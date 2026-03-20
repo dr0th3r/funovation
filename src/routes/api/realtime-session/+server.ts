@@ -8,38 +8,26 @@ export async function POST({ request }: RequestEvent) {
 	});
 
 	try {
-		const body = await request.json().catch(() => ({}));
-		const userInstructions = body.instructions || '';
-		const baseInstructions = 'You are a helpful culinary assistant guiding the user through cooking steps.';
-		
-		const finalInstructions = userInstructions 
-			? `${baseInstructions}\n\nAdditional Context:\n${userInstructions}`
-			: baseInstructions;
+		// Ensure request is consumed if needed, though not currently used for token generation
+		await request.json().catch(() => ({}));
+		console.log("🔷 [SERVER] POST /api/realtime-session received");
 
-		// Request an ephemeral token from OpenAI using the official SDK
+		// Request an official ephemeral token from OpenAI securely on the backend
 		const session = await openai.beta.realtime.sessions.create({
 			model: 'gpt-4o-realtime-preview-2024-12-17',
 			voice: 'verse', 
-			instructions: finalInstructions
+			instructions: 'You are a helpful assistant.'
 		});
 
-		// Send the ephemeral session data back to the client
+		// Return the official session object which contains the ephemeral client_secret
+		console.log("✅ [SERVER] Ephemeral session created successfully");
 		return json(session);
 	} catch (error: unknown) {
-		const err = error as any;
-		// Log the full error to the terminal for the user to see exactly what's failing (Quota, API Key, etc.)
-		console.error("--- OpenAI SESSION ERROR ---");
-		if (err.response) {
-			console.error("Status:", err.status);
-			console.error("Data:", err.response);
-		} else {
-			console.error("Message:", err.message);
-		}
-		console.error("----------------------------");
-
+		const errorMessage = error instanceof Error ? error.message : String(error);
+		console.error("❌ [SERVER] OpenAI Session Error:", errorMessage);
 		return json(
-			{ error: 'Failed to generate token', details: err.message }, 
-			{ status: err.status || 500 }
+			{ error: 'Failed to generate token', details: errorMessage }, 
+			{ status: 500 }
 		);
 	}
 }
