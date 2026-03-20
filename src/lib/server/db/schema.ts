@@ -1,5 +1,5 @@
-import { integer, jsonb, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
+import { integer, jsonb, pgTable, primaryKey, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const task = pgTable('task', {
 	id: serial('id').primaryKey(),
@@ -22,6 +22,29 @@ export const recipe = pgTable('recipe', {
 	pricePerPortionCZK: integer('price_per_portion_czk').notNull(),
 	allergens: jsonb('allergens').$type<string[]>().notNull()
 });
+
+export const recipeTranslation = pgTable(
+	'recipe_translation',
+	{
+		recipeId: integer('recipe_id')
+			.notNull()
+			.references(() => recipe.id, { onDelete: 'cascade' }),
+		locale: text('locale').notNull(),
+		name: text('name').notNull(),
+		category: text('category').notNull(),
+		area: text('area').notNull(),
+		cuisine: text('cuisine').notNull(),
+		ingredients: jsonb('ingredients').$type<string[]>(),
+		simplifiedIngredients: jsonb('simplified_ingredients').$type<string[]>(),
+		steps: jsonb('steps').$type<string[]>(),
+		createdAt: timestamp('created_at').defaultNow().notNull(),
+		updatedAt: timestamp('updated_at').defaultNow().notNull()
+	},
+	(table) => ({
+		pk: primaryKey({ columns: [table.recipeId, table.locale] })
+	})
+);
+
 export const userProfile = pgTable('user_profile', {
 	id: text('id').primaryKey(), // = user.id (no FK to avoid auth schema cross-import)
 	onboardingStep: integer('onboarding_step').notNull().default(0),
