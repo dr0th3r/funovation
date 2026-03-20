@@ -17,7 +17,7 @@
 	const { form, errors, enhance, submitting } = sf;
 </script>
 
-<Card.Root>
+<Card.Root class="bg-transparent py-0 shadow-none ring-0 sm:bg-card sm:py-6 sm:shadow-xs sm:ring-1">
 	<Card.Header>
 		<Card.Title class="text-2xl">Preferences</Card.Title>
 		<Card.Description>Set your budget and any foods you'd rather avoid.</Card.Description>

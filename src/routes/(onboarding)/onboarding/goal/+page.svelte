@@ -50,12 +50,12 @@
 	};
 </script>
 
-<Card.Root>
-	<Card.Header>
+{#snippet content()}
+	<Card.Header class="px-0 pt-0 sm:px-6">
 		<Card.Title class="text-2xl">What's your goal?</Card.Title>
 		<Card.Description>Pick one or more to get started.</Card.Description>
 	</Card.Header>
-	<Card.Content>
+	<Card.Content class="px-0 pb-0 sm:px-6">
 		<form method="POST" action="?/save" use:enhance class="space-y-6">
 			<div class="space-y-2.5">
 				{#each GOALS as goal (goal.value)}
@@ -109,4 +109,12 @@
 			</div>
 		</form>
 	</Card.Content>
+{/snippet}
+
+<Card.Root class="hidden sm:block">
+	{@render content()}
 </Card.Root>
+
+<div class="block sm:hidden">
+	{@render content()}
+</div>

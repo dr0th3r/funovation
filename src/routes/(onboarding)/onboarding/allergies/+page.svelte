@@ -22,14 +22,14 @@
 	});
 </script>
 
-<Card.Root>
-	<Card.Header>
+<Card.Root class="bg-transparent py-0 shadow-none ring-0 sm:bg-card sm:py-6 sm:shadow-xs sm:ring-1">
+	<Card.Header class="px-0 pt-0 sm:px-6">
 		<Card.Title class="text-2xl">Allergies & Diet</Card.Title>
-		<Card.Description
-			>Tell us what to avoid. You can update this later in settings.</Card.Description
-		>
+		<Card.Description>
+			Tell us what to avoid. You can update this later in settings.
+		</Card.Description>
 	</Card.Header>
-	<Card.Content>
+	<Card.Content class="px-0 pb-0 sm:px-6">
 		<form method="POST" action="?/save" use:enhance class="space-y-6">
 			<div class="space-y-2">
 				<Label class="text-sm font-medium">Allergens</Label>
