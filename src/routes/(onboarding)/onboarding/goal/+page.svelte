@@ -2,7 +2,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { valibot } from 'sveltekit-superforms/adapters';
 	import { goalSchema } from '../schemas';
-	import * as Card from '$lib/components/ui/card';
+	import ResponsiveCard from '$lib/components/ResponsiveCard.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { cn } from '$lib/utils';
@@ -50,63 +50,57 @@
 	};
 </script>
 
-<Card.Root>
-	<Card.Header>
-		<Card.Title class="text-2xl">What's your goal?</Card.Title>
-		<Card.Description>Pick one or more to get started.</Card.Description>
-	</Card.Header>
-	<Card.Content>
-		<form method="POST" action="?/save" use:enhance class="space-y-6">
-			<div class="space-y-2.5">
-				{#each GOALS as goal (goal.value)}
-					<button
-						type="button"
-						class={cn(
-							'flex w-full items-start gap-3 rounded-lg border p-5 text-left transition-colors duration-150 hover:bg-accent',
-							$form.goals.includes(goal.value)
-								? 'border-primary bg-primary/5'
-								: 'border-border bg-card'
-						)}
-						onclick={() => toggle(goal.value)}
-					>
-						<Checkbox
-							checked={$form.goals.includes(goal.value)}
-							class="mt-0.5 shrink-0"
-							aria-hidden="true"
-						/>
-						<div class="space-y-0.5">
-							<p class="leading-none font-medium">{goal.title}</p>
-							<p class="text-sm text-muted-foreground">{goal.description}</p>
-						</div>
-					</button>
-				{/each}
+<ResponsiveCard title="What's your goal?" description="Pick one or more to get started.">
+	<form method="POST" action="?/save" use:enhance class="space-y-6">
+		<div class="space-y-2.5">
+			{#each GOALS as goal (goal.value)}
+				<button
+					type="button"
+					class={cn(
+						'flex w-full items-start gap-3 rounded-lg border p-5 text-left transition-colors duration-150 hover:bg-accent',
+						$form.goals.includes(goal.value)
+							? 'border-primary bg-primary/5'
+							: 'border-border bg-card'
+					)}
+					onclick={() => toggle(goal.value)}
+				>
+					<Checkbox
+						checked={$form.goals.includes(goal.value)}
+						class="mt-0.5 shrink-0"
+						aria-hidden="true"
+					/>
+					<div class="space-y-0.5">
+						<p class="leading-none font-medium">{goal.title}</p>
+						<p class="text-sm text-muted-foreground">{goal.description}</p>
+					</div>
+				</button>
+			{/each}
 
-				{#each $form.goals as goal}
-					<input type="hidden" name="goals" value={goal} />
-				{/each}
-			</div>
+			{#each $form.goals as goal}
+				<input type="hidden" name="goals" value={goal} />
+			{/each}
+		</div>
 
-			{#if $errors.goals}
-				{#each $errors.goals._errors as error}
-					<p class="text-sm text-destructive">{error}</p>
-				{/each}
-			{/if}
+		{#if $errors.goals}
+			{#each $errors.goals._errors as error}
+				<p class="text-sm text-destructive">{error}</p>
+			{/each}
+		{/if}
 
-			<div class="space-y-3">
-				<Button type="submit" class="w-full" disabled={$submitting || $form.goals.length === 0}>
-					{$submitting ? 'Setting up…' : 'Get Started'}
+		<div class="space-y-3">
+			<Button type="submit" class="w-full" disabled={$submitting || $form.goals.length === 0}>
+				{$submitting ? 'Setting up…' : 'Get Started'}
+			</Button>
+			<div class="flex justify-start">
+				<Button
+					href="/onboarding/preferences"
+					variant="ghost"
+					size="sm"
+					class="text-muted-foreground"
+				>
+					<ArrowLeft class="size-4" /> Back
 				</Button>
-				<div class="flex justify-start">
-					<Button
-						href="/onboarding/preferences"
-						variant="ghost"
-						size="sm"
-						class="text-muted-foreground"
-					>
-						<ArrowLeft class="size-4" /> Back
-					</Button>
-				</div>
 			</div>
-		</form>
-	</Card.Content>
-</Card.Root>
+		</div>
+	</form>
+</ResponsiveCard>
