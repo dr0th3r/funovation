@@ -1,5 +1,4 @@
 import { db } from '$lib/server/db';
-import { EXAMPLE_RECIPES } from '$lib/server/db/example-recipes';
 import { recipe } from '$lib/server/db/schema';
 import { json } from '@sveltejs/kit';
 import { sql } from 'drizzle-orm';
@@ -21,17 +20,8 @@ const parseOptionalNumber = (value: string | null) => {
 	return parsed;
 };
 
-const ensureSeedData = async () => {
-	await db
-		.insert(recipe)
-		.values(EXAMPLE_RECIPES)
-		.onConflictDoNothing({ target: recipe.slug });
-};
-
 export const GET: RequestHandler = async ({ url }) => {
 	try {
-		await ensureSeedData();
-
 		const includeIngredients = parseListParam([
 			...url.searchParams.getAll('ingredients'),
 			...url.searchParams.getAll('ingrediences'),
