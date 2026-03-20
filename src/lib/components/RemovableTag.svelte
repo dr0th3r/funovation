@@ -3,6 +3,7 @@
 	import X from '@lucide/svelte/icons/x';
 	import { cn } from '$lib/utils';
 	import type { Snippet } from 'svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	let {
 		children,
@@ -25,7 +26,7 @@
 		className
 	)}
 	onclick={onRemove}
-	aria-label={ariaLabel ?? 'Remove tag'}
+	aria-label={ariaLabel ?? m.aria_remove_tag()}
 >
 	{@render children()}
 	<X class="ml-1 size-3" />

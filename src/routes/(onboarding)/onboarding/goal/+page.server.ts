@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	const form = await superValidate(
 		{ goals: (profile?.goals ?? []) as ('plan' | 'learn' | 'recommendations')[] },
-		valibot(goalSchema),
+		valibot(goalSchema()),
 		{ errors: false }
 	);
 
@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 export const actions: Actions = {
 	save: async (event) => {
-		const form = await superValidate(event.request, valibot(goalSchema));
+		const form = await superValidate(event.request, valibot(goalSchema()));
 		if (!form.valid) return fail(400, { form });
 
 		await db

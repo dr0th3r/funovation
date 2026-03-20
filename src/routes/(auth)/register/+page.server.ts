@@ -7,15 +7,16 @@ import { registerSchema } from '../schemas';
 import { db } from '$lib/server/db';
 import { userProfile } from '$lib/server/db/schema';
 import { APIError } from 'better-auth/api';
+import * as m from '$lib/paraglide/messages';
 
 export const load: PageServerLoad = async () => {
-	const form = await superValidate(valibot(registerSchema));
+	const form = await superValidate(valibot(registerSchema()));
 	return { form };
 };
 
 export const actions: Actions = {
 	default: async (event) => {
-		const form = await superValidate(event.request, valibot(registerSchema));
+		const form = await superValidate(event.request, valibot(registerSchema()));
 		if (!form.valid) return fail(400, { form });
 
 		let userId: string;
@@ -33,11 +34,11 @@ export const actions: Actions = {
 			if (e instanceof APIError) {
 				return message(
 					form,
-					{ type: 'error', text: e.message ?? 'Registration failed' },
+					{ type: 'error', text: e.message ?? m.auth_error_registration_failed() },
 					{ status: 400 }
 				);
 			}
-			return message(form, { type: 'error', text: 'Something went wrong' }, { status: 500 });
+			return message(form, { type: 'error', text: m.auth_error_something_went_wrong() }, { status: 500 });
 		}
 
 		await db.insert(userProfile).values({ id: userId, onboardingStep: 0 });

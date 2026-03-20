@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { Progress } from '$lib/components/ui/progress';
+	import * as m from '$lib/paraglide/messages';
 
 	let { children } = $props();
 
 	const steps = [
-		{ path: '/onboarding/allergies', label: 'Allergies & Diet' },
-		{ path: '/onboarding/preferences', label: 'Preferences' },
-		{ path: '/onboarding/goal', label: 'Your goal' }
+		{ path: '/onboarding/allergies', label: m.onboarding_step_allergies() },
+		{ path: '/onboarding/preferences', label: m.onboarding_step_preferences() },
+		{ path: '/onboarding/goal', label: m.onboarding_step_goal() }
 	];
 
 	const currentStep = $derived(steps.findIndex((s) => page.url.pathname.startsWith(s.path)) + 1);

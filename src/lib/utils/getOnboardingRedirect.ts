@@ -7,6 +7,7 @@ export const getOnboardingRedirect = async (userId: string): Promise<string | nu
 		where: eq(userProfile.id, userId),
 		columns: { onboardingStep: true }
 	});
+
 	const step = profile?.onboardingStep ?? 0;
 	if (step === 0) return '/onboarding/allergies';
 	if (step === 1) return '/onboarding/preferences';

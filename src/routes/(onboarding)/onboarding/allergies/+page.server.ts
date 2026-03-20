@@ -17,14 +17,14 @@ export const load: PageServerLoad = async ({ locals }) => {
 			allergies: profile?.allergies ?? [],
 			diet: (profile?.dietaryRestrictions[0] as 'vegetarian' | 'vegan' | undefined) ?? undefined
 		},
-		valibot(allergiesSchema)
+		valibot(allergiesSchema())
 	);
 	return { form };
 };
 
 export const actions: Actions = {
 	save: async (event) => {
-		const form = await superValidate(event.request, valibot(allergiesSchema));
+		const form = await superValidate(event.request, valibot(allergiesSchema()));
 		if (!form.valid) return fail(400, { form });
 
 		await db

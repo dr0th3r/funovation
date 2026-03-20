@@ -10,18 +10,19 @@
 	import TagInput from '$lib/components/TagInput.svelte';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
+	import * as m from '$lib/paraglide/messages';
 
 	let { data } = $props();
 
-	const sf = superForm(data.form, { validators: valibot(preferencesSchema) });
+	const sf = superForm(data.form, { validators: valibot(preferencesSchema()) });
 	const { form, errors, enhance, submitting } = sf;
 </script>
 
-<ResponsiveCard title="Preferences" description="Set your budget and any foods you'd rather avoid.">
+<ResponsiveCard title={m.onboarding_preferences_title()} description={m.onboarding_preferences_description()}>
 	<form method="POST" action="?/save" use:enhance class="space-y-6">
 		<div class="space-y-3">
 			<div class="flex items-center justify-between">
-				<Label class="text-sm font-medium">Max budget per meal</Label>
+				<Label class="text-sm font-medium">{m.onboarding_preferences_budget_label()}</Label>
 				<span class="text-sm font-medium text-muted-foreground">
 					{$form.budgetCzk} Kč
 				</span>
@@ -33,7 +34,7 @@
 		<Separator />
 
 		<div class="space-y-2">
-			<Label class="text-sm font-medium">Foods I don't like</Label>
+			<Label class="text-sm font-medium">{m.onboarding_preferences_dislikes_label()}</Label>
 			<!-- BACKLOG: autocomplete from a curated ingredient list -->
 			<TagInput name="dislikedFoods" initialTags={$form.dislikedFoods} />
 			{#if $errors.dislikedFoods}
@@ -42,7 +43,7 @@
 		</div>
 
 		<div class="space-y-3">
-			<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
+			<Button type="submit" class="w-full" disabled={$submitting}>{m.common_save_continue()}</Button>
 			<div class="flex items-center justify-between">
 				<Button
 					href="/onboarding/allergies"
@@ -50,7 +51,7 @@
 					size="sm"
 					class="text-muted-foreground"
 				>
-					<ArrowLeft class="size-4" /> Back
+					<ArrowLeft class="size-4" /> {m.common_back()}
 				</Button>
 				<Button
 					type="submit"
@@ -60,7 +61,7 @@
 					class="text-muted-foreground"
 					disabled={$submitting}
 				>
-					Skip <ArrowRight class="size-4" />
+					{m.common_skip()} <ArrowRight class="size-4" />
 				</Button>
 			</div>
 		</div>

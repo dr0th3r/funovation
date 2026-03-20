@@ -20,14 +20,14 @@ export const load: PageServerLoad = async ({ locals }) => {
 			budgetCzk: profile?.budgetLunchCzk ?? 200,
 			dislikedFoods: profile?.dislikedFoods ?? []
 		},
-		valibot(preferencesSchema)
+		valibot(preferencesSchema())
 	);
 	return { form };
 };
 
 export const actions: Actions = {
 	save: async (event) => {
-		const form = await superValidate(event.request, valibot(preferencesSchema));
+		const form = await superValidate(event.request, valibot(preferencesSchema()));
 		if (!form.valid) return fail(400, { form });
 
 		await db

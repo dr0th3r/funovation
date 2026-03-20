@@ -2,6 +2,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
 	import RemovableTagList from '$lib/components/RemovableTagList.svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	let { name, initialTags = [] }: { name: string; initialTags?: string[] } = $props();
 
@@ -35,11 +36,11 @@
 	<div class="flex gap-2">
 		<Input
 			type="text"
-			placeholder="Type and press Enter…"
+			placeholder={m.common_tag_input_placeholder()}
 			bind:value={inputValue}
 			onkeydown={onKeydown}
 			class="flex-1"
 		/>
-		<Button type="button" variant="outline" onclick={add}>Add</Button>
+		<Button type="button" variant="outline" onclick={add}>{m.common_add()}</Button>
 	</div>
 </div>
