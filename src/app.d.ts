@@ -9,10 +9,19 @@ declare global {
 			session?: Session;
 		}
 
+		interface FormMessage {
+			type: 'error' | 'success';
+			text: string;
+		}
+
 		// interface Error {}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+
+		namespace Superforms {
+			type Message = FormMessage;
+		}
 	}
 }
 

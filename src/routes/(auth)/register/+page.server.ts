@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from './$types';
-import { superValidate, setError } from 'sveltekit-superforms';
+import { superValidate, message } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
 import { fail, redirect } from '@sveltejs/kit';
 import { auth } from '$lib/server/auth';
@@ -31,9 +31,13 @@ export const actions: Actions = {
 			userId = result.user.id;
 		} catch (e) {
 			if (e instanceof APIError) {
-				return setError(form, 'email', e.message ?? 'Registration failed');
+				return message(
+					form,
+					{ type: 'error', text: e.message ?? 'Registration failed' },
+					{ status: 400 }
+				);
 			}
-			return setError(form, 'email', 'Something went wrong');
+			return message(form, { type: 'error', text: 'Something went wrong' }, { status: 500 });
 		}
 
 		await db.insert(userProfile).values({ id: userId, onboardingStep: 0 });
