@@ -6,6 +6,13 @@ import { RealtimeAgent, RealtimeSession } from "@openai/agents/realtime";
  * @param additionalInstructions Dynamic instructions to append to the system prompt
  */
 export async function createCookingSession(additionalInstructions?: string) {
+    console.log("Requesting microphone access...");
+    try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch {
+        throw new Error("Microphone access denied. Please allow microphone permissions in your browser and try again.");
+    }
+
     console.log("Fetching Ephemeral Token from the server...");
     const response = await fetch('/api/realtime-session', {
         method: 'POST',
