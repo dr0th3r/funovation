@@ -7,22 +7,23 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
 	import FormMessage from '$lib/components/FormMessage.svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	let { data } = $props();
 
-	const sf = superForm(data.form, { validators: valibot(loginSchema) });
+	const sf = superForm(data.form, { validators: valibot(loginSchema()) });
 	const { form, message, enhance, submitting } = sf;
 </script>
 
-<ResponsiveCard title="Welcome back" description="Sign in to your account">
+<ResponsiveCard title={m.auth_login_title()} description={m.auth_login_description()}>
 	<form method="POST" use:enhance class="space-y-4">
 		<FormMessage message={$message} />
 
 		<Form.Field form={sf} name="email">
 			<Form.Control>
 				{#snippet children({ props })}
-					<Form.Label>Email</Form.Label>
-					<Input {...props} type="email" bind:value={$form.email} placeholder="you@example.com" />
+					<Form.Label>{m.auth_email_label()}</Form.Label>
+					<Input {...props} type="email" bind:value={$form.email} placeholder={m.auth_email_placeholder()} />
 				{/snippet}
 			</Form.Control>
 			<Form.FieldErrors />
@@ -31,8 +32,8 @@
 		<Form.Field form={sf} name="password">
 			<Form.Control>
 				{#snippet children({ props })}
-					<Form.Label>Password</Form.Label>
-					<Input {...props} type="password" bind:value={$form.password} placeholder="••••••••" />
+					<Form.Label>{m.auth_password_label()}</Form.Label>
+					<Input {...props} type="password" bind:value={$form.password} placeholder={m.auth_password_placeholder()} />
 				{/snippet}
 			</Form.Control>
 			<Form.FieldErrors />
@@ -40,11 +41,11 @@
 
 		<div class="space-y-3">
 			<Button type="submit" class="w-full" disabled={$submitting}>
-				{$submitting ? 'Signing in…' : 'Sign in'}
+				{$submitting ? m.auth_login_submitting() : m.auth_login_submit()}
 			</Button>
 			<p class="text-sm text-muted-foreground">
-				Don't have an account?
-				<a href="/register" class="text-primary underline-offset-4 hover:underline">Register</a>
+				{m.auth_login_no_account()}
+				<a href="/register" class="text-primary underline-offset-4 hover:underline">{m.auth_login_register_link()}</a>
 			</p>
 		</div>
 	</form>

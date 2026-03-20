@@ -4,17 +4,18 @@ import { valibot } from 'sveltekit-superforms/adapters';
 import { fail, redirect } from '@sveltejs/kit';
 import { auth } from '$lib/server/auth';
 import { loginSchema } from '../schemas';
-import { getOnboardingRedirect } from '../../onboarding.server';
 import { APIError } from 'better-auth/api';
+import * as m from '$lib/paraglide/messages';
+import { getOnboardingRedirect } from '$lib/utils/getOnboardingRedirect';
 
 export const load: PageServerLoad = async () => {
-	const form = await superValidate(valibot(loginSchema));
+	const form = await superValidate(valibot(loginSchema()));
 	return { form };
 };
 
 export const actions: Actions = {
 	default: async (event) => {
-		const form = await superValidate(event.request, valibot(loginSchema));
+		const form = await superValidate(event.request, valibot(loginSchema()));
 		if (!form.valid) return fail(400, { form });
 
 		let userId: string;
@@ -27,11 +28,15 @@ export const actions: Actions = {
 			if (e instanceof APIError) {
 				return message(
 					form,
-					{ type: 'error', text: e.message ?? 'Invalid email or password' },
+					{ type: 'error', text: e.message ?? m.auth_error_invalid_credentials() },
 					{ status: 400 }
 				);
 			}
-			return message(form, { type: 'error', text: 'Something went wrong' }, { status: 500 });
+			return message(
+				form,
+				{ type: 'error', text: m.auth_error_something_went_wrong() },
+				{ status: 500 }
+			);
 		}
 
 		const dest = await getOnboardingRedirect(userId);

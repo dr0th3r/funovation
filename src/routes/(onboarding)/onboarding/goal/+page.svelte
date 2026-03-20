@@ -7,39 +7,35 @@
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { cn } from '$lib/utils';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+	import * as m from '$lib/paraglide/messages';
 
 	let { data } = $props();
 
 	const sf = superForm(data.form, {
-		validators: valibot(goalSchema),
+		validators: valibot(goalSchema()),
 		validationMethod: 'submit-only',
 		dataType: 'json'
 	});
 
 	const { form, errors, enhance, submitting } = sf;
 
-	const GOALS: Array<{
-		value: 'plan' | 'learn' | 'recommendations';
-		title: string;
-		description: string;
-	}> = [
+	const GOALS = $derived([
 		{
-			value: 'plan',
-			title: 'Plan meals',
-			description: 'Get weekly meal plans tailored to your preferences and budget'
+			value: 'plan' as const,
+			title: m.onboarding_goal_plan_title(),
+			description: m.onboarding_goal_plan_description()
 		},
 		{
-			value: 'learn',
-			title: 'Learn to cook',
-			description: 'Step-by-step guided cooking with a voice assistant'
+			value: 'learn' as const,
+			title: m.onboarding_goal_learn_title(),
+			description: m.onboarding_goal_learn_description()
 		},
 		{
-			value: 'recommendations',
-			title: 'Discover new recipes',
-			description:
-				'Get personalized recipe recommendations based on your preferences and what is on sale'
+			value: 'recommendations' as const,
+			title: m.onboarding_goal_discover_title(),
+			description: m.onboarding_goal_discover_description()
 		}
-	];
+	]);
 
 	const toggle = (value: 'plan' | 'learn' | 'recommendations') => {
 		if ($form.goals.includes(value)) {
@@ -50,7 +46,7 @@
 	};
 </script>
 
-<ResponsiveCard title="What's your goal?" description="Pick one or more to get started.">
+<ResponsiveCard title={m.onboarding_goal_title()} description={m.onboarding_goal_description()}>
 	<form method="POST" action="?/save" use:enhance class="space-y-6">
 		<div class="space-y-2.5">
 			{#each GOALS as goal (goal.value)}
@@ -89,7 +85,7 @@
 
 		<div class="space-y-3">
 			<Button type="submit" class="w-full" disabled={$submitting || $form.goals.length === 0}>
-				{$submitting ? 'Setting up…' : 'Get Started'}
+				{$submitting ? m.onboarding_goal_submitting() : m.onboarding_goal_submit()}
 			</Button>
 			<div class="flex justify-start">
 				<Button
@@ -98,7 +94,7 @@
 					size="sm"
 					class="text-muted-foreground"
 				>
-					<ArrowLeft class="size-4" /> Back
+					<ArrowLeft class="size-4" /> {m.common_back()}
 				</Button>
 			</div>
 		</div>

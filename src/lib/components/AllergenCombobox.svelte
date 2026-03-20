@@ -6,23 +6,24 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import RemovableTagList from '$lib/components/RemovableTagList.svelte';
 	import { cn } from '$lib/utils';
+	import * as m from '$lib/paraglide/messages';
 
-	const ALLERGENS = [
-		{ value: 'gluten', label: '1. Gluten (wheat, rye, barley, oats)' },
-		{ value: 'crustaceans', label: '2. Crustaceans' },
-		{ value: 'eggs', label: '3. Eggs' },
-		{ value: 'fish', label: '4. Fish' },
-		{ value: 'peanuts', label: '5. Peanuts' },
-		{ value: 'soybeans', label: '6. Soybeans' },
-		{ value: 'milk', label: '7. Milk (incl. lactose)' },
-		{ value: 'nuts', label: '8. Tree nuts' },
-		{ value: 'celery', label: '9. Celery' },
-		{ value: 'mustard', label: '10. Mustard' },
-		{ value: 'sesame', label: '11. Sesame seeds' },
-		{ value: 'sulphites', label: '12. Sulphur dioxide & sulphites' },
-		{ value: 'lupin', label: '13. Lupin' },
-		{ value: 'molluscs', label: '14. Molluscs' }
-	];
+	const ALLERGENS = $derived([
+		{ value: 'gluten', label: m.allergen_gluten() },
+		{ value: 'crustaceans', label: m.allergen_crustaceans() },
+		{ value: 'eggs', label: m.allergen_eggs() },
+		{ value: 'fish', label: m.allergen_fish() },
+		{ value: 'peanuts', label: m.allergen_peanuts() },
+		{ value: 'soybeans', label: m.allergen_soybeans() },
+		{ value: 'milk', label: m.allergen_milk() },
+		{ value: 'nuts', label: m.allergen_nuts() },
+		{ value: 'celery', label: m.allergen_celery() },
+		{ value: 'mustard', label: m.allergen_mustard() },
+		{ value: 'sesame', label: m.allergen_sesame() },
+		{ value: 'sulphites', label: m.allergen_sulphites() },
+		{ value: 'lupin', label: m.allergen_lupin() },
+		{ value: 'molluscs', label: m.allergen_molluscs() }
+	]);
 
 	let { name, selected = $bindable([]) }: { name: string; selected?: string[] } = $props();
 
@@ -61,14 +62,14 @@
 			bind:ref={triggerRef}
 			class={[buttonVariants({ variant: 'outline', class: 'w-full' }), 'justify-between']}
 		>
-			{selected.length > 0 ? `${selected.length} selected` : 'Select allergens…'}
+			{selected.length > 0 ? m.onboarding_allergens_trigger_count({ count: selected.length }) : m.onboarding_allergens_trigger_empty()}
 			<ChevronsUpDown class="ml-2 size-4 shrink-0 opacity-50" />
 		</Popover.Trigger>
 		<Popover.Content class="w-full min-w-(--bits-popover-anchor-width) p-0">
 			<Command.Root>
-				<Command.Input placeholder="Search allergens…" />
+				<Command.Input placeholder={m.onboarding_allergens_search_placeholder()} />
 				<Command.List>
-					<Command.Empty>No allergens found.</Command.Empty>
+					<Command.Empty>{m.onboarding_allergens_no_results()}</Command.Empty>
 					<Command.Group>
 						{#each ALLERGENS as allergen}
 							<Command.Item
