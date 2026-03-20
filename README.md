@@ -52,6 +52,9 @@ You can preview the production build with `npm run preview`.
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
 ## API
+
+**Localization:** All API endpoints support an optional `locale` query parameter (e.g., `?locale=cs`) to return translated content. Currently supported values are `en` (default), `cs`, and `th`.
+
 ### Random Meal Selection
 
 The `/api/meals/randomselection` endpoint returns up to 10 randomly selected meals from the database that match your specified criteria. It gracefully handles comma-separated lists, multiple identical query parameters, and case-insensitivity.

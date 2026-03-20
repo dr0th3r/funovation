@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { recipe } from '$lib/server/db/schema';
+import { recipe, recipeTranslation } from '$lib/server/db/schema';
 import { json } from '@sveltejs/kit';
 import { sql } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
@@ -22,6 +22,8 @@ const parseOptionalNumber = (value: string | null) => {
 
 export const GET: RequestHandler = async ({ url }) => {
 	try {
+		const requestedLocale = (url.searchParams.get('locale') ?? 'en').toLowerCase();
+
 		const includeIngredients = parseListParam([
 			...url.searchParams.getAll('ingredients'),
 			...url.searchParams.getAll('ingrediences'),
@@ -90,17 +92,18 @@ export const GET: RequestHandler = async ({ url }) => {
 			.select({
 				id: recipe.id,
 				slug: recipe.slug,
-				name: recipe.name,
-				category: recipe.category,
-				area: recipe.area,
-				cuisine: recipe.cuisine,
+				name: sql<string>`coalesce((select ${recipeTranslation.name} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.name} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.name})`,
+				category: sql<string>`coalesce((select ${recipeTranslation.category} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.category} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.category})`,
+				area: sql<string>`coalesce((select ${recipeTranslation.area} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.area} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.area})`,
+				cuisine: sql<string>`coalesce((select ${recipeTranslation.cuisine} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.cuisine} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.cuisine})`,
+				ingredients: sql<string[]>`coalesce((select ${recipeTranslation.ingredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.ingredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.ingredients})`,
+				simplifiedIngredients: sql<string[]>`coalesce((select ${recipeTranslation.simplifiedIngredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.simplifiedIngredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.simplifiedIngredients})`,
+				steps: sql<string[]>`coalesce((select ${recipeTranslation.steps} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.steps} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.steps})`,
 				imageUrl: recipe.imageUrl,
-				ingredients: recipe.ingredients,
-				simplifiedIngredients: recipe.simplifiedIngredients,
-				steps: recipe.steps,
 				preferences: recipe.preferences,
 				pricePerPortionCZK: recipe.pricePerPortionCZK,
-				allergens: recipe.allergens
+				allergens: recipe.allergens,
+				locale: sql<string>`${requestedLocale}`
 			})
 			.from(recipe)
 			.where(whereClause)
