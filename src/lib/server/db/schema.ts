@@ -15,7 +15,11 @@ export const recipe = pgTable('recipe', {
 	cuisine: text('cuisine').notNull(),
 	imageUrl: text('image_url'),
 	ingredients: jsonb('ingredients').$type<string[]>().notNull(),
-	steps: jsonb('steps').$type<string[]>().notNull()
+	simplifiedIngredients: jsonb('simplified_ingredients').$type<string[]>().notNull(),
+	steps: jsonb('steps').$type<string[]>().notNull(),
+	preferences: jsonb('preferences').$type<string[]>().notNull(),
+	pricePerPortionCZK: integer('price_per_portion_czk').notNull(),
+	allergens: jsonb('allergens').$type<string[]>().notNull()
 });
 
 export * from './auth.schema';

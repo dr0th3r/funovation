@@ -1,3 +1,5 @@
+export type Preference = 'gluten-free' | 'lactose-free' | 'vegetarian' | 'vegan';
+
 export type ExampleRecipeSeed = {
 	slug: string;
 	name: string;
@@ -6,7 +8,11 @@ export type ExampleRecipeSeed = {
 	cuisine: string;
 	imageUrl: string | null;
 	ingredients: string[];
+	simplifiedIngredients: string[];
 	steps: string[];
+	preferences: Preference[];
+	pricePerPortionCZK: number;
+	allergens: string[]; // EU standard codes (1-14)
 };
 
 export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
@@ -29,13 +35,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Salt and pepper',
 			'Fresh parsley'
 		],
+		simplifiedIngredients: ['oil', 'onion', 'bell pepper', 'garlic', 'cumin', 'paprika', 'tomatoes', 'eggs', 'parsley', 'bread'],
 		steps: [
 			'Heat oil and saute onion and pepper until soft.',
 			'Stir in garlic and spices for 30 seconds.',
 			'Add tomatoes, simmer 10 minutes, season to taste.',
 			'Make wells and crack eggs in, cover and cook until set.',
 			'Garnish with parsley and serve with bread.'
-		]
+		],
+		preferences: ['vegetarian', 'lactose-free'],
+		pricePerPortionCZK: 45,
+		allergens: ['1', '3'] // 1: Cereals (from served bread), 3: Eggs
 	},
 	{
 		slug: 'chicken-teriyaki-bowl',
@@ -55,12 +65,16 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tsp cornstarch + 2 tbsp water',
 			'Steamed broccoli'
 		],
+		simplifiedIngredients: ['chicken', 'rice', 'oil', 'soy sauce', 'mirin', 'sugar', 'ginger', 'cornstarch', 'broccoli'],
 		steps: [
 			'Sear chicken in oil until cooked through.',
 			'Add soy, mirin, sugar, and ginger; simmer briefly.',
 			'Stir in cornstarch slurry and cook until glossy.',
 			'Serve over rice with steamed broccoli.'
-		]
+		],
+		preferences: ['lactose-free'],
+		pricePerPortionCZK: 75,
+		allergens: ['1', '6'] // 1: Cereals (often in soy sauce), 6: Soybeans
 	},
 	{
 		slug: 'lentil-coconut-curry',
@@ -81,13 +95,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 cup spinach',
 			'Lime wedges'
 		],
+		simplifiedIngredients: ['lentils', 'oil', 'onion', 'garlic', 'curry powder', 'turmeric', 'coconut milk', 'vegetable stock', 'spinach', 'lime'],
 		steps: [
 			'Saute onion and garlic until fragrant.',
 			'Bloom curry powder and turmeric for 30 seconds.',
 			'Add lentils, coconut milk, and stock; simmer 20 minutes.',
 			'Fold in spinach and cook until wilted.',
 			'Finish with lime and serve.'
-		]
+		],
+		preferences: ['vegetarian', 'vegan', 'gluten-free', 'lactose-free'],
+		pricePerPortionCZK: 40,
+		allergens: ['9'] // 9: Celery (often in vegetable stock)
 	},
 	{
 		slug: 'beef-taco-skillet',
@@ -107,12 +125,16 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 cup shredded cheese',
 			'Tortilla chips or warm tortillas'
 		],
+		simplifiedIngredients: ['beef', 'onion', 'garlic', 'taco seasoning', 'beans', 'corn', 'tomatoes', 'cheese', 'tortillas'],
 		steps: [
 			'Brown beef with onion and garlic; drain excess fat.',
 			'Add taco seasoning, beans, corn, and tomato sauce.',
 			'Simmer 8 minutes until thickened.',
 			'Top with cheese, cover until melted, and serve.'
-		]
+		],
+		preferences: ['gluten-free'], // Assuming corn tortillas
+		pricePerPortionCZK: 85,
+		allergens: ['7'] // 7: Milk
 	},
 	{
 		slug: 'salmon-lemon-dill',
@@ -129,12 +151,16 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 garlic cloves, minced',
 			'Salt and pepper'
 		],
+		simplifiedIngredients: ['salmon', 'oil', 'lemon', 'dill', 'garlic'],
 		steps: [
 			'Season salmon with salt and pepper.',
 			'Mix oil, garlic, and dill, then brush over salmon.',
 			'Top with lemon slices and bake at 200C for 12-15 minutes.',
 			'Serve with potatoes or salad.'
-		]
+		],
+		preferences: ['gluten-free', 'lactose-free'],
+		pricePerPortionCZK: 160,
+		allergens: ['4'] // 4: Fish
 	},
 	{
 		slug: 'spaghetti-aglio-olio',
@@ -152,13 +178,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Salt',
 			'Parmesan (optional)'
 		],
+		simplifiedIngredients: ['pasta', 'oil', 'garlic', 'chili', 'parsley', 'cheese'],
 		steps: [
 			'Cook spaghetti in salted water until al dente.',
 			'Gently fry garlic in olive oil until lightly golden.',
 			'Add chili flakes, then toss in drained pasta.',
 			'Add a splash of pasta water and parsley; toss well.',
 			'Serve immediately, optionally with parmesan.'
-		]
+		],
+		preferences: ['vegetarian'],
+		pricePerPortionCZK: 35,
+		allergens: ['1', '7'] // 1: Cereals, 7: Milk (from Parmesan)
 	},
 	{
 		slug: 'classic-margherita-pizza',
@@ -175,6 +205,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp extra virgin olive oil',
 			'Salt'
 		],
+		simplifiedIngredients: ['pizza dough', 'tomatoes', 'cheese', 'basil', 'oil'],
 		steps: [
 			'Preheat oven to 250C with a pizza stone inside.',
 			'Stretch dough into a 12-inch circle.',
@@ -182,7 +213,10 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Top with mozzarella and a pinch of salt.',
 			'Bake for 8-10 minutes until crust is blistered.',
 			'Top with fresh basil and drizzle with olive oil before serving.'
-		]
+		],
+		preferences: ['vegetarian'],
+		pricePerPortionCZK: 65,
+		allergens: ['1', '7'] // 1: Cereals, 7: Milk
 	},
 	{
 		slug: 'thai-green-chicken-curry',
@@ -202,13 +236,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Fresh basil leaves',
 			'Cooked jasmine rice'
 		],
+		simplifiedIngredients: ['chicken', 'curry paste', 'coconut milk', 'bamboo shoots', 'bell pepper', 'fish sauce', 'sugar', 'basil', 'rice'],
 		steps: [
 			'Fry green curry paste in a little coconut cream until fragrant.',
 			'Add chicken and cook until outside is white.',
 			'Pour in remaining coconut milk, fish sauce, and sugar.',
 			'Add bamboo shoots and bell pepper; simmer 15 minutes.',
 			'Stir in basil and serve with jasmine rice.'
-		]
+		],
+		preferences: ['gluten-free', 'lactose-free'],
+		pricePerPortionCZK: 95,
+		allergens: ['2', '4'] // 2: Crustaceans (usually in green curry paste), 4: Fish (fish sauce)
 	},
 	{
 		slug: 'fluffy-buttermilk-pancakes',
@@ -228,13 +266,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1/4 cup melted butter',
 			'Butter and maple syrup for serving'
 		],
+		simplifiedIngredients: ['flour', 'sugar', 'baking powder', 'baking soda', 'buttermilk', 'eggs', 'butter', 'maple syrup'],
 		steps: [
 			'Whisk dry ingredients in a large bowl.',
 			'In another bowl, whisk buttermilk, eggs, and melted butter.',
 			'Gently fold wet ingredients into dry until just combined (lumps are fine).',
 			'Cook 1/4 cup portions on a buttered skillet until bubbles form and pop.',
 			'Flip and cook until golden. Serve with butter and syrup.'
-		]
+		],
+		preferences: ['vegetarian'],
+		pricePerPortionCZK: 35,
+		allergens: ['1', '3', '7'] // 1: Cereals, 3: Eggs, 7: Milk
 	},
 	{
 		slug: 'beef-and-broccoli-stir-fry',
@@ -254,13 +296,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp cornstarch',
 			'2 tbsp vegetable oil'
 		],
+		simplifiedIngredients: ['beef', 'broccoli', 'soy sauce', 'oyster sauce', 'sesame oil', 'garlic', 'ginger', 'cornstarch', 'oil'],
 		steps: [
 			'Toss beef with 1 tbsp soy sauce and cornstarch; let sit 10 mins.',
 			'Mix remaining soy sauce, oyster sauce, and sesame oil.',
 			'Stir-fry beef in hot oil until browned, then remove from pan.',
 			'Add garlic, ginger, and broccoli to the pan; stir-fry 3 minutes.',
 			'Return beef to pan, add sauce, and cook until thickened.'
-		]
+		],
+		preferences: ['lactose-free'],
+		pricePerPortionCZK: 110,
+		allergens: ['1', '6', '11', '14'] // 1: Cereals (soy sauce), 6: Soybeans, 11: Sesame, 14: Molluscs (oyster sauce)
 	},
 	{
 		slug: 'mediterranean-chickpea-salad',
@@ -280,13 +326,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp red wine vinegar',
 			'1 tsp dried oregano'
 		],
+		simplifiedIngredients: ['chickpeas', 'cucumber', 'tomatoes', 'onion', 'cheese', 'olives', 'oil', 'vinegar', 'oregano'],
 		steps: [
 			'Combine chickpeas, cucumber, tomatoes, onion, and olives in a bowl.',
 			'Whisk olive oil, vinegar, oregano, salt, and pepper to make dressing.',
 			'Pour dressing over the salad and toss to coat.',
 			'Gently fold in the feta cheese.',
 			'Serve immediately or chill for 30 minutes to let flavors meld.'
-		]
+		],
+		preferences: ['vegetarian', 'gluten-free'],
+		pricePerPortionCZK: 55,
+		allergens: ['7'] // 7: Milk
 	},
 	{
 		slug: 'creamy-mushroom-risotto',
@@ -306,13 +356,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 tbsp butter',
 			'2 tbsp olive oil'
 		],
+		simplifiedIngredients: ['rice', 'mushrooms', 'onion', 'garlic', 'wine', 'broth', 'cheese', 'butter', 'oil'],
 		steps: [
 			'Sauté mushrooms in 1 tbsp oil until browned; remove and set aside.',
 			'In the same pot, sauté onions and garlic in remaining oil until soft.',
 			'Add rice and toast for 1 minute, then pour in wine and stir until absorbed.',
 			'Add warm broth one ladle at a time, stirring constantly until absorbed.',
 			'When rice is al dente, stir in mushrooms, butter, and parmesan.'
-		]
+		],
+		preferences: ['vegetarian', 'gluten-free'],
+		pricePerPortionCZK: 75,
+		allergens: ['7', '9', '12'] // 7: Milk, 9: Celery (broth), 12: Sulphites (wine)
 	},
 	{
 		slug: 'veggie-pad-thai',
@@ -332,13 +386,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Lime wedges',
 			'Cilantro for garnish'
 		],
+		simplifiedIngredients: ['pasta', 'eggs', 'bean sprouts', 'peanuts', 'onion', 'pad thai sauce', 'oil', 'lime', 'cilantro'],
 		steps: [
 			'Soak rice noodles in warm water until pliable, then drain.',
 			'Heat oil in a wok, scramble eggs loosely, and push to the side.',
 			'Add noodles and pad thai sauce, tossing vigorously until noodles are soft.',
 			'Fold in bean sprouts, green onions, and half the peanuts.',
 			'Serve immediately topped with remaining peanuts, cilantro, and lime.'
-		]
+		],
+		preferences: ['vegetarian', 'gluten-free', 'lactose-free'],
+		pricePerPortionCZK: 70,
+		allergens: ['3', '5', '6'] // 3: Eggs, 5: Peanuts, 6: Soybeans (usually in pad thai sauce)
 	},
 	{
 		slug: 'french-onion-soup',
@@ -357,15 +415,19 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 baguette, sliced and toasted',
 			'1.5 cups Gruyère cheese, grated'
 		],
+		simplifiedIngredients: ['onion', 'butter', 'oil', 'wine', 'beef broth', 'thyme', 'bread', 'cheese'],
 		steps: [
 			'Caramelize onions in butter and oil over medium-low heat for 40 mins.',
 			'Deglaze the pot with sherry, scraping up browned bits.',
 			'Add beef broth and thyme; simmer for 20 minutes.',
 			'Ladle soup into oven-safe bowls and top with a toasted baguette slice.',
 			'Cover generously with Gruyère and broil until cheese is bubbly and golden.'
-		]
-    },
-    {
+		],
+		preferences: [],
+		pricePerPortionCZK: 65,
+		allergens: ['1', '7', '9', '12'] // 1: Cereals, 7: Milk, 9: Celery (broth), 12: Sulphites
+	},
+	{
 		slug: 'greek-moussaka',
 		name: 'Greek Moussaka',
 		category: 'Dinner',
@@ -384,13 +446,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 tbsp all-purpose flour',
 			'1/2 cup parmesan cheese, grated'
 		],
+		simplifiedIngredients: ['eggplant', 'beef', 'onion', 'garlic', 'tomatoes', 'cinnamon', 'milk', 'butter', 'flour', 'cheese'],
 		steps: [
 			'Roast eggplant slices at 200°C for 20 minutes until tender.',
 			'Brown meat with onion and garlic, then add tomatoes and cinnamon; simmer 20 minutes.',
 			'Melt butter in a saucepan, whisk in flour, then slowly whisk in milk until thickened to make bechamel.',
 			'Layer eggplant and meat sauce in a baking dish, topping with the bechamel sauce and parmesan cheese.',
 			'Bake at 180°C for 45 minutes until the top is deeply golden and bubbling.'
-		]
+		],
+		preferences: [],
+		pricePerPortionCZK: 105,
+		allergens: ['1', '7'] // 1: Cereals, 7: Milk
 	},
 	{
 		slug: 'chicken-tikka-masala',
@@ -410,13 +476,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 cup heavy cream',
 			'Fresh cilantro for garnish'
 		],
+		simplifiedIngredients: ['chicken', 'yogurt', 'garam masala', 'onion', 'garlic', 'ginger', 'tomatoes', 'cream', 'cilantro'],
 		steps: [
 			'Marinate chicken in yogurt and 1 tbsp of garam masala for at least 1 hour.',
 			'Sear the marinated chicken in a hot pan until browned; remove and set aside.',
 			'In the same pan, saute the diced onion, garlic, and ginger until soft and fragrant.',
 			'Add tomato puree, remaining garam masala, and heavy cream; simmer for 10 minutes.',
 			'Return chicken to the sauce, simmer until cooked through, and garnish with cilantro.'
-		]
+		],
+		preferences: ['gluten-free'],
+		pricePerPortionCZK: 95,
+		allergens: ['7'] // 7: Milk
 	},
 	{
 		slug: 'avocado-toast-poached-egg',
@@ -434,13 +504,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Salt and black pepper to taste',
 			'1 tsp fresh lemon juice'
 		],
+		simplifiedIngredients: ['bread', 'avocado', 'eggs', 'vinegar', 'pepper', 'lemon'],
 		steps: [
 			'Toast the sourdough bread slices until golden and crisp.',
 			'In a small bowl, mash the avocado with lemon juice, salt, and pepper.',
 			'Bring a pot of water to a gentle simmer, add vinegar, and stir to create a vortex.',
 			'Gently drop in eggs and poach for exactly 3 minutes; remove with a slotted spoon.',
 			'Spread avocado evenly on the toast, top with a poached egg, and sprinkle with red pepper flakes.'
-		]
+		],
+		preferences: ['vegetarian', 'lactose-free'],
+		pricePerPortionCZK: 55,
+		allergens: ['1', '3'] // 1: Cereals, 3: Eggs
 	},
 	{
 		slug: 'classic-miso-soup',
@@ -456,13 +530,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 green onions, thinly sliced',
 			'1 tbsp dried wakame seaweed'
 		],
+		simplifiedIngredients: ['dashi', 'miso', 'tofu', 'onion', 'seaweed'],
 		steps: [
 			'Rehydrate the dried wakame in a small bowl of water for 10 minutes, then drain well.',
 			'Bring the dashi stock to a gentle simmer in a medium pot over medium heat.',
 			'Place miso paste in a ladle, add a little hot stock to dissolve it smoothly, then stir the mixture back into the pot.',
 			'Add the cubed tofu and rehydrated wakame, heating gently for 2 minutes without letting the soup boil.',
 			'Garnish with sliced green onions and serve immediately while hot.'
-		]
+		],
+		preferences: ['lactose-free', 'gluten-free'],
+		pricePerPortionCZK: 35,
+		allergens: ['4', '6'] // 4: Fish (from dashi), 6: Soybeans (from miso and tofu)
 	},
 	{
 		slug: 'beef-stroganoff',
@@ -482,15 +560,19 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp Dijon mustard',
 			'Cooked egg noodles for serving'
 		],
+		simplifiedIngredients: ['beef', 'mushrooms', 'onion', 'butter', 'flour', 'beef broth', 'sour cream', 'mustard', 'pasta'],
 		steps: [
 			'Quickly sear beef strips in a hot skillet with a little oil until browned; remove and set aside.',
 			'Melt butter in the same skillet, add chopped onions and mushrooms, cooking until soft and browned.',
 			'Sprinkle in the flour and stir continuously for 1 minute to cook out the raw flour taste.',
 			'Gradually whisk in the beef broth and Dijon mustard, simmering until the sauce thickens.',
 			'Remove from heat, stir in the sour cream and cooked beef, and serve warm over egg noodles.'
-		]
-    },
-    {
+		],
+		preferences: [],
+		pricePerPortionCZK: 125,
+		allergens: ['1', '3', '7', '9', '10'] // 1: Cereals, 3: Eggs (egg noodles), 7: Milk, 9: Celery (broth), 10: Mustard
+	},
+	{
 		slug: 'classic-caprese-salad',
 		name: 'Classic Caprese Salad',
 		category: 'Starter',
@@ -505,12 +587,16 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp balsamic glaze',
 			'Flaky sea salt and black pepper'
 		],
+		simplifiedIngredients: ['tomatoes', 'cheese', 'basil', 'oil', 'balsamic glaze'],
 		steps: [
 			'Alternate slices of tomato and mozzarella on a large serving platter.',
 			'Tuck fresh basil leaves between the slices.',
 			'Drizzle generously with extra virgin olive oil and balsamic glaze.',
 			'Season with flaky sea salt and freshly cracked black pepper right before serving.'
-		]
+		],
+		preferences: ['vegetarian', 'gluten-free'],
+		pricePerPortionCZK: 65,
+		allergens: ['7'] // 7: Milk
 	},
 	{
 		slug: 'tofu-vegetable-stir-fry',
@@ -529,13 +615,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 cloves garlic, minced',
 			'2 tbsp vegetable oil'
 		],
+		simplifiedIngredients: ['tofu', 'vegetables', 'soy sauce', 'hoisin', 'sesame oil', 'ginger', 'garlic', 'oil'],
 		steps: [
 			'Pan-fry tofu cubes in 1 tbsp of vegetable oil until golden and crispy on all sides, then remove from pan.',
 			'Add the remaining oil and stir-fry the mixed vegetables, ginger, and garlic for 3-4 minutes.',
 			'Whisk together soy sauce, hoisin sauce, and sesame oil in a small bowl.',
 			'Return the tofu to the pan, pour the sauce over the mixture, and toss to coat evenly.',
 			'Cook for another 2 minutes until the sauce is bubbly and serve hot.'
-		]
+		],
+		preferences: ['vegan', 'vegetarian', 'lactose-free'],
+		pricePerPortionCZK: 50,
+		allergens: ['1', '6', '11'] // 1: Cereals (soy/hoisin sauce), 6: Soybeans, 11: Sesame
 	},
 	{
 		slug: 'bbq-pulled-pork',
@@ -555,13 +645,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1/2 cup chicken broth',
 			'Hamburger buns for serving'
 		],
+		simplifiedIngredients: ['pork', 'paprika', 'sugar', 'garlic', 'onion', 'bbq sauce', 'vinegar', 'chicken broth', 'bread'],
 		steps: [
 			'Rub the pork shoulder evenly with smoked paprika, brown sugar, garlic powder, onion powder, salt, and pepper.',
 			'Place the pork in a slow cooker along with the apple cider vinegar and chicken broth.',
 			'Cook on low for 8 hours or until the meat is incredibly tender and falling apart.',
 			'Shred the pork using two forks, discarding any large pieces of fat.',
 			'Stir in the BBQ sauce and serve warm on hamburger buns.'
-		]
+		],
+		preferences: ['lactose-free'],
+		pricePerPortionCZK: 85,
+		allergens: ['1', '9', '10'] // 1: Cereals (buns), 9: Celery (broth), 10: Mustard (often in BBQ sauce)
 	},
 	{
 		slug: 'garlic-shrimp-scampi',
@@ -581,13 +675,17 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Juice of 1 lemon',
 			'1/2 tsp red pepper flakes'
 		],
+		simplifiedIngredients: ['shrimp', 'pasta', 'butter', 'oil', 'garlic', 'wine', 'parsley', 'lemon', 'pepper'],
 		steps: [
 			'Boil linguine in salted water according to package directions until al dente.',
 			'Melt 2 tbsp butter and olive oil in a large skillet over medium heat.',
 			'Add garlic and red pepper flakes, sautéing for 1 minute until fragrant.',
 			'Add the shrimp and cook until pink, about 2 minutes per side, then remove from skillet.',
 			'Pour in white wine and lemon juice, simmering to reduce slightly, then swirl in remaining butter and toss with pasta, shrimp, and parsley.'
-		]
+		],
+		preferences: [],
+		pricePerPortionCZK: 145,
+		allergens: ['1', '2', '7', '12'] // 1: Cereals, 2: Crustaceans, 7: Milk, 12: Sulphites
 	},
 	{
 		slug: 'tom-yum-goong',
@@ -607,12 +705,16 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 tbsp Thai chili paste (Nam Prik Pao)',
 			'1/4 cup fresh lime juice'
 		],
+		simplifiedIngredients: ['broth', 'lemongrass', 'lime leaves', 'ginger', 'mushrooms', 'shrimp', 'fish sauce', 'chili paste', 'lime'],
 		steps: [
 			'Bring the broth to a boil in a pot and add lemongrass, kaffir lime leaves, and galangal; simmer for 5 minutes.',
 			'Stir in the mushrooms and Thai chili paste, cooking for another 3 minutes.',
 			'Add the shrimp and cook just until they turn pink and opaque, about 2-3 minutes.',
 			'Remove from heat and stir in the fish sauce and fresh lime juice.',
 			'Taste and adjust seasoning, then ladle into bowls, discarding the woody aromatics before eating.'
-		]
+		],
+		preferences: ['gluten-free', 'lactose-free'],
+		pricePerPortionCZK: 110,
+		allergens: ['2', '4', '9'] // 2: Crustaceans (shrimp, chili paste), 4: Fish (fish sauce), 9: Celery (broth)
 	}
 ];
