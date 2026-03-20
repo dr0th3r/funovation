@@ -1,3 +1,11 @@
+# HOW TO RUN
+
+```sh
+docker compose up -d
+pnpm db:migrate
+pnpm dev
+```
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
