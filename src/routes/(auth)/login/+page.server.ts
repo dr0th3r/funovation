@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from './$types';
-import { superValidate, setError } from 'sveltekit-superforms';
+import { superValidate, message } from 'sveltekit-superforms';
 import { valibot } from 'sveltekit-superforms/adapters';
 import { fail, redirect } from '@sveltejs/kit';
 import { auth } from '$lib/server/auth';
@@ -25,9 +25,13 @@ export const actions: Actions = {
 			userId = result.user.id;
 		} catch (e) {
 			if (e instanceof APIError) {
-				return setError(form, 'email', e.message ?? 'Invalid email or password');
+				return message(
+					form,
+					{ type: 'error', text: e.message ?? 'Invalid email or password' },
+					{ status: 400 }
+				);
 			}
-			return setError(form, 'email', 'Something went wrong');
+			return message(form, { type: 'error', text: 'Something went wrong' }, { status: 500 });
 		}
 
 		const dest = await getOnboardingRedirect(userId);

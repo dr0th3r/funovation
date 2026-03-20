@@ -6,15 +6,18 @@
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
+	import FormMessage from '$lib/components/FormMessage.svelte';
 
 	let { data } = $props();
 
 	const sf = superForm(data.form, { validators: valibot(registerSchema) });
-	const { form, enhance, submitting } = sf;
+	const { form, message, enhance, submitting } = sf;
 </script>
 
 <ResponsiveCard title="Create account" description="Get started with Funovation">
 	<form method="POST" use:enhance class="space-y-4">
+		<FormMessage message={$message} />
+
 		<Form.Field form={sf} name="name">
 			<Form.Control>
 				{#snippet children({ props })}
@@ -45,14 +48,14 @@
 			<Form.FieldErrors />
 		</Form.Field>
 
-		<Button type="submit" class="w-full" disabled={$submitting}>
-			{$submitting ? 'Creating account…' : 'Create account'}
-		</Button>
+		<div class="space-y-3">
+			<Button type="submit" class="w-full" disabled={$submitting}>
+				{$submitting ? 'Creating account…' : 'Create account'}
+			</Button>
+			<p class="text-sm text-muted-foreground">
+				Already have an account?
+				<a href="/login" class="text-primary underline-offset-4 hover:underline">Sign in</a>
+			</p>
+		</div>
 	</form>
-	{#snippet footer()}
-		<p class="text-sm text-muted-foreground">
-			Already have an account?
-			<a href="/login" class="text-primary underline-offset-4 hover:underline">Sign in</a>
-		</p>
-	{/snippet}
 </ResponsiveCard>
