@@ -52,6 +52,7 @@ Configured in `src/lib/server/auth.ts` using Better Auth with Drizzle adapter. T
 
 ### Key conventions
 - **Svelte 5 runes** (`$state`, `$derived`, `$effect`) — not legacy reactivity
+- **Arrow functions always** — use `const foo = () => {}`, never `function foo() {}`
 - **Tabs** for indentation, single quotes, 100 char print width (Prettier enforced)
 - Server-only code goes in `src/lib/server/` — never imported from client components
 - UI components go in `src/lib/components/ui/` (shadcn-style)
