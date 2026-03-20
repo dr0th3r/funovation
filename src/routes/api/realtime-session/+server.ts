@@ -12,12 +12,25 @@ export async function POST({ request }: RequestEvent) {
 		await request.json().catch(() => ({}));
 		console.log("🔷 [SERVER] POST /api/realtime-session received");
 
-		// Request an official ephemeral token from OpenAI securely on the backend
+		// Request an official ephemeral token using the latest 'gpt-realtime' model
 		const session = await openai.beta.realtime.sessions.create({
-			model: 'gpt-4o-realtime-preview-2024-12-17',
-			voice: 'verse', 
-			modalities: ['audio', 'text'], // Explicitly set to ensure WebRTC audio support
-			instructions: 'You are a helpful assistant.'
+			model: 'gpt-realtime' as any,
+			voice: 'marin', 
+			modalities: ['audio', 'text'],
+			instructions: `
+# Role & Objective
+You are a helpful and concise assistant. Your goal is to provide clear, brief support to the user.
+
+# Personality & Tone
+- Friendly, calm, and approachable.
+- Tone: Warm, concise, and confident.
+- Length: Keep responses to 1-2 short sentences.
+
+# Instructions / Rules
+- IF THE USER'S AUDIO IS UNCLEAR, ASK FOR CLARIFICATION.
+- SPEAK CLEARLY AND BRIEFLY.
+- CONFIRM UNDERSTANDING BEFORE TAKING ACTIONS.
+			`.trim()
 		});
 
 		// Return the official session object which contains the ephemeral client_secret
