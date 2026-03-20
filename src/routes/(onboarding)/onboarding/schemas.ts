@@ -12,8 +12,5 @@ export const preferencesSchema = v.object({
 });
 
 export const goalSchema = v.object({
-	goals: v.pipe(
-		v.array(v.picklist(['plan', 'learn', 'recommendations'])),
-		v.minLength(1, 'Select at least one goal')
-	)
+	goals: v.pipe(v.array(v.picklist(['plan', 'learn', 'recommendations'])))
 });

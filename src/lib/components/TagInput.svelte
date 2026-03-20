@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
-	import { Badge, badgeVariants } from '$lib/components/ui/badge';
-	import X from '@lucide/svelte/icons/x';
-	import { cn } from '$lib/utils';
+	import RemovableTagList from '$lib/components/RemovableTagList.svelte';
 
 	let { name, initialTags = [] }: { name: string; initialTags?: string[] } = $props();
 
@@ -33,22 +31,7 @@
 {/each}
 
 <div class="space-y-2">
-	<div class="flex flex-wrap gap-2">
-		{#each tags as tag (tag)}
-			<button
-				type="button"
-				class={cn(
-					badgeVariants({ variant: 'secondary' }),
-					'group h-6 cursor-pointer px-3 transition-colors hover:border-destructive/50 hover:bg-destructive/10 hover:text-destructive'
-				)}
-				onclick={() => remove(tag)}
-				aria-label="Remove {tag}"
-			>
-				{tag}
-				<X class="ml-1 size-3" />
-			</button>
-		{/each}
-	</div>
+	<RemovableTagList {tags} onRemove={remove} />
 	<div class="flex gap-2">
 		<Input
 			type="text"

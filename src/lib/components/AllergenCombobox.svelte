@@ -1,12 +1,10 @@
 <script lang="ts">
 	import Check from '@lucide/svelte/icons/check';
 	import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
-	import X from '@lucide/svelte/icons/x';
-	import { tick } from 'svelte';
 	import * as Command from '$lib/components/ui/command';
 	import * as Popover from '$lib/components/ui/popover';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
+	import { buttonVariants } from '$lib/components/ui/button';
+	import RemovableTagList from '$lib/components/RemovableTagList.svelte';
 	import { cn } from '$lib/utils';
 
 	const ALLERGENS = [
@@ -52,23 +50,11 @@
 {/each}
 
 <div class="flex flex-col gap-2">
-	{#if selected.length > 0}
-		<div class="flex flex-wrap gap-1.5">
-			{#each selected as value (value)}
-				<Badge variant="secondary" class="gap-1 pr-1">
-					{shortLabelOf(value)}
-					<button
-						type="button"
-						onclick={() => remove(value)}
-						class="ml-0.5 rounded-full hover:text-destructive"
-						aria-label="Remove {value}"
-					>
-						<X class="size-3" />
-					</button>
-				</Badge>
-			{/each}
-		</div>
-	{/if}
+	<RemovableTagList tags={selected} onRemove={remove} class="gap-1.5">
+		{#snippet tagLabel(value)}
+			{shortLabelOf(value)}
+		{/snippet}
+	</RemovableTagList>
 
 	<Popover.Root bind:open>
 		<Popover.Trigger

@@ -33,14 +33,17 @@
 		<form method="POST" action="?/save" use:enhance class="space-y-6">
 			<div class="space-y-3">
 				<div class="flex items-center justify-between">
-					<Label class="text-sm font-medium">Max budget per meal</Label>
-					<div class="flex items-center gap-2">
+					<div>
+						<Label class="text-sm font-medium">Max budget per meal</Label>
+						<p class="text-xs text-muted-foreground">0 Kč = no limit</p>
+					</div>
+					<div class="flex items-center gap-1.5">
 						<Input
 							type="number"
 							min="0"
 							max="5000"
 							step="10"
-							class="w-24 text-right"
+							class="w-20 text-right tabular-nums"
 							bind:value={budgetValue}
 						/>
 						<span class="text-sm text-muted-foreground">Kč</span>
@@ -53,7 +56,7 @@
 			<Separator />
 
 			<div class="space-y-2">
-				<Label>Foods I don't like</Label>
+				<Label class="text-sm font-medium">Foods I don't like</Label>
 				<!-- BACKLOG: autocomplete from a curated ingredient list -->
 				<TagInput name="dislikedFoods" initialTags={$form.dislikedFoods} />
 				{#if $errors.dislikedFoods}
@@ -61,27 +64,28 @@
 				{/if}
 			</div>
 
-			<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
-
-			<div class="flex items-center justify-between">
-				<Button
-					href="/onboarding/allergies"
-					variant="ghost"
-					size="sm"
-					class="text-muted-foreground"
-				>
-					<ArrowLeft class="size-4" /> Back
-				</Button>
-				<Button
-					type="submit"
-					formaction="?/skip"
-					variant="ghost"
-					size="sm"
-					class="text-muted-foreground"
-					disabled={$submitting}
-				>
-					Skip <ArrowRight />
-				</Button>
+			<div class="space-y-3">
+				<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
+				<div class="flex items-center justify-between">
+					<Button
+						href="/onboarding/allergies"
+						variant="ghost"
+						size="sm"
+						class="text-muted-foreground"
+					>
+						<ArrowLeft class="size-4" /> Back
+					</Button>
+					<Button
+						type="submit"
+						formaction="?/skip"
+						variant="ghost"
+						size="sm"
+						class="text-muted-foreground"
+						disabled={$submitting}
+					>
+						Skip <ArrowRight class="size-4" />
+					</Button>
+				</div>
 			</div>
 		</form>
 	</Card.Content>

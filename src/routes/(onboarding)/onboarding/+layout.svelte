@@ -4,19 +4,25 @@
 
 	let { children } = $props();
 
-	const steps = ['/onboarding/allergies', '/onboarding/preferences', '/onboarding/goal'];
+	const steps = [
+		{ path: '/onboarding/allergies', label: 'Allergies & Diet' },
+		{ path: '/onboarding/preferences', label: 'Preferences' },
+		{ path: '/onboarding/goal', label: 'Your goal' }
+	];
 
-	const currentStep = $derived(steps.findIndex((s) => page.url.pathname.startsWith(s)) + 1);
+	const currentStep = $derived(steps.findIndex((s) => page.url.pathname.startsWith(s.path)) + 1);
+	const stepLabel = $derived(steps[currentStep - 1]?.label ?? '');
 	const progress = $derived((currentStep / steps.length) * 100);
 </script>
 
-<div class="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+<div class="flex min-h-svh flex-col items-center justify-center bg-background px-4 py-10">
 	<div class="w-full max-w-lg">
-		<div class="mb-6 space-y-2">
-			<div class="flex items-center justify-between text-sm text-muted-foreground">
-				<span>Step {currentStep} of {steps.length}</span>
+		<div class="mb-8 space-y-3">
+			<div class="flex items-baseline justify-between">
+				<span class="text-sm font-medium">{stepLabel}</span>
+				<span class="text-xs text-muted-foreground">{currentStep} / {steps.length}</span>
 			</div>
-			<Progress value={progress} class="h-2" />
+			<Progress value={progress} class="h-1.5" />
 		</div>
 		{@render children()}
 	</div>

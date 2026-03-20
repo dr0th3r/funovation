@@ -13,7 +13,6 @@
 	const sf = superForm(data.form, {
 		validators: valibot(goalSchema),
 		validationMethod: 'submit-only',
-
 		dataType: 'json'
 	});
 
@@ -36,8 +35,9 @@
 		},
 		{
 			value: 'recommendations',
-			title: 'Get recommendations',
-			description: 'Discover new recipes based on what you like and what is on sale'
+			title: 'Discover new recipes',
+			description:
+				'Get personalized recipe recommendations based on your preferences and what is on sale'
 		}
 	];
 
@@ -53,16 +53,16 @@
 <Card.Root>
 	<Card.Header>
 		<Card.Title class="text-2xl">What's your goal?</Card.Title>
-		<Card.Description>Choose one or more things you'd like to do with Funovation.</Card.Description>
+		<Card.Description>Pick one or more to get started.</Card.Description>
 	</Card.Header>
 	<Card.Content>
-		<form method="POST" action="?/save" use:enhance class="space-y-4">
-			<div class="space-y-3">
+		<form method="POST" action="?/save" use:enhance class="space-y-6">
+			<div class="space-y-2.5">
 				{#each GOALS as goal (goal.value)}
 					<button
 						type="button"
 						class={cn(
-							'flex w-full items-start gap-3 rounded-lg border p-4 text-left transition-colors hover:bg-accent',
+							'flex w-full items-start gap-3 rounded-lg border p-5 text-left transition-colors duration-150 hover:bg-accent',
 							$form.goals.includes(goal.value)
 								? 'border-primary bg-primary/5'
 								: 'border-border bg-card'
@@ -74,8 +74,8 @@
 							class="mt-0.5 shrink-0"
 							aria-hidden="true"
 						/>
-						<div>
-							<p class="font-medium">{goal.title}</p>
+						<div class="space-y-0.5">
+							<p class="leading-none font-medium">{goal.title}</p>
 							<p class="text-sm text-muted-foreground">{goal.description}</p>
 						</div>
 					</button>
@@ -92,19 +92,20 @@
 				{/each}
 			{/if}
 
-			<Button type="submit" class="w-full" disabled={$submitting || $form.goals.length === 0}>
-				{$submitting ? 'Setting up…' : 'Get Started'}
-			</Button>
-
-			<div class="flex justify-start">
-				<Button
-					href="/onboarding/preferences"
-					variant="ghost"
-					size="sm"
-					class="text-muted-foreground"
-				>
-					<ArrowLeft class="size-4" /> Back
+			<div class="space-y-3">
+				<Button type="submit" class="w-full" disabled={$submitting || $form.goals.length === 0}>
+					{$submitting ? 'Setting up…' : 'Get Started'}
 				</Button>
+				<div class="flex justify-start">
+					<Button
+						href="/onboarding/preferences"
+						variant="ghost"
+						size="sm"
+						class="text-muted-foreground"
+					>
+						<ArrowLeft class="size-4" /> Back
+					</Button>
+				</div>
 			</div>
 		</form>
 	</Card.Content>
