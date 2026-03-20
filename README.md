@@ -51,11 +51,12 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
-## API: Random Meal Selection
+## API
+### Random Meal Selection
 
 The `/api/meals/randomselection` endpoint returns up to 10 randomly selected meals from the database that match your specified criteria. It gracefully handles comma-separated lists, multiple identical query parameters, and case-insensitivity.
 
-### Available Filters
+#### Available Filters
 
 - **`ingredients`** (or `includeIngredients`, `ingrediences`): Include meals containing **ANY** of these ingredients (OR condition).
 - **`preferences`** (or `includePreferences`): Include meals matching **ALL** of these dietary preferences (AND condition). Options include: `vegan`, `vegetarian`, `gluten-free`, `lactose-free`.
@@ -64,8 +65,18 @@ The `/api/meals/randomselection` endpoint returns up to 10 randomly selected mea
 - **`excludeCuisines`**: Filter out meals matching these cuisines (e.g., `italian`, `mexican`).
 - **`maxPricePerPortion`** (or `maxPricePerPortionCZK`): Returns meals costing less than or equal to this amount in CZK.
 
-### Example Usage
+#### Example Usage
 
 ```text
 GET /api/meals/randomselection?ingredients=chicken,beef&preferences=gluten-free&excludeAllergens=7&maxPricePerPortion=150
+```
+
+---
+
+### Meal Names
+
+Returns a list of all recipe names in the database.
+
+```text
+GET /api/meals/names
 ```
