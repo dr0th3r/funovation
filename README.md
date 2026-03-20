@@ -1,6 +1,7 @@
 # HOW TO RUN
 
 ```sh
+pnpm i
 docker compose up -d
 pnpm db:migrate
 pnpm dev
