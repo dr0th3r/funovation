@@ -16,6 +16,7 @@ export async function POST({ request }: RequestEvent) {
 		const session = await openai.beta.realtime.sessions.create({
 			model: 'gpt-4o-realtime-preview-2024-12-17',
 			voice: 'verse', 
+			modalities: ['audio', 'text'], // Explicitly set to ensure WebRTC audio support
 			instructions: 'You are a helpful assistant.'
 		});
 

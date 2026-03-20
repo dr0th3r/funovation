@@ -50,6 +50,7 @@ export async function createCookingSession() {
     console.log(">>> Connecting via secure Ephemeral Token...");
     try {
         await session.connect({
+            model: sessionData.model,
             apiKey: clientApiKey,
         });
         console.log(">>> SUCCESS: Connected!");
