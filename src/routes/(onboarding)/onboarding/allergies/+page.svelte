@@ -2,7 +2,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { valibot } from 'sveltekit-superforms/adapters';
 	import { allergiesSchema } from '../schemas';
-	import * as Card from '$lib/components/ui/card';
+	import ResponsiveCard from '$lib/components/ResponsiveCard.svelte';
 	import * as RadioGroup from '$lib/components/ui/radio-group';
 	import { Button } from '$lib/components/ui/button';
 	import { Label } from '$lib/components/ui/label';
@@ -22,57 +22,52 @@
 	});
 </script>
 
-<Card.Root class="bg-transparent py-0 shadow-none ring-0 sm:bg-card sm:py-6 sm:shadow-xs sm:ring-1">
-	<Card.Header class="px-0 pt-0 sm:px-6">
-		<Card.Title class="text-2xl">Allergies & Diet</Card.Title>
-		<Card.Description>
-			Tell us what to avoid. You can update this later in settings.
-		</Card.Description>
-	</Card.Header>
-	<Card.Content class="px-0 pb-0 sm:px-6">
-		<form method="POST" action="?/save" use:enhance class="space-y-6">
-			<div class="space-y-2">
-				<Label class="text-sm font-medium">Allergens</Label>
-				<AllergenCombobox name="allergies" bind:selected={$form.allergies} />
-			</div>
+<ResponsiveCard
+	title="Allergies & Diet"
+	description="Tell us what to avoid. You can update this later in settings."
+>
+	<form method="POST" action="?/save" use:enhance class="space-y-6">
+		<div class="space-y-2">
+			<Label class="text-sm font-medium">Allergens</Label>
+			<AllergenCombobox name="allergies" bind:selected={$form.allergies} />
+		</div>
 
-			<Separator />
+		<Separator />
 
-			<div class="space-y-3">
-				<Label class="text-sm font-medium">Dietary preference</Label>
-				<RadioGroup.Root bind:value={dietValue} name="diet" class="flex gap-6">
-					{#each [{ value: 'vegetarian', label: 'Vegetarian' }, { value: 'vegan', label: 'Vegan' }] as option (option.value)}
-						<div class="flex items-center gap-2">
-							<RadioGroup.Item value={option.value} id="diet-{option.value}" />
-							<Label for="diet-{option.value}" class="cursor-pointer font-normal"
-								>{option.label}</Label
-							>
-						</div>
-					{/each}
+		<div class="space-y-3">
+			<Label class="text-sm font-medium">Dietary preference</Label>
+			<RadioGroup.Root bind:value={dietValue} name="diet" class="flex gap-6">
+				{#each [{ value: 'vegetarian', label: 'Vegetarian' }, { value: 'vegan', label: 'Vegan' }] as option (option.value)}
 					<div class="flex items-center gap-2">
-						<RadioGroup.Item value="" id="diet-none" />
-						<Label for="diet-none" class="cursor-pointer font-normal text-muted-foreground"
-							>None</Label
+						<RadioGroup.Item value={option.value} id="diet-{option.value}" />
+						<Label for="diet-{option.value}" class="cursor-pointer font-normal"
+							>{option.label}</Label
 						>
 					</div>
-				</RadioGroup.Root>
-			</div>
-
-			<div class="space-y-3">
-				<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
-				<div class="flex justify-end">
-					<Button
-						type="submit"
-						formaction="?/skip"
-						variant="ghost"
-						size="sm"
-						class="text-muted-foreground"
-						disabled={$submitting}
+				{/each}
+				<div class="flex items-center gap-2">
+					<RadioGroup.Item value="" id="diet-none" />
+					<Label for="diet-none" class="cursor-pointer font-normal text-muted-foreground"
+						>None</Label
 					>
-						Skip <ArrowRight class="size-4" />
-					</Button>
 				</div>
+			</RadioGroup.Root>
+		</div>
+
+		<div class="space-y-3">
+			<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
+			<div class="flex justify-end">
+				<Button
+					type="submit"
+					formaction="?/skip"
+					variant="ghost"
+					size="sm"
+					class="text-muted-foreground"
+					disabled={$submitting}
+				>
+					Skip <ArrowRight class="size-4" />
+				</Button>
 			</div>
-		</form>
-	</Card.Content>
-</Card.Root>
+		</div>
+	</form>
+</ResponsiveCard>

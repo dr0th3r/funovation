@@ -2,7 +2,7 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { valibot } from 'sveltekit-superforms/adapters';
 	import { preferencesSchema } from '../schemas';
-	import * as Card from '$lib/components/ui/card';
+	import ResponsiveCard from '$lib/components/ResponsiveCard.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Label } from '$lib/components/ui/label';
 	import { Slider } from '$lib/components/ui/slider';
@@ -17,64 +17,52 @@
 	const { form, errors, enhance, submitting } = sf;
 </script>
 
-<Card.Root class="bg-transparent py-0 shadow-none ring-0 sm:bg-card sm:py-6 sm:shadow-xs sm:ring-1">
-	<Card.Header>
-		<Card.Title class="text-2xl">Preferences</Card.Title>
-		<Card.Description>Set your budget and any foods you'd rather avoid.</Card.Description>
-	</Card.Header>
-	<Card.Content>
-		<form method="POST" action="?/save" use:enhance class="space-y-6">
-			<div class="space-y-3">
-				<div class="flex items-center justify-between">
-					<Label class="text-sm font-medium">Max budget per meal</Label>
-					<span class="text-sm font-medium text-muted-foreground">
-						{$form.budgetCzk} Kč
-					</span>
-				</div>
-				<Slider
-					type="single"
-					bind:value={$form.budgetCzk as number}
-					min={50}
-					max={1000}
-					step={10}
-				/>
-				<input type="hidden" name="budgetCzk" value={$form.budgetCzk ?? ''} />
+<ResponsiveCard title="Preferences" description="Set your budget and any foods you'd rather avoid.">
+	<form method="POST" action="?/save" use:enhance class="space-y-6">
+		<div class="space-y-3">
+			<div class="flex items-center justify-between">
+				<Label class="text-sm font-medium">Max budget per meal</Label>
+				<span class="text-sm font-medium text-muted-foreground">
+					{$form.budgetCzk} Kč
+				</span>
 			</div>
+			<Slider type="single" bind:value={$form.budgetCzk as number} min={50} max={1000} step={10} />
+			<input type="hidden" name="budgetCzk" value={$form.budgetCzk ?? ''} />
+		</div>
 
-			<Separator />
+		<Separator />
 
-			<div class="space-y-2">
-				<Label class="text-sm font-medium">Foods I don't like</Label>
-				<!-- BACKLOG: autocomplete from a curated ingredient list -->
-				<TagInput name="dislikedFoods" initialTags={$form.dislikedFoods} />
-				{#if $errors.dislikedFoods}
-					<p class="text-sm text-destructive">{$errors.dislikedFoods}</p>
-				{/if}
+		<div class="space-y-2">
+			<Label class="text-sm font-medium">Foods I don't like</Label>
+			<!-- BACKLOG: autocomplete from a curated ingredient list -->
+			<TagInput name="dislikedFoods" initialTags={$form.dislikedFoods} />
+			{#if $errors.dislikedFoods}
+				<p class="text-sm text-destructive">{$errors.dislikedFoods}</p>
+			{/if}
+		</div>
+
+		<div class="space-y-3">
+			<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
+			<div class="flex items-center justify-between">
+				<Button
+					href="/onboarding/allergies"
+					variant="ghost"
+					size="sm"
+					class="text-muted-foreground"
+				>
+					<ArrowLeft class="size-4" /> Back
+				</Button>
+				<Button
+					type="submit"
+					formaction="?/skip"
+					variant="ghost"
+					size="sm"
+					class="text-muted-foreground"
+					disabled={$submitting}
+				>
+					Skip <ArrowRight class="size-4" />
+				</Button>
 			</div>
-
-			<div class="space-y-3">
-				<Button type="submit" class="w-full" disabled={$submitting}>Save & Continue</Button>
-				<div class="flex items-center justify-between">
-					<Button
-						href="/onboarding/allergies"
-						variant="ghost"
-						size="sm"
-						class="text-muted-foreground"
-					>
-						<ArrowLeft class="size-4" /> Back
-					</Button>
-					<Button
-						type="submit"
-						formaction="?/skip"
-						variant="ghost"
-						size="sm"
-						class="text-muted-foreground"
-						disabled={$submitting}
-					>
-						Skip <ArrowRight class="size-4" />
-					</Button>
-				</div>
-			</div>
-		</form>
-	</Card.Content>
-</Card.Root>
+		</div>
+	</form>
+</ResponsiveCard>
