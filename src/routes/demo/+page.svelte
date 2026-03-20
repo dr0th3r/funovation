@@ -35,7 +35,7 @@
   type UserLevel = { level: number; xp: number; xpMax: number };
 
   // Default mock shown instantly; replaced by real data on load
-  let userLevel = $state<UserLevel>({ level: 8, xp: 0, xpMax: 195 });
+  let userLevel = $state<UserLevel>({ level: 8, xp: 90, xpMax: 195 });
 
   $effect(() => {
     fetch('/api/user/level')            // ← replace with your endpoint
@@ -56,7 +56,7 @@
 <div class="mx-auto max-w-[480px] min-h-screen bg-background relative">
 
   <header class="flex items-center justify-between px-5 py-[18px] bg-background sticky top-0 z-[100] border-b border-border">
-    <a href={resolve('/')} class="font-['Caveat'] text-[1.75rem] font-semibold text-foreground no-underline">Pipa</a>
+    <a href={resolve('/')} class="font-['Caveat'] text-[1.75rem] font-semibold text-foreground no-underline">Papi</a>
 
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -75,7 +75,7 @@
           <a href={resolve('/')}>Domů</a>
         </DropdownMenu.Item>
         <DropdownMenu.Item>
-          <a href={resolve('/')}>Recepty</a>
+          <a href={resolve('/recipes')}>Recepty</a>
         </DropdownMenu.Item>
         <DropdownMenu.Item>
           <a href={resolve('/')}>Nastavení</a>
