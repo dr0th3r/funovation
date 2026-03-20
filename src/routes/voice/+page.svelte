@@ -72,7 +72,7 @@
                 </span>
                 
                 <h2 class="font-['Lato'] text-2xl font-bold text-[#c8603a]">{step.title}</h2>
-                
+              
                 {#if i === currentStep}
                   <div class="mt-4 flex flex-col items-center">
                     <p class="text-center text-[0.95rem] leading-relaxed text-[#444]">{step.description}</p>
