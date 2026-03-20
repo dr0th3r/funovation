@@ -1,6 +1,7 @@
 # HOW TO RUN
 
 ```sh
+cp .env.example .env
 pnpm i
 docker compose up -d
 pnpm db:migrate

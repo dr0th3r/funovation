@@ -20,6 +20,9 @@ importers:
       '@fontsource-variable/dm-sans':
         specifier: ^5.2.8
         version: 5.2.8
+      '@fontsource-variable/figtree':
+        specifier: ^5.2.10
+        version: 5.2.10
       '@lucide/svelte':
         specifier: ^0.577.0
         version: 0.577.0(svelte@5.54.0)
@@ -829,6 +832,9 @@ packages:
 
   '@fontsource-variable/dm-sans@5.2.8':
     resolution: {integrity: sha512-AxkvMTvNWgfrmlyjiV05vlHYJa+nRQCf1EfvIrQAPBpFJW0O9VTz7oAFr9S3lvbWdmnFoBk7yFqQL86u64nl2g==}
+
+  '@fontsource-variable/figtree@5.2.10':
+    resolution: {integrity: sha512-a5Gumbpy3mdd+Yg31g6Qb7CmjYbrfyutJa3bWfP5q8A4GclIOwX7mI+ZuSHsJnw/mHvW6r9oh1AHJcJTIxK4JA==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3401,6 +3407,8 @@ snapshots:
       levn: 0.4.1
 
   '@fontsource-variable/dm-sans@5.2.8': {}
+
+  '@fontsource-variable/figtree@5.2.10': {}
 
   '@humanfs/core@0.19.1': {}
 
