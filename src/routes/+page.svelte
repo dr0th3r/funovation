@@ -10,8 +10,7 @@
 		try {
 			isConnecting = true;
 			errorMsg = '';
-			const customSystemPrompt = "The user is testing this locally. Ask them what they want to cook!";
-			session = await createCookingSession(customSystemPrompt);
+			session = await createCookingSession();
 		} catch (error) {
 			const err = error as Error;
 			console.error("Failed to start session", err);
