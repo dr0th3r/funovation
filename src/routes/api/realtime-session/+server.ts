@@ -25,9 +25,21 @@ export async function POST({ request }: RequestEvent) {
 
 		// Send the ephemeral session data back to the client
 		return json(session);
-	} catch (error) {
-		const err = error as Error;
-		console.error("OpenAI session error:", err);
-		return json({ error: 'Failed to generate token', details: err.message }, { status: 500 });
+	} catch (error: unknown) {
+		const err = error as any;
+		// Log the full error to the terminal for the user to see exactly what's failing (Quota, API Key, etc.)
+		console.error("--- OpenAI SESSION ERROR ---");
+		if (err.response) {
+			console.error("Status:", err.status);
+			console.error("Data:", err.response);
+		} else {
+			console.error("Message:", err.message);
+		}
+		console.error("----------------------------");
+
+		return json(
+			{ error: 'Failed to generate token', details: err.message }, 
+			{ status: err.status || 500 }
+		);
 	}
 }
