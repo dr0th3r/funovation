@@ -7,7 +7,12 @@ export const allergiesSchema = v.object({
 });
 
 export const preferencesSchema = v.object({
-	budgetCzk: v.pipe(v.number(), v.integer(), v.minValue(0), v.maxValue(5000)),
+	budgetCzk: v.pipe(
+		v.fallback(v.number(), 50),
+		v.integer(),
+		v.minValue(50, 'Budget must be at least 50 Kč'),
+		v.maxValue(5000, 'Budget cannot exceed 5 000 Kč')
+	),
 	dislikedFoods: v.array(v.string())
 });
 

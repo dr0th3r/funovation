@@ -4,7 +4,6 @@
 	import { preferencesSchema } from '../schemas';
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { Slider } from '$lib/components/ui/slider';
 	import { Separator } from '$lib/components/ui/separator';
@@ -16,12 +15,6 @@
 
 	const sf = superForm(data.form, { validators: valibot(preferencesSchema) });
 	const { form, errors, enhance, submitting } = sf;
-
-	let budgetValue = $state(data.form.data.budgetCzk ?? 200);
-
-	$effect(() => {
-		$form.budgetCzk = budgetValue;
-	});
 </script>
 
 <Card.Root>
@@ -33,24 +26,19 @@
 		<form method="POST" action="?/save" use:enhance class="space-y-6">
 			<div class="space-y-3">
 				<div class="flex items-center justify-between">
-					<div>
-						<Label class="text-sm font-medium">Max budget per meal</Label>
-						<p class="text-xs text-muted-foreground">0 Kč = no limit</p>
-					</div>
-					<div class="flex items-center gap-1.5">
-						<Input
-							type="number"
-							min="0"
-							max="5000"
-							step="10"
-							class="w-20 text-right tabular-nums"
-							bind:value={budgetValue}
-						/>
-						<span class="text-sm text-muted-foreground">Kč</span>
-					</div>
+					<Label class="text-sm font-medium">Max budget per meal</Label>
+					<span class="text-sm font-medium text-muted-foreground">
+						{$form.budgetCzk} Kč
+					</span>
 				</div>
-				<Slider type="single" bind:value={budgetValue} min={0} max={1000} step={10} />
-				<input type="hidden" name="budgetCzk" value={budgetValue} />
+				<Slider
+					type="single"
+					bind:value={$form.budgetCzk as number}
+					min={50}
+					max={1000}
+					step={10}
+				/>
+				<input type="hidden" name="budgetCzk" value={$form.budgetCzk ?? ''} />
 			</div>
 
 			<Separator />
