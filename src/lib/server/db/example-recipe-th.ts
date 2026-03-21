@@ -6,7 +6,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ชัคชูกา',
 		category: 'อาหารเช้า',
-		area: 'ตะวันออกกลาง',
 		cuisine: 'ตะวันออกกลาง',
 		ingredients: [
 			'น้ำมันมะกอก 2 ช้อนโต๊ะ',
@@ -34,7 +33,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ข้าวหน้าไก่เทอริยากิ',
 		category: 'อาหารเย็น',
-		area: 'เอเชีย',
 		cuisine: 'ญี่ปุ่น',
 		ingredients: [
 			'สะโพกไก่หั่นชิ้น 400 กรัม',
@@ -60,7 +58,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'แกงเลนทิลกะทิ',
 		category: 'มังสวิรัติ',
-		area: 'เอเชีย',
 		cuisine: 'อินเดีย',
 		ingredients: [
 			'ถั่วเลนทิลแดง 1 ถ้วย',
@@ -88,7 +85,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ทาโก้เนื้อผัดกระทะ',
 		category: 'อาหารเย็น',
-		area: 'ลาตินอเมริกา',
 		cuisine: 'เม็กซิกัน',
 		ingredients: [
 			'เนื้อบด 400 กรัม',
@@ -114,7 +110,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'แซลมอนเลมอนดิลล์',
 		category: 'อาหารเย็น',
-		area: 'ยุโรป',
 		cuisine: 'นอร์ดิก',
 		ingredients: [
 			'เนื้อปลาแซลมอน 4 ชิ้น',
@@ -137,7 +132,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'สปาเกตตีอาลโยเอโอลิโอ',
 		category: 'พาสต้า',
-		area: 'ยุโรป',
 		cuisine: 'อิตาเลียน',
 		ingredients: [
 			'เส้นสปาเกตตี 300 กรัม',
@@ -162,7 +156,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'พิซซ่ามาร์เกริต้าคลาสสิก',
 		category: 'อาหารเย็น',
-		area: 'ยุโรป',
 		cuisine: 'อิตาเลียน',
 		ingredients: [
 			'แป้งพิซซ่า 1 ก้อน',
@@ -187,7 +180,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'แกงเขียวหวานไก่',
 		category: 'อาหารเย็น',
-		area: 'เอเชีย',
 		cuisine: 'ไทย',
 		ingredients: [
 			'อกไก่หั่นชิ้น 400 กรัม',
@@ -214,7 +206,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'แพนเค้กบัตเตอร์มิลค์ฟูนุ่ม',
 		category: 'อาหารเช้า',
-		area: 'อเมริกาเหนือ',
 		cuisine: 'อเมริกัน',
 		ingredients: [
 			'แป้งอเนกประสงค์ 2 ถ้วย',
@@ -241,7 +232,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'เนื้อผัดบรอกโคลี',
 		category: 'อาหารเย็น',
-		area: 'เอเชีย',
 		cuisine: 'จีน',
 		ingredients: [
 			'เนื้อสันในหั่นบาง 400 กรัม',
@@ -268,7 +258,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'สลัดถั่วลูกไก่เมดิเตอร์เรเนียน',
 		category: 'อาหารกลางวัน',
-		area: 'ยุโรป',
 		cuisine: 'เมดิเตอร์เรเนียน',
 		ingredients: [
 			'ถั่วลูกไก่กระป๋อง (400 กรัม) ล้างน้ำ 1 กระป๋อง',
@@ -295,7 +284,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ริซอตโต้เห็ดครีมมี่',
 		category: 'อาหารเย็น',
-		area: 'ยุโรป',
 		cuisine: 'อิตาเลียน',
 		ingredients: [
 			'ข้าวอาร์โบริโอ 1.5 ถ้วย',
@@ -322,7 +310,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ผัดไทยผัก',
 		category: 'อาหารเย็น',
-		area: 'เอเชีย',
 		cuisine: 'ไทย',
 		ingredients: [
 			'เส้นจันท์ 200 กรัม',
@@ -349,7 +336,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ซุปหัวหอมฝรั่งเศส',
 		category: 'อาหารเรียกน้ำย่อย',
-		area: 'ยุโรป',
 		cuisine: 'ฝรั่งเศส',
 		ingredients: [
 			'หอมใหญ่ฝานบาง 4 หัว',
@@ -375,7 +361,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'มูซาก้ากรีก',
 		category: 'อาหารเย็น',
-		area: 'ยุโรป',
 		cuisine: 'กรีก',
 		ingredients: [
 			'มะเขือม่วงฝานหนาครึ่งนิ้ว 2 ลูก',
@@ -403,7 +388,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ไก่ทิกก้ามาซาลา',
 		category: 'อาหารเย็น',
-		area: 'เอเชีย',
 		cuisine: 'อินเดีย',
 		ingredients: [
 			'อกไก่หั่นเต๋าพอดีคำ 500 กรัม',
@@ -430,7 +414,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'อะโวคาโดโทสต์ไข่ลวก',
 		category: 'อาหารเช้า',
-		area: 'อเมริกาเหนือ',
 		cuisine: 'อเมริกัน',
 		ingredients: [
 			'ขนมปังซาวร์โดว์ฝานหนา 2 แผ่น',
@@ -455,7 +438,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ซุปมิโสะคลาสสิก',
 		category: 'อาหารเรียกน้ำย่อย',
-		area: 'เอเชีย',
 		cuisine: 'ญี่ปุ่น',
 		ingredients: [
 			'น้ำซุปดาชิ 4 ถ้วย',
@@ -478,7 +460,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'บีฟสโตรกานอฟ',
 		category: 'อาหารเย็น',
-		area: 'ยุโรป',
 		cuisine: 'รัสเซีย',
 		ingredients: [
 			'เนื้อสันนอกสไลซ์บาง 500 กรัม',
@@ -505,7 +486,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'สลัดคาเปรเซ่คลาสสิก',
 		category: 'อาหารเรียกน้ำย่อย',
-		area: 'ยุโรป',
 		cuisine: 'อิตาเลียน',
 		ingredients: [
 			'มะเขือเทศสุกผลใหญ่ฝาน 3 ผล',
@@ -528,7 +508,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'เต้าหู้ผัดผัก',
 		category: 'วีแกน',
-		area: 'เอเชีย',
 		cuisine: 'จีน',
 		ingredients: [
 			'เต้าหู้แข็งทับสะเด็ดน้ำและหั่นเต๋า 400 กรัม',
@@ -554,7 +533,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'หมูฉีกบาร์บีคิว',
 		category: 'อาหารเย็น',
-		area: 'อเมริกาเหนือ',
 		cuisine: 'อเมริกัน',
 		ingredients: [
 			'สันคอหมู 1.5 กก.',
@@ -581,7 +559,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'กุ้งสแกมปีซอสกระเทียม',
 		category: 'อาหารเย็น',
-		area: 'ยุโรป',
 		cuisine: 'อิตาเลียน',
 		ingredients: [
 			'กุ้งตัวใหญ่ ปอกเปลือกและผ่าหลัง 400 กรัม',
@@ -608,7 +585,6 @@ export const EXAMPLE_RECIPE_TH: ExampleRecipeTranslationSeed[] = [
 		locale: 'th',
 		name: 'ต้มยำกุ้ง',
 		category: 'อาหารเรียกน้ำย่อย',
-		area: 'เอเชีย',
 		cuisine: 'ไทย',
 		ingredients: [
 			'น้ำซุปไก่หรือผัก 4 ถ้วย',

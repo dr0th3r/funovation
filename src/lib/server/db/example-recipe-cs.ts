@@ -3,7 +3,6 @@ export type ExampleRecipeTranslationSeed = {
 	locale: string;
 	name: string;
 	category: string;
-	area: string;
 	cuisine: string;
 	ingredients: string[];
 	simplifiedIngredients: string[];
@@ -18,7 +17,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Šakšuka',
 		category: 'Snídaně',
-		area: 'Blízký východ',
 		cuisine: 'Blízkovýchodní',
 		ingredients: [
 			'2 lžíce olivového oleje',
@@ -46,7 +44,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Kuřecí teriyaki miska',
 		category: 'Večeře',
-		area: 'Asie',
 		cuisine: 'Japonská',
 		ingredients: [
 			'400g kuřecích stehen, nakrájených',
@@ -72,7 +69,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Čočkové kokosové kari',
 		category: 'Vegetariánské',
-		area: 'Asie',
 		cuisine: 'Indická',
 		ingredients: [
 			'1 šálek červené čočky',
@@ -100,7 +96,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Hovězí taco pánev',
 		category: 'Večeře',
-		area: 'Latinská Amerika',
 		cuisine: 'Mexická',
 		ingredients: [
 			'400g mletého hovězího',
@@ -126,7 +121,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Losos s citronem a koprem',
 		category: 'Večeře',
-		area: 'Evropa',
 		cuisine: 'Severská',
 		ingredients: [
 			'4 filety z lososa',
@@ -149,7 +143,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Špagety aglio e olio',
 		category: 'Těstoviny',
-		area: 'Evropa',
 		cuisine: 'Italská',
 		ingredients: [
 			'300g špaget',
@@ -174,7 +167,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Klasická pizza margherita',
 		category: 'Večeře',
-		area: 'Evropa',
 		cuisine: 'Italská',
 		ingredients: [
 			'1 těsto na pizzu',
@@ -199,7 +191,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Thajské zelené kuřecí kari',
 		category: 'Večeře',
-		area: 'Asie',
 		cuisine: 'Thajská',
 		ingredients: [
 			'400g kuřecích prsou, nakrájených',
@@ -226,7 +217,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Nadýchané podmáslové lívance',
 		category: 'Snídaně',
-		area: 'Severní Amerika',
 		cuisine: 'Americká',
 		ingredients: [
 			'2 šálky hladké mouky',
@@ -253,7 +243,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Restované hovězí s brokolicí',
 		category: 'Večeře',
-		area: 'Asie',
 		cuisine: 'Čínská',
 		ingredients: [
 			'400g hovězího pupku (flank steak), nakrájeného na tenké plátky',
@@ -280,7 +269,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Středomořský cizrnový salát',
 		category: 'Oběd',
-		area: 'Evropa',
 		cuisine: 'Středomořská',
 		ingredients: [
 			'1 plechovka (400g) cizrny, propláchnutá',
@@ -307,7 +295,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Krémové houbové rizoto',
 		category: 'Večeře',
-		area: 'Evropa',
 		cuisine: 'Italská',
 		ingredients: [
 			'1.5 šálku rýže arborio',
@@ -334,7 +321,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Zeleninové pad thai',
 		category: 'Večeře',
-		area: 'Asie',
 		cuisine: 'Thajská',
 		ingredients: [
 			'200g rýžových nudlí',
@@ -361,7 +347,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Francouzská cibulačka',
 		category: 'Předkrm',
-		area: 'Evropa',
 		cuisine: 'Francouzská',
 		ingredients: [
 			'4 velké žluté cibule, nakrájené na tenké plátky',
@@ -387,7 +372,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Řecká musaka',
 		category: 'Večeře',
-		area: 'Evropa',
 		cuisine: 'Řecká',
 		ingredients: [
 			'2 velké lilky, nakrájené na 1 cm silné plátky',
@@ -415,7 +399,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Kuřecí tikka masala',
 		category: 'Večeře',
-		area: 'Asie',
 		cuisine: 'Indická',
 		ingredients: [
 			'500g kuřecích prsou, nakrájených na kostky',
@@ -442,7 +425,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Avokádový toast se zastřeným vejcem',
 		category: 'Snídaně',
-		area: 'Severní Amerika',
 		cuisine: 'Americká',
 		ingredients: [
 			'2 silné plátky kváskového chleba',
@@ -467,7 +449,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Klasická miso polévka',
 		category: 'Předkrm',
-		area: 'Asie',
 		cuisine: 'Japonská',
 		ingredients: [
 			'4 šálky vývaru dashi',
@@ -490,7 +471,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Hovězí stroganov',
 		category: 'Večeře',
-		area: 'Evropa',
 		cuisine: 'Ruská',
 		ingredients: [
 			'500g svíčkové, nakrájené na tenké nudličky',
@@ -517,7 +497,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Klasický caprese salát',
 		category: 'Předkrm',
-		area: 'Evropa',
 		cuisine: 'Italská',
 		ingredients: [
 			'3 velká zralá rajčata, nakrájená na plátky',
@@ -540,7 +519,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Restované tofu se zeleninou',
 		category: 'Veganské',
-		area: 'Asie',
 		cuisine: 'Čínská',
 		ingredients: [
 			'400g extra pevného tofu, vylisovaného a nakrájeného na kostky',
@@ -566,7 +544,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Trhané vepřové s BBQ',
 		category: 'Večeře',
-		area: 'Severní Amerika',
 		cuisine: 'Americká',
 		ingredients: [
 			'1.5kg vepřového plecka',
@@ -593,7 +570,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Česnekové krevety scampi',
 		category: 'Večeře',
-		area: 'Evropa',
 		cuisine: 'Italská',
 		ingredients: [
 			'400g velkých krevet, oloupaných a zbavených střívka',
@@ -620,7 +596,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		locale: 'cs',
 		name: 'Tom yum goong',
 		category: 'Předkrm',
-		area: 'Asie',
 		cuisine: 'Thajská',
 		ingredients: [
 			'4 šálky kuřecího nebo zeleninového vývaru',

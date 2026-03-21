@@ -4,34 +4,16 @@
 	import Mic from '@lucide/svelte/icons/mic';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import type { PageData } from './$types';
 
-	type Step = { id: number; title: string; description: string };
-	type Ingredient = { id: number; name: string; amount: string };
+	let { data }: { data: PageData } = $props();
 
-	const recipe = { name: 'Kuřecí nudličky s rýží' };
+	const { recipe } = data;
 
-	const steps: Step[] = [
-		{
-			id: 1,
-			title: 'Oloupat brambory',
-			description: 'Oloupejte brambory a nakrájejte na kostičky.'
-		},
-		{ id: 2, title: 'Uvařit rýži', description: 'Vařte rýži 15 minut v osolené vodě.' },
-		{
-			id: 3,
-			title: 'Opéct kuře',
-			description: 'Nakrájejte kuře na nudličky a opečte na oleji dozlatova.'
-		},
-		{ id: 4, title: 'Smíchat', description: 'Smíchejte rýži s kuřetem a dochuťte solí a pepřem.' }
-	];
-
-	const ingredients: Ingredient[] = [
-		{ id: 1, name: 'Kuřecí prsa', amount: '300 g' },
-		{ id: 2, name: 'Rýže', amount: '200 g' },
-		{ id: 3, name: 'Olej', amount: '2 lžíce' },
-		{ id: 4, name: 'Sůl', amount: 'podle chuti' },
-		{ id: 5, name: 'Pepř', amount: 'podle chuti' }
-	];
+	// DB steps are plain strings — give each an index-based id
+	const steps = recipe.steps.map((description, i) => ({ id: i, description }));
+	// DB simplifiedIngredients are plain strings like "Chicken breast 300g"
+	const ingredients = recipe.simplifiedIngredients.map((name, i) => ({ id: i, name }));
 
 	let activeTab: 'steps' | 'ingredients' = $state('steps');
 	let currentStep = $state(0);
@@ -82,12 +64,13 @@
 							>
 								{i === currentStep ? m.voice_step_current({ step: i + 1 }) : m.voice_step_next()}
 							</span>
-							<h2 class="text-2xl font-bold text-primary">{step.title}</h2>
-							{#if i === currentStep}
-								<p class="mt-4 text-sm leading-relaxed text-secondary-foreground">
-									{step.description}
-								</p>
-							{/if}
+							<p
+								class="text-sm leading-relaxed {i === currentStep
+									? 'text-foreground'
+									: 'text-secondary-foreground'}"
+							>
+								{step.description}
+							</p>
 						</div>
 					{/if}
 				{/each}
@@ -97,9 +80,8 @@
 		{#if activeTab === 'ingredients'}
 			<div class="flex flex-col">
 				{#each ingredients as ing (ing.id)}
-					<div class="flex justify-between border-b border-border py-4 text-sm">
+					<div class="border-b border-border py-4 text-sm">
 						<span class="font-bold text-foreground">{ing.name}</span>
-						<span class="font-medium text-muted-foreground">{ing.amount}</span>
 					</div>
 				{/each}
 			</div>

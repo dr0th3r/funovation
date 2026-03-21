@@ -53,15 +53,14 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		if (includeIngredients.length > 0) {
 			const ingredientAnyMatch = includeIngredients.map(
-				(ingredient) => sql`${recipe.simplifiedIngredients} @> ${JSON.stringify([ingredient])}::jsonb`
+				(ingredient) =>
+					sql`${recipe.simplifiedIngredients} @> ${JSON.stringify([ingredient])}::jsonb`
 			);
 			conditions.push(sql`(${sql.join(ingredientAnyMatch, sql` or `)})`);
 		}
 
 		if (includePreferences.length > 0) {
-			conditions.push(
-				sql`${recipe.preferences} @> ${JSON.stringify(includePreferences)}::jsonb`
-			);
+			conditions.push(sql`${recipe.preferences} @> ${JSON.stringify(includePreferences)}::jsonb`);
 		}
 
 		if (excludeAllergens.length > 0) {
@@ -94,11 +93,16 @@ export const GET: RequestHandler = async ({ url }) => {
 				slug: recipe.slug,
 				name: sql<string>`coalesce((select ${recipeTranslation.name} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.name} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.name})`,
 				category: sql<string>`coalesce((select ${recipeTranslation.category} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.category} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.category})`,
-				area: sql<string>`coalesce((select ${recipeTranslation.area} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.area} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.area})`,
 				cuisine: sql<string>`coalesce((select ${recipeTranslation.cuisine} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.cuisine} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.cuisine})`,
-				ingredients: sql<string[]>`coalesce((select ${recipeTranslation.ingredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.ingredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.ingredients})`,
-				simplifiedIngredients: sql<string[]>`coalesce((select ${recipeTranslation.simplifiedIngredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.simplifiedIngredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.simplifiedIngredients})`,
-				steps: sql<string[]>`coalesce((select ${recipeTranslation.steps} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.steps} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.steps})`,
+				ingredients: sql<
+					string[]
+				>`coalesce((select ${recipeTranslation.ingredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.ingredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.ingredients})`,
+				simplifiedIngredients: sql<
+					string[]
+				>`coalesce((select ${recipeTranslation.simplifiedIngredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.simplifiedIngredients} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.simplifiedIngredients})`,
+				steps: sql<
+					string[]
+				>`coalesce((select ${recipeTranslation.steps} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = ${requestedLocale} limit 1), (select ${recipeTranslation.steps} from ${recipeTranslation} where ${recipeTranslation.recipeId} = ${recipe.id} and ${recipeTranslation.locale} = 'en' limit 1), ${recipe.steps})`,
 				imageUrl: recipe.imageUrl,
 				preferences: recipe.preferences,
 				pricePerPortionCZK: recipe.pricePerPortionCZK,
@@ -112,9 +116,6 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		return json({ meals });
 	} catch {
-		return json(
-			{ error: 'Unable to load recipes from local database' },
-			{ status: 502 }
-		);
+		return json({ error: 'Unable to load recipes from local database' }, { status: 502 });
 	}
 };

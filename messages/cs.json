@@ -121,6 +121,8 @@
 	"recipes_cat_quick": "Rychlé",
 	"recipes_results": "{count} výsledků",
 	"recipes_no_results": "Žádné recepty nenalezeny",
+	"recipes_tab_recommended": "Doporučené",
+	"recipes_tab_sale": "Ve slevě",
 
 	"voice_tab_steps": "Postup",
 	"voice_tab_ingredients": "Ingredience",

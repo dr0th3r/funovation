@@ -4,7 +4,6 @@ export type ExampleRecipeSeed = {
 	slug: string;
 	name: string;
 	category: string;
-	area: string;
 	cuisine: string;
 	imageUrl: string | null;
 	ingredients: string[];
@@ -20,7 +19,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'shakshuka',
 		name: 'Shakshuka',
 		category: 'Breakfast',
-		area: 'Middle Eastern',
 		cuisine: 'Middle Eastern',
 		imageUrl: 'https://images.unsplash.com/photo-1590412200988-a436970781fa?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -51,7 +49,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'chicken-teriyaki-bowl',
 		name: 'Chicken Teriyaki Bowl',
 		category: 'Dinner',
-		area: 'Asian',
 		cuisine: 'Japanese',
 		imageUrl: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -80,7 +77,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'lentil-coconut-curry',
 		name: 'Lentil Coconut Curry',
 		category: 'Vegetarian',
-		area: 'Asian',
 		cuisine: 'Indian',
 		imageUrl: 'https://images.unsplash.com/photo-1565557612110-d8ab1f84d634?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -111,7 +107,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'beef-taco-skillet',
 		name: 'Beef Taco Skillet',
 		category: 'Dinner',
-		area: 'Latin American',
 		cuisine: 'Mexican',
 		imageUrl: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -140,7 +135,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'salmon-lemon-dill',
 		name: 'Lemon Dill Salmon',
 		category: 'Dinner',
-		area: 'European',
 		cuisine: 'Nordic',
 		imageUrl: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -166,7 +160,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'spaghetti-aglio-olio',
 		name: 'Spaghetti Aglio e Olio',
 		category: 'Pasta',
-		area: 'European',
 		cuisine: 'Italian',
 		imageUrl: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -194,7 +187,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'classic-margherita-pizza',
 		name: 'Classic Margherita Pizza',
 		category: 'Dinner',
-		area: 'European',
 		cuisine: 'Italian',
 		imageUrl: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -222,7 +214,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'thai-green-chicken-curry',
 		name: 'Thai Green Chicken Curry',
 		category: 'Dinner',
-		area: 'Asian',
 		cuisine: 'Thai',
 		imageUrl: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -252,7 +243,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'fluffy-buttermilk-pancakes',
 		name: 'Fluffy Buttermilk Pancakes',
 		category: 'Breakfast',
-		area: 'North American',
 		cuisine: 'American',
 		imageUrl: 'https://images.unsplash.com/photo-1575853121743-60c24f0a7502?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -282,7 +272,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'beef-and-broccoli-stir-fry',
 		name: 'Beef and Broccoli Stir-Fry',
 		category: 'Dinner',
-		area: 'Asian',
 		cuisine: 'Chinese',
 		imageUrl: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -312,7 +301,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'mediterranean-chickpea-salad',
 		name: 'Mediterranean Chickpea Salad',
 		category: 'Lunch',
-		area: 'European',
 		cuisine: 'Mediterranean',
 		imageUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -342,7 +330,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'creamy-mushroom-risotto',
 		name: 'Creamy Mushroom Risotto',
 		category: 'Dinner',
-		area: 'European',
 		cuisine: 'Italian',
 		imageUrl: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -372,7 +359,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'veggie-pad-thai',
 		name: 'Veggie Pad Thai',
 		category: 'Dinner',
-		area: 'Asian',
 		cuisine: 'Thai',
 		imageUrl: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -402,7 +388,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'french-onion-soup',
 		name: 'French Onion Soup',
 		category: 'Starter',
-		area: 'European',
 		cuisine: 'French',
 		imageUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -431,7 +416,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'greek-moussaka',
 		name: 'Greek Moussaka',
 		category: 'Dinner',
-		area: 'European',
 		cuisine: 'Greek',
 		imageUrl: 'https://images.unsplash.com/photo-1627522460108-2144342a3f9e?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -462,7 +446,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'chicken-tikka-masala',
 		name: 'Chicken Tikka Masala',
 		category: 'Dinner',
-		area: 'Asian',
 		cuisine: 'Indian',
 		imageUrl: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -492,7 +475,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'avocado-toast-poached-egg',
 		name: 'Avocado Toast with Poached Egg',
 		category: 'Breakfast',
-		area: 'North American',
 		cuisine: 'American',
 		imageUrl: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -520,7 +502,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'classic-miso-soup',
 		name: 'Classic Miso Soup',
 		category: 'Starter',
-		area: 'Asian',
 		cuisine: 'Japanese',
 		imageUrl: 'https://images.unsplash.com/photo-1548943487-a2e4f43b4851?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -546,7 +527,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'beef-stroganoff',
 		name: 'Beef Stroganoff',
 		category: 'Dinner',
-		area: 'European',
 		cuisine: 'Russian',
 		imageUrl: 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -576,7 +556,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'classic-caprese-salad',
 		name: 'Classic Caprese Salad',
 		category: 'Starter',
-		area: 'European',
 		cuisine: 'Italian',
 		imageUrl: 'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -602,7 +581,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'tofu-vegetable-stir-fry',
 		name: 'Tofu Vegetable Stir-Fry',
 		category: 'Vegan',
-		area: 'Asian',
 		cuisine: 'Chinese',
 		imageUrl: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -631,7 +609,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'bbq-pulled-pork',
 		name: 'BBQ Pulled Pork',
 		category: 'Dinner',
-		area: 'North American',
 		cuisine: 'American',
 		imageUrl: 'https://images.unsplash.com/photo-1629236715174-87428f522883?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -661,7 +638,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'garlic-shrimp-scampi',
 		name: 'Garlic Shrimp Scampi',
 		category: 'Dinner',
-		area: 'European',
 		cuisine: 'Italian',
 		imageUrl: 'https://images.unsplash.com/photo-1625944230945-1b7dd12a8fee?auto=format&fit=crop&w=800&q=80',
 		ingredients: [
@@ -691,7 +667,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		slug: 'tom-yum-goong',
 		name: 'Tom Yum Goong',
 		category: 'Starter',
-		area: 'Asian',
 		cuisine: 'Thai',
 		imageUrl: 'https://images.unsplash.com/photo-1548943487-a2e4f43b4851?auto=format&fit=crop&w=800&q=80',
 		ingredients: [

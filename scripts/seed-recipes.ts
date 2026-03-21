@@ -32,7 +32,6 @@ const run = async () => {
 				slug: recipe.slug,
 				name: recipe.name,
 				category: recipe.category,
-				area: recipe.area,
 				cuisine: recipe.cuisine
 			})
 			.from(recipe);
@@ -42,7 +41,6 @@ const run = async () => {
 			locale: 'en',
 			name: item.name,
 			category: item.category,
-			area: item.area,
 			cuisine: item.cuisine
 		}));
 
@@ -69,7 +67,6 @@ const run = async () => {
 					locale: translation.locale.toLowerCase(),
 					name: translation.name,
 					category: translation.category,
-					area: translation.area,
 					cuisine: translation.cuisine,
 					ingredients: translation.ingredients,
 					simplifiedIngredients: translation.simplifiedIngredients,
