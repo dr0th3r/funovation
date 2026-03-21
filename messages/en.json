@@ -120,5 +120,11 @@
 	"recipes_cat_desserts": "Desserts",
 	"recipes_cat_quick": "Quick",
 	"recipes_results": "{count} results",
-	"recipes_no_results": "No recipes found"
+	"recipes_no_results": "No recipes found",
+
+	"voice_tab_steps": "Steps",
+	"voice_tab_ingredients": "Ingredients",
+	"voice_step_current": "Step {step} · In progress",
+	"voice_step_next": "Next up",
+	"voice_next": "Next"
 }

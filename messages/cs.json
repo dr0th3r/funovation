@@ -120,5 +120,11 @@
 	"recipes_cat_desserts": "Dezerty",
 	"recipes_cat_quick": "Rychlé",
 	"recipes_results": "{count} výsledků",
-	"recipes_no_results": "Žádné recepty nenalezeny"
+	"recipes_no_results": "Žádné recepty nenalezeny",
+
+	"voice_tab_steps": "Postup",
+	"voice_tab_ingredients": "Ingredience",
+	"voice_step_current": "{step}. krok · Právě děláte",
+	"voice_step_next": "Následuje",
+	"voice_next": "Další"
 }
