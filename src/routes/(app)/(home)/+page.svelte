@@ -24,7 +24,8 @@
 
 	let { data }: { data: PageData } = $props();
 
-	const { recommendedRecipes, budgetRecipes } = data;
+	let recommendedRecipes = $derived(data.recommendedRecipes);
+	let budgetRecipes = $derived(data.budgetRecipes);
 
 	let selectedRecipe: Recipe | null = $state(null);
 	let sheetOpen = $state(false);
@@ -42,7 +43,7 @@
 	};
 </script>
 
-<main>
+<main class="max-w-4xl">
 	<!-- Hero -->
 	<section class="px-5 pt-7 pb-4 md:px-8 md:pt-10 md:pb-6">
 		<h1 class="text-4xl leading-tight font-bold text-foreground md:text-5xl">
@@ -56,7 +57,7 @@
 			<div class="h-75 overflow-hidden md:h-90">
 				<LayerCake data={worldData}>
 					<Svg>
-						<WorldMap />
+						<WorldMap highlights={{ USA: 0.5, CZE: 0.6 }} />
 					</Svg>
 				</LayerCake>
 			</div>
@@ -78,7 +79,7 @@
 			</div>
 			<Button
 				variant="link"
-				class="h-auto p-0 text-sm font-bold underline underline-offset-2"
+				class="h-auto p-0 text-sm font-bold underline hover:no-underline"
 				onclick={() => goto('/recipes')}
 			>
 				{m.main_show_all()}
@@ -118,7 +119,7 @@
 			</div>
 			<Button
 				variant="link"
-				class="h-auto p-0 text-sm font-bold underline underline-offset-2"
+				class="h-auto p-0 text-sm font-bold underline hover:no-underline"
 				onclick={() => goto('/recipes')}
 			>
 				{m.main_show_all()}
