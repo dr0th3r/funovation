@@ -53,33 +53,62 @@ You can preview the production build with `npm run preview`.
 
 ## API
 
-**Localization:** All API endpoints support an optional `locale` query parameter (e.g., `?locale=cs`) to return translated content. Currently supported values are `en` (default), `cs`, and `th`.
+All endpoints support translation via an optional `locale` query parameter (e.g., `?locale=cs`). Supported values: `en` (default), `cs`, `th`.
 
-### Random Meal Selection
+---
 
-The `/api/meals/randomselection` endpoint returns up to 10 randomly selected meals from the database that match your specified criteria. It gracefully handles comma-separated lists, multiple identical query parameters, and case-insensitivity.
+### `GET /api/meals/randomselection`
+Returns up to 10 random meals matching filters.
 
-#### Available Filters
+**Query Parameters:**
+- `ingredients`, `includeIngredients`, `ingrediences`: Meals containing **any** of these ingredients (comma-separated or multi-param)
+- `preferences`, `includePreferences`: Meals matching **all** of these dietary preferences (`vegan`, `vegetarian`, `gluten-free`, `lactose-free`)
+- `excludeAllergens`: Exclude meals with **any** of these EU allergen codes (1-14)
+- `excludeIngredients`, `excludeIngrediences`: Exclude meals with **any** of these ingredients
+- `excludeCuisines`: Exclude cuisines (comma-separated)
+- `maxPricePerPortion`, `maxPricePerPortionCZK`: Meals costing ≤ this value (CZK)
+- `locale`: (optional)
 
-- **`ingredients`** (or `includeIngredients`, `ingrediences`): Include meals containing **ANY** of these ingredients (OR condition).
-- **`preferences`** (or `includePreferences`): Include meals matching **ALL** of these dietary preferences (AND condition). Options include: `vegan`, `vegetarian`, `gluten-free`, `lactose-free`.
-- **`excludeAllergens`**: Filter out meals containing **ANY** of these EU standard allergen codes (1-14).
-- **`excludeIngredients`** (or `excludeIngrediences`): Filter out meals containing **ANY** of these ingredients.
-- **`excludeCuisines`**: Filter out meals matching these cuisines (e.g., `italian`, `mexican`).
-- **`maxPricePerPortion`** (or `maxPricePerPortionCZK`): Returns meals costing less than or equal to this amount in CZK.
-
-#### Example Usage
-
-```text
-GET /api/meals/randomselection?ingredients=chicken,beef&preferences=gluten-free&excludeAllergens=7&maxPricePerPortion=150
+**Example:**
+```
+GET /api/meals/randomselection?ingredients=chicken,beef&preferences=vegan&maxPricePerPortion=120
 ```
 
 ---
 
-### Meal Names
+### `GET /api/meals/names`
+List all recipe names, translated.
 
-Returns a list of all recipe names in the database.
+**Query Parameters:** `locale` (optional)
+**Response:** `{"names": ["Sushi", "Falafel Bowl", ...]}`
 
-```text
-GET /api/meals/names
-```
+---
+
+### `GET /api/countries/names`
+List all countries with id and name, translated.
+
+**Query Parameters:** `locale` (optional)
+**Response:** `{"countries": [{"id": 1, "name": "Czechia"}, ...]}`
+
+---
+
+### `GET /api/ingrediences/names`
+List all ingredient names, translated.
+
+**Query Parameters:** `locale` (optional)
+**Response:** `{"ingrediences": ["Potato", "Tomato", ...]}`
+
+---
+
+### User Endpoints *(auth required)*
+All require a valid Better Auth session cookie.
+
+#### `GET /api/user/countries`
+Get countries for current user.
+**Response:** `{ "countries": ["Czechia", "Italy"] }`
+
+#### `POST /api/user/countries`
+Add a country to the user.
+**Body:** `{ "country": "Czechia" }` ⬅️ Only exact country names accepted.
+**Response:** Returns updated list: `{ "countries": [ ... ] }`.
+
