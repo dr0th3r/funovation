@@ -139,12 +139,12 @@
 	let userLevel = $state<UserLevel>({ level: 8, xp: 90, xpMax: 195 });
 
 	$effect(() => {
-		fetch('/api/user/level')
-			.then((r) => r.json())
-			.then((data: UserLevel) => {
-				userLevel = data;
-			})
-			.catch(() => {});
+		// fetch('/api/user/level')
+		// 	.then((r) => r.json())
+		// 	.then((data: UserLevel) => {
+		// 		userLevel = data;
+		// 	})
+		// 	.catch(() => {});
 	});
 
 	const openRecipe = (recipe: Recipe) => {

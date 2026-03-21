@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick, onDestroy } from 'svelte';
 	import * as m from '$lib/paraglide/messages';
 	import { Button } from '$lib/components/ui/button';
 	import Mic from '@lucide/svelte/icons/mic';
@@ -6,6 +7,11 @@
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Timer from '@lucide/svelte/icons/timer';
+	import Camera from '@lucide/svelte/icons/camera';
+	import Share2 from '@lucide/svelte/icons/share-2';
+	import Home from '@lucide/svelte/icons/home';
+	import { SvelteSet, SvelteMap } from 'svelte/reactivity';
+	import { goto } from '$app/navigation';
 
 	type Step = { id: number; title: string; description: string };
 	type Ingredient = { id: number; name: string; amount: string };
@@ -39,6 +45,15 @@
 
 	let activeTab: 'steps' | 'ingredients' = $state('steps');
 	let currentStep = $state(0);
+	let recipeFinished = $state(false);
+
+	// Camera state
+	let cameraActive = $state(false);
+	let capturedImage = $state<string | null>(null);
+	let videoEl: HTMLVideoElement | null = $state(null);
+	let canvasEl: HTMLCanvasElement | null = $state(null);
+	let cameraStream: MediaStream | null = null;
+	let showCancelConfirmation = $state(false);
 
 	// Voice state
 	let connectionState = $state<ConnectionState>('disconnected');
@@ -53,8 +68,8 @@
 	let dc: RTCDataChannel | null = null;
 	let audioEl: HTMLAudioElement | null = null;
 	let timerNextId = 0;
-	const handledCallIds = new Set<string>();
-	const timerIntervals = new Map<number, ReturnType<typeof setInterval>>();
+	const handledCallIds = new SvelteSet<string>();
+	const timerIntervals = new SvelteMap<number, ReturnType<typeof setInterval>>();
 
 	const formatTime = (seconds: number) => {
 		const m = Math.floor(seconds / 60);
@@ -119,6 +134,15 @@
 					fire_at: new Date(Date.now() + delaySeconds * 1000).toISOString()
 				};
 			}
+		} else if (name === 'next_recipe_step') {
+			nextStep();
+			output = { success: true, current_step: currentStep };
+		} else if (name === 'previous_recipe_step') {
+			prevStep();
+			output = { success: true, current_step: currentStep };
+		} else if (name === 'cancel_recipe') {
+			output = { success: true };
+			showCancelConfirmation = true;
 		} else {
 			output = { scheduled: false, error: `Unknown tool: ${name}` };
 		}
@@ -167,6 +191,19 @@
 						}
 					})
 				);
+
+				const recipeContext = `I want to cook ${recipe.name}. The ingredients are: ${ingredients.map(i => `${i.name} (${i.amount})`).join(', ')}. The steps are: ${steps.map((s, i) => `${i + 1}. ${s.title} - ${s.description}`).join(' ')}. Guide me step by step starting with step 1.`;
+				dc!.send(
+					JSON.stringify({
+						type: 'conversation.item.create',
+						item: {
+							type: 'message',
+							role: 'user',
+							content: [{ type: 'input_text', text: recipeContext }]
+						}
+					})
+				);
+				dc!.send(JSON.stringify({ type: 'response.create' }));
 			};
 
 			dc.onclose = () => {
@@ -255,6 +292,98 @@
 		if (currentStep < steps.length - 1) currentStep++;
 	};
 
+	const finishRecipe = async () => {
+		if (connectionState === 'connected') disconnect();
+		recipeFinished = true;
+	};
+
+	const shareRecipe = async () => {
+		try {
+			if (navigator.share) {
+				await navigator.share({
+					title: `I just cooked ${recipe.name}!`,
+					text: `Check out this recipe for ${recipe.name}. I just made it using the Funovation AI assistant!`,
+					url: window.location.href,
+				});
+			} else {
+				alert('Web Share API is not supported in your browser.');
+			}
+		} catch (error) {
+			console.log('Error sharing', error);
+		}
+	};
+
+	const confirmCancel = async () => {
+		disconnect();
+		await goto('/');
+	};
+
+	const resumeCooking = () => {
+		showCancelConfirmation = false;
+		if (dc?.readyState === 'open') {
+			dc.send(
+				JSON.stringify({
+					type: 'conversation.item.create',
+					item: {
+						type: 'message',
+						role: 'user',
+						content: [{ type: 'input_text', text: 'I decided to keep cooking. Please continue.' }]
+					}
+				})
+			);
+			dc.send(JSON.stringify({ type: 'response.create' }));
+		}
+	};
+
+	const startCamera = async () => {
+		cameraActive = true;
+		capturedImage = null;
+		await tick(); // Wait for video element to render
+		try {
+			cameraStream = await navigator.mediaDevices.getUserMedia({
+				video: { facingMode: 'environment' }
+			});
+			if (videoEl) {
+				videoEl.srcObject = cameraStream;
+			}
+		} catch (err) {
+			console.error('Camera error', err);
+			alert('Could not access camera. Please check permissions.');
+			cameraActive = false;
+		}
+	};
+
+	const stopCamera = () => {
+		if (cameraStream) {
+			cameraStream.getTracks().forEach((t) => t.stop());
+			cameraStream = null;
+		}
+		cameraActive = false;
+	};
+
+	const takePhoto = () => {
+		if (videoEl && canvasEl) {
+			canvasEl.width = videoEl.videoWidth;
+			canvasEl.height = videoEl.videoHeight;
+			const ctx = canvasEl.getContext('2d');
+			if (ctx) {
+				ctx.drawImage(videoEl, 0, 0);
+				capturedImage = canvasEl.toDataURL('image/jpeg', 0.8);
+				stopCamera();
+			}
+		}
+	};
+
+	const retakePhoto = () => {
+		capturedImage = null;
+		startCamera();
+	};
+
+	onDestroy(() => {
+		stopCamera();
+		disconnect();
+	});
+
 	const statusLabel = $derived(
 		connectionState === 'connecting'
 			? 'Connecting…'
@@ -272,140 +401,221 @@
 </script>
 
 <main class="flex w-xl flex-1 flex-col overflow-hidden">
-	<div class="flex-1 overflow-y-auto px-5 pb-20">
-		<h1 class="py-6 text-3xl leading-tight font-black tracking-tight text-foreground">
-			{recipe.name}
-		</h1>
+	{#if !recipeFinished}
+		<div class="flex-1 overflow-y-auto px-5 pb-20">
+			<h1 class="py-6 text-3xl leading-tight font-black tracking-tight text-foreground">
+				{recipe.name}
+			</h1>
 
-		<!-- Timers -->
-		{#if activeTimers.length > 0}
-			<div class="mb-4 flex flex-wrap gap-2">
-				{#each activeTimers as timer (timer.id)}
-					<div
-						class="flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-700"
-					>
-						<Timer class="size-3.5" />
-						<span>{timer.label}</span>
-						<span class="font-mono tabular-nums">{formatTime(timer.remaining)}</span>
-					</div>
-				{/each}
-			</div>
-		{/if}
-
-		<!-- Tabs -->
-		<div class="mb-6 grid grid-cols-2 gap-2">
-			<button
-				onclick={() => (activeTab = 'steps')}
-				class="rounded-xl border py-2 text-sm font-bold transition-all
-					{activeTab === 'steps'
-					? 'border-primary bg-primary text-primary-foreground'
-					: 'border-border bg-background text-muted-foreground'}">{m.voice_tab_steps()}</button
-			>
-			<button
-				onclick={() => (activeTab = 'ingredients')}
-				class="rounded-xl border py-2 text-sm font-bold transition-all
-					{activeTab === 'ingredients'
-					? 'border-primary bg-primary text-primary-foreground'
-					: 'border-border bg-background text-muted-foreground'}"
-				>{m.voice_tab_ingredients()}</button
-			>
-		</div>
-
-		{#if activeTab === 'steps'}
-			<div class="flex flex-col gap-3">
-				{#each steps as step, i}
-					{#if i === currentStep || i === currentStep + 1}
+			<!-- Timers -->
+			{#if activeTimers.length > 0}
+				<div class="mb-4 flex flex-wrap gap-2">
+					{#each activeTimers as timer (timer.id)}
 						<div
-							class="rounded-2xl border p-5
-							{i === currentStep ? 'border-primary bg-primary/5' : 'border-dashed border-border opacity-55'}"
+							class="flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-700"
 						>
-							<span
-								class="mb-1 block text-xs font-bold tracking-widest text-muted-foreground uppercase"
-							>
-								{i === currentStep ? m.voice_step_current({ step: i + 1 }) : m.voice_step_next()}
-							</span>
-							<h2 class="text-2xl font-bold text-primary">{step.title}</h2>
-							{#if i === currentStep}
-								<p class="mt-4 text-sm leading-relaxed text-secondary-foreground">
-									{step.description}
-								</p>
-							{/if}
+							<Timer class="size-3.5" />
+							<span>{timer.label}</span>
+							<span class="font-mono tabular-nums">{formatTime(timer.remaining)}</span>
 						</div>
-					{/if}
-				{/each}
-			</div>
-		{/if}
+					{/each}
+				</div>
+			{/if}
 
-		{#if activeTab === 'ingredients'}
-			<div class="flex flex-col">
-				{#each ingredients as ing (ing.id)}
-					<div class="flex justify-between border-b border-border py-4 text-sm">
-						<span class="font-bold text-foreground">{ing.name}</span>
-						<span class="font-medium text-muted-foreground">{ing.amount}</span>
-					</div>
-				{/each}
+			<!-- Tabs -->
+			<div class="mb-6 grid grid-cols-2 gap-2">
+				<button
+					onclick={() => (activeTab = 'steps')}
+					class="rounded-xl border py-2 text-sm font-bold transition-all
+						{activeTab === 'steps'
+						? 'border-primary bg-primary text-primary-foreground'
+						: 'border-border bg-background text-muted-foreground'}">{m.voice_tab_steps()}</button
+				>
+				<button
+					onclick={() => (activeTab = 'ingredients')}
+					class="rounded-xl border py-2 text-sm font-bold transition-all
+						{activeTab === 'ingredients'
+						? 'border-primary bg-primary text-primary-foreground'
+						: 'border-border bg-background text-muted-foreground'}"
+					>{m.voice_tab_ingredients()}</button
+				>
 			</div>
-		{/if}
 
-		<!-- AI transcript -->
-		{#if aiTranscript && connectionState === 'connected'}
-			<div class="mt-6 rounded-2xl border border-border bg-muted/40 p-4">
-				<p class="text-sm leading-relaxed text-foreground">{aiTranscript}</p>
-			</div>
-		{/if}
-	</div>
+			{#if activeTab === 'steps'}
+				<div class="flex flex-col gap-3">
+					{#each steps as step, i (step.id)}
+						{#if i === currentStep || i === currentStep + 1}
+							<div
+								class="rounded-2xl border p-5
+								{i === currentStep ? 'border-primary bg-primary/5' : 'border-dashed border-border opacity-55'}"
+							>
+								<span
+									class="mb-1 block text-xs font-bold tracking-widest text-muted-foreground uppercase"
+								>
+									{i === currentStep ? m.voice_step_current({ step: i + 1 }) : m.voice_step_next()}
+								</span>
+								<h2 class="text-2xl font-bold text-primary">{step.title}</h2>
+								{#if i === currentStep}
+									<p class="mt-4 text-sm leading-relaxed text-secondary-foreground">
+										{step.description}
+									</p>
+								{/if}
+							</div>
+						{/if}
+					{/each}
+				</div>
+			{/if}
 
-	<div class="shrink-0 border-t border-border bg-background p-5">
-		<!-- Status / error -->
-		<div class="mb-3 text-center">
-			{#if errorMessage}
-				<p class="text-xs font-medium text-destructive">{errorMessage}</p>
-			{:else}
-				<p class="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-					{statusLabel}
-				</p>
+			{#if activeTab === 'ingredients'}
+				<div class="flex flex-col">
+					{#each ingredients as ing (ing.id)}
+						<div class="flex justify-between border-b border-border py-4 text-sm">
+							<span class="font-bold text-foreground">{ing.name}</span>
+							<span class="font-medium text-muted-foreground">{ing.amount}</span>
+						</div>
+					{/each}
+				</div>
+			{/if}
+
+			<!-- AI transcript -->
+			{#if aiTranscript && connectionState === 'connected'}
+				<div class="mt-6 rounded-2xl border border-border bg-muted/40 p-4">
+					<p class="text-sm leading-relaxed text-foreground">{aiTranscript}</p>
+				</div>
 			{/if}
 		</div>
 
-		<!-- Mic button -->
-		<div class="mb-5 flex justify-center">
-			<button
-				onclick={toggleConnection}
-				disabled={connectionState === 'connecting'}
-				aria-label={micActive ? 'Stop assistant' : 'Start assistant'}
-				class="flex size-22 items-center justify-center rounded-full transition-all active:scale-95 disabled:opacity-50
-					{micActive
-					? 'bg-primary text-primary-foreground'
-					: 'bg-secondary text-primary'}
-					{micPulsing ? 'animate-pulse-ring' : ''}"
-			>
-				{#if connectionState === 'connecting'}
-					<div class="size-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
-				{:else if micActive}
-					<MicOff class="size-10" />
+		<div class="shrink-0 border-t border-border bg-background p-5">
+			<!-- Status / error -->
+			<div class="mb-3 text-center">
+				{#if errorMessage}
+					<p class="text-xs font-medium text-destructive">{errorMessage}</p>
 				{:else}
-					<Mic class="size-10" />
+					<p class="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+						{statusLabel}
+					</p>
 				{/if}
-			</button>
-		</div>
+			</div>
 
-		<div class="flex items-center justify-between">
-			<Button variant="ghost" onclick={prevStep} disabled={currentStep === 0} class="font-bold">
-				<ChevronLeft class="size-4" />{m.common_back()}
-			</Button>
-			<span class="text-xs font-bold tracking-widest text-muted-foreground">
-				{currentStep + 1} / {steps.length}
-			</span>
-			<Button
-				variant="ghost"
-				onclick={nextStep}
-				disabled={currentStep === steps.length - 1}
-				class="font-bold"
-			>
-				{m.voice_next()}<ChevronRight class="size-4" />
-			</Button>
+			<!-- Mic button -->
+			<div class="mb-5 flex justify-center">
+				<button
+					onclick={toggleConnection}
+					disabled={connectionState === 'connecting'}
+					aria-label={micActive ? 'Stop assistant' : 'Start assistant'}
+					class="flex size-22 items-center justify-center rounded-full transition-all active:scale-95 disabled:opacity-50
+						{micActive
+						? 'bg-primary text-primary-foreground'
+						: 'bg-secondary text-primary'}
+						{micPulsing ? 'animate-pulse-ring' : ''}"
+				>
+					{#if connectionState === 'connecting'}
+						<div class="size-6 animate-spin rounded-full border-2 border-current border-t-transparent"></div>
+					{:else if micActive}
+						<MicOff class="size-10" />
+					{:else}
+						<Mic class="size-10" />
+					{/if}
+				</button>
+			</div>
+
+			<div class="flex items-center justify-between">
+				<Button variant="ghost" onclick={prevStep} disabled={currentStep === 0} class="font-bold">
+					<ChevronLeft class="size-4" />{m.common_back()}
+				</Button>
+				<span class="text-xs font-bold tracking-widest text-muted-foreground">
+					{currentStep + 1} / {steps.length}
+				</span>
+				{#if currentStep === steps.length - 1}
+					<Button variant="destructive" onclick={finishRecipe} class="font-bold">
+						Finished
+					</Button>
+				{:else}
+					<Button variant="ghost" onclick={nextStep} class="font-bold">
+						{m.voice_next()}<ChevronRight class="size-4" />
+					</Button>
+				{/if}
+			</div>
 		</div>
-	</div>
+	{:else}
+		<!-- Post-Cook Completion Screen -->
+		<div class="flex flex-1 flex-col items-center justify-center p-6 text-center animate-in fade-in slide-in-from-bottom-8 duration-500">
+			<div class="mb-6 flex size-24 items-center justify-center rounded-full bg-primary/10">
+				<span class="text-5xl">🎉</span>
+			</div>
+			
+			<h1 class="mb-2 text-3xl font-black tracking-tight text-foreground">
+				Dobrou chuť!
+			</h1>
+			<p class="mb-10 text-muted-foreground">
+				You successfully prepared <strong>{recipe.name}</strong>. Now it's time to enjoy your meal!
+			</p>
+
+			<div class="flex w-full max-w-sm flex-col gap-4">
+				{#if cameraActive}
+					<div class="relative w-full overflow-hidden rounded-2xl border-4 border-primary bg-black aspect-[3/4]">
+						<video
+							bind:this={videoEl}
+							autoplay
+							playsinline
+							class="h-full w-full object-cover"
+						></video>
+						<canvas bind:this={canvasEl} class="hidden"></canvas>
+						
+						<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
+							<Button size="icon" variant="secondary" class="h-14 w-14 rounded-full shadow-lg" onclick={stopCamera}>
+								X
+							</Button>
+							<Button size="icon" variant="default" class="h-14 w-14 rounded-full border-2 border-white shadow-lg" onclick={takePhoto}>
+								<Camera class="size-6" />
+							</Button>
+						</div>
+					</div>
+				{:else if capturedImage}
+					<div class="relative w-full overflow-hidden rounded-2xl border-4 border-primary shadow-lg aspect-[3/4]">
+						<img src={capturedImage} alt="Your cooked meal" class="h-full w-full object-cover" />
+						<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
+							<Button variant="secondary" size="sm" class="font-bold shadow-md" onclick={retakePhoto}>
+								Retake
+							</Button>
+						</div>
+					</div>
+				{:else}
+					<Button size="lg" variant="default" class="w-full gap-2 font-bold" onclick={startCamera}>
+						<Camera class="size-5" />Take a Photo
+					</Button>
+				{/if}
+				
+				<Button size="lg" variant="secondary" onclick={shareRecipe} class="w-full gap-2 font-bold pointer-events-auto mt-2">
+					<Share2 class="size-5" />Share Recipe
+				</Button>
+				
+				<Button size="lg" variant="ghost" onclick={async () => await goto('/')} class="mt-2 w-full gap-2 font-bold pointer-events-auto">
+					<Home class="size-5" />Back to Home
+				</Button>
+			</div>
+		</div>
+	{/if}
+
+	<!-- Cancel Confirmation Popup -->
+	{#if showCancelConfirmation}
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-sm animate-in fade-in duration-200">
+			<div class="w-full max-w-sm rounded-3xl border border-border bg-card p-6 shadow-xl animate-in zoom-in-95 duration-200">
+				<h2 class="mb-2 text-2xl font-black text-foreground text-center">Cancel Recipe?</h2>
+				<p class="mb-6 text-center text-sm text-muted-foreground">
+					Are you sure you want to stop cooking and return to the home screen? Your progress will be lost.
+				</p>
+				<div class="flex flex-col gap-3">
+					<Button variant="destructive" size="lg" onclick={confirmCancel} class="w-full font-bold">
+						Yes, cancel recipe
+					</Button>
+					<Button variant="outline" size="lg" onclick={resumeCooking} class="w-full font-bold">
+						No, keep cooking
+					</Button>
+				</div>
+			</div>
+		</div>
+	{/if}
 </main>
 
 <style>
