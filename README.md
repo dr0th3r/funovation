@@ -1,55 +1,57 @@
-# HOW TO RUN
+# Funovation
+
+AI-powered cooking app with voice-guided recipes, personalized recommendations, and discount-aware meal planning.
+
+**Stack:** SvelteKit · PostgreSQL · Drizzle ORM · OpenAI · Better Auth · Tailwind CSS
+
+## Local development
 
 ```sh
-cp .env.example .env
+cp .env.example .env   # fill in secrets
 pnpm i
-docker compose up -d
-pnpm db:migrate
-pnpm dev
+docker compose up -d   # starts postgres on port 5432
+pnpm db:migrate        # run migrations + seed
+pnpm dev               # http://localhost:5173
 ```
 
-# sv
-
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Production (Docker)
 
 ```sh
-# create a new project
-npx sv create my-app
+docker compose up -d --build
 ```
 
-To recreate this project with the same configuration:
+App runs behind Caddy at `http://localhost:4040`. Migrations run automatically on startup.
+
+**Fresh deploy (wipe data):**
+```sh
+docker compose down -v && docker compose up -d --build
+```
+
+## Environment variables
+
+Copy `.env.example` → `.env`:
+
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | Postgres connection string |
+| `BETTER_AUTH_SECRET` | 32-char random secret (`openssl rand -base64 32`) |
+| `ORIGIN` | App origin URL (e.g. `http://localhost:5173`) |
+| `OPENAI_API_KEY` | OpenAI API key |
+| `POSTGRES_USER/PASSWORD/DB` | Used by docker-compose |
+
+## Commands
 
 ```sh
-# recreate this project
-pnpm dlx sv@0.12.8 create --template minimal --types ts --add prettier eslint tailwindcss="plugins:none" drizzle="database:postgresql+postgresql:postgres.js+docker:yes" better-auth="demo:password" --install pnpm ./
+pnpm dev          # dev server
+pnpm build        # production build
+pnpm preview      # run built app locally (requires DB running)
+pnpm check        # type check
+pnpm lint / format
+
+pnpm db:migrate   # run migrations + seed
+pnpm db:studio    # Drizzle Studio GUI
+pnpm auth:schema  # regenerate auth schema from auth.ts
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
 ## API
 
