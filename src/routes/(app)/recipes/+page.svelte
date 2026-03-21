@@ -1,9 +1,7 @@
 <script lang="ts">
 	import * as m from '$lib/paraglide/messages';
 	import { Button } from '$lib/components/ui/button';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import RecipeDetailModal from '../../lib/components/RecipeDetailModal.svelte';
-	import Menu from '@lucide/svelte/icons/menu';
+	import RecipeDetailModal from '$lib/components/RecipeDetailModal.svelte';
 	import Search from '@lucide/svelte/icons/search';
 	import Clock from '@lucide/svelte/icons/clock';
 
@@ -115,7 +113,12 @@
 			difficulty: 'medium',
 			description:
 				'Vydatný vegetariánský guláš z červených fazolí, paprik a rajčat s kouřovou paprikou.',
-			ingredients: ['Červené fazole 400 g', 'Paprika 2 ks', 'Rajčatový protlak', 'Uzená paprika'],
+			ingredients: [
+				'Červené fazole 400 g',
+				'Paprika 2 ks',
+				'Rajčatový protlak',
+				'Uzená paprika'
+			],
 			country: '🇲🇽 Mexiko'
 		},
 		{
@@ -228,135 +231,105 @@
 	};
 </script>
 
-<div class="relative mx-auto min-h-screen max-w-120 bg-background md:max-w-4xl">
-	<!-- Navbar -->
-	<header
-		class="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background px-5 py-4 md:px-8"
+<main class="pb-10">
+	<!-- Page title + search -->
+	<section class="px-5 pt-7 pb-4 md:px-8 md:pt-10">
+		<h1 class="text-4xl leading-tight font-bold tracking-tight text-foreground md:text-5xl">
+			{m.recipes_title()}
+		</h1>
+		<p class="mt-1 text-sm text-muted-foreground">
+			{m.recipes_count({ count: allRecipes.length })}
+		</p>
+
+		<!-- Search -->
+		<div class="relative mt-4 flex items-center">
+			<Search class="pointer-events-none absolute left-3 size-4 text-muted-foreground" />
+			<input
+				type="search"
+				placeholder={m.recipes_search_placeholder()}
+				bind:value={searchQuery}
+				class="h-11 w-full rounded-xl border border-border bg-secondary pr-4 pl-9 text-sm text-foreground transition-colors outline-none placeholder:text-muted-foreground focus:border-primary focus:bg-background"
+			/>
+		</div>
+	</section>
+
+	<!-- Category filters -->
+	<div
+		class="flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:px-8 [&::-webkit-scrollbar]:hidden"
 	>
-		<a href="/main" class="text-2xl font-semibold text-foreground no-underline">Papi</a>
+		{#each categories as cat (cat.id)}
+			<button
+				onclick={() => (activeCategory = cat.id)}
+				class="shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-semibold
+					{activeCategory === cat.id
+					? 'border-primary bg-primary text-primary-foreground'
+					: 'border-border bg-background text-muted-foreground hover:border-primary hover:text-primary'}"
+			>
+				{cat.label()}
+			</button>
+		{/each}
+	</div>
 
-		<DropdownMenu.Root>
-			<DropdownMenu.Trigger>
-				{#snippet child({ props }: { props: Record<string, unknown> })}
-					<Button variant="ghost" size="icon" {...props} aria-label={m.main_nav_home()}>
-						<Menu class="size-6" />
-					</Button>
-				{/snippet}
-			</DropdownMenu.Trigger>
-			<DropdownMenu.Content align="end" sideOffset={8}>
-				<DropdownMenu.Item>
-					<a href="/main">{m.main_nav_home()}</a>
-				</DropdownMenu.Item>
-				<DropdownMenu.Item>
-					<a href="/recipes">{m.main_nav_recipes()}</a>
-				</DropdownMenu.Item>
-				<DropdownMenu.Item>
-					<a href="/">{m.main_nav_settings()}</a>
-				</DropdownMenu.Item>
-			</DropdownMenu.Content>
-		</DropdownMenu.Root>
-	</header>
+	<!-- Results count -->
+	<div class="px-5 pt-4 pb-2 md:px-8">
+		<span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+			{m.recipes_results({ count: filteredRecipes.length })}
+		</span>
+	</div>
 
-	<main class="pb-10">
-		<!-- Page title + search -->
-		<section class="px-5 pt-7 pb-4 md:px-8 md:pt-10">
-			<h1 class="text-4xl leading-tight font-bold tracking-tight text-foreground md:text-5xl">
-				{m.recipes_title()}
-			</h1>
-			<p class="mt-1 text-sm text-muted-foreground">
-				{m.recipes_count({ count: allRecipes.length })}
-			</p>
-
-			<!-- Search -->
-			<div class="relative mt-4 flex items-center">
-				<Search class="pointer-events-none absolute left-3 size-4 text-muted-foreground" />
-				<input
-					type="search"
-					placeholder={m.recipes_search_placeholder()}
-					bind:value={searchQuery}
-					class="h-11 w-full rounded-xl border border-border bg-secondary pr-4 pl-9 text-sm text-foreground transition-colors outline-none placeholder:text-muted-foreground focus:border-primary focus:bg-background"
-				/>
-			</div>
-		</section>
-
-		<!-- Category filters -->
-		<div
-			class="flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:px-8 [&::-webkit-scrollbar]:hidden"
-		>
-			{#each categories as cat (cat.id)}
+	<!-- Recipe list / grid -->
+	{#if filteredRecipes.length > 0}
+		<div class="flex flex-col gap-3 px-5 md:grid md:grid-cols-2 md:gap-4 md:px-8">
+			{#each filteredRecipes as recipe (recipe.id)}
 				<button
-					onclick={() => (activeCategory = cat.id)}
-					class="shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap
-						{activeCategory === cat.id
-						? 'border-primary bg-primary text-primary-foreground'
-						: 'border-border bg-background text-muted-foreground hover:border-primary hover:text-primary'}"
+					class="flex items-stretch overflow-hidden rounded-2xl border border-border bg-background text-left hover:border-primary"
+					onclick={() => openRecipe(recipe)}
 				>
-					{cat.label()}
+					<!-- Color thumbnail -->
+					<div
+						class="relative flex w-22 shrink-0 items-end p-1.5"
+						style="background-color: {recipe.color}"
+					>
+						<span class="text-2xl leading-none">{recipe.country.split(' ')[0]}</span>
+					</div>
+
+					<!-- Content -->
+					<div class="flex flex-1 flex-col justify-center gap-1 px-3.5 py-3">
+						<div class="flex items-start justify-between gap-2">
+							<span class="text-sm leading-snug font-bold text-foreground">{recipe.name}</span>
+							<span
+								class="mt-0.5 inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-bold {difficultyClass[
+									recipe.difficulty
+								]}"
+							>
+								{difficultyLabel[recipe.difficulty]()}
+							</span>
+						</div>
+						<p class="flex items-center gap-1 text-xs text-muted-foreground">
+							<Clock class="size-3" />{recipe.time}<span class="mx-1 opacity-40">•</span
+							>{recipe.price}/porce
+						</p>
+					</div>
 				</button>
 			{/each}
 		</div>
-
-		<!-- Results count -->
-		<div class="px-5 pt-4 pb-2 md:px-8">
-			<span class="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-				{m.recipes_results({ count: filteredRecipes.length })}
-			</span>
+	{:else}
+		<!-- Empty state -->
+		<div class="flex flex-col items-center gap-3 px-5 py-16">
+			<Search class="size-10 text-muted-foreground opacity-40" />
+			<p class="text-sm font-medium text-muted-foreground">{m.recipes_no_results()}</p>
+			<button
+				onclick={() => {
+					searchQuery = '';
+					activeCategory = 'all';
+				}}
+				class="text-sm font-bold text-primary underline underline-offset-2"
+			>
+				{m.main_show_all()}
+			</button>
 		</div>
-
-		<!-- Recipe list / grid -->
-		{#if filteredRecipes.length > 0}
-			<div class="flex flex-col gap-3 px-5 md:grid md:grid-cols-2 md:gap-4 md:px-8">
-				{#each filteredRecipes as recipe (recipe.id)}
-					<button
-						class="flex items-stretch overflow-hidden rounded-2xl border border-border bg-background text-left hover:border-primary"
-						onclick={() => openRecipe(recipe)}
-					>
-						<!-- Color thumbnail -->
-						<div
-							class="relative flex w-22 shrink-0 items-end p-1.5"
-							style="background-color: {recipe.color}"
-						>
-							<span class="text-2xl leading-none">{recipe.country.split(' ')[0]}</span>
-						</div>
-
-						<!-- Content -->
-						<div class="flex flex-1 flex-col justify-center gap-1 px-3.5 py-3">
-							<div class="flex items-start justify-between gap-2">
-								<span class="text-sm leading-snug font-bold text-foreground">{recipe.name}</span>
-								<span
-									class="mt-0.5 inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-bold {difficultyClass[
-										recipe.difficulty
-									]}"
-								>
-									{difficultyLabel[recipe.difficulty]()}
-								</span>
-							</div>
-							<p class="flex items-center gap-1 text-xs text-muted-foreground">
-								<Clock class="size-3" />{recipe.time}<span class="mx-1 opacity-40">•</span
-								>{recipe.price}/porce
-							</p>
-						</div>
-					</button>
-				{/each}
-			</div>
-		{:else}
-			<!-- Empty state -->
-			<div class="flex flex-col items-center gap-3 px-5 py-16">
-				<Search class="size-10 text-muted-foreground opacity-40" />
-				<p class="text-sm font-medium text-muted-foreground">{m.recipes_no_results()}</p>
-				<button
-					onclick={() => {
-						searchQuery = '';
-						activeCategory = 'all';
-					}}
-					class="text-sm font-bold text-primary underline underline-offset-2"
-				>
-					{m.main_show_all()}
-				</button>
-			</div>
-		{/if}
-	</main>
-</div>
+	{/if}
+</main>
 
 <RecipeDetailModal
 	bind:open={sheetOpen}

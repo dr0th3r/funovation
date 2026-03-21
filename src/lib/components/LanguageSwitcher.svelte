@@ -16,19 +16,20 @@
 </script>
 
 <Popover.Root bind:open>
-	<Popover.Trigger
-		class={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-2 px-2')}
-	>
+	<Popover.Trigger class={cn(buttonVariants({ variant: 'ghost' }), 'gap-2 px-2')}>
 		<span class="text-base leading-none">{current.flag}</span>
 		<span class="text-sm">{current.label}</span>
 		<ChevronDown class="size-3.5 text-muted-foreground" />
 	</Popover.Trigger>
-	<Popover.Content class="w-40 p-1" align="end">
+	<Popover.Content class="w-40 gap-0 p-1" align="end">
 		{#each locales as locale}
 			{@const lang = LANGUAGES[locale] ?? { label: locale, flag: '🌐' }}
 			<button
 				type="button"
-				onclick={() => { setLocale(locale); open = false; }}
+				onclick={() => {
+					setLocale(locale);
+					open = false;
+				}}
 				class={cn(
 					'flex w-full items-center gap-2.5 rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent',
 					getLocale() === locale && 'font-medium'
