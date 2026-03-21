@@ -92,5 +92,39 @@
 	"home_title": "Welcome to Funovation",
 	"home_subtitle": "Your AI-powered cooking companion.",
 
-	"aria_remove_tag": "Remove tag"
+	"main_coming_soon": "Coming soon",
+	"main_hero_title": "Hi! What shall we cook today?",
+	"main_level": "Level {level}",
+	"main_recommended_title": "Recommended recipes",
+	"main_budget_title": "Food at a better price",
+	"main_show_all": "Show all",
+	"main_view_more": "View more",
+	"main_lets_cook": "Let's cook!",
+	"main_ingredients": "Ingredients:",
+	"main_nav_home": "Home",
+	"main_nav_recipes": "Recipes",
+	"main_nav_settings": "Settings",
+	"main_difficulty_easy": "Easy",
+	"main_difficulty_medium": "Medium",
+	"main_difficulty_hard": "Hard",
+
+	"aria_remove_tag": "Remove tag",
+
+	"recipes_title": "Recipes",
+	"recipes_count": "{count} recipes total",
+	"recipes_search_placeholder": "Search recipe or country…",
+	"recipes_cat_all": "All",
+	"recipes_cat_soups": "Soups",
+	"recipes_cat_mains": "Main dishes",
+	"recipes_cat_salads": "Salads",
+	"recipes_cat_desserts": "Desserts",
+	"recipes_cat_quick": "Quick",
+	"recipes_results": "{count} results",
+	"recipes_no_results": "No recipes found",
+
+	"voice_tab_steps": "Steps",
+	"voice_tab_ingredients": "Ingredients",
+	"voice_step_current": "Step {step} · In progress",
+	"voice_step_next": "Next up",
+	"voice_next": "Next"
 }

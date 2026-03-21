@@ -92,5 +92,39 @@
 	"home_title": "Vítejte ve Funovation",
 	"home_subtitle": "Váš kuchařský společník poháněný umělou inteligencí.",
 
-	"aria_remove_tag": "Odebrat štítek"
+	"main_coming_soon": "Brzy k dispozici",
+	"main_hero_title": "Ahoj! Co si dnes uvaříme?",
+	"main_level": "Úroveň {level}",
+	"main_recommended_title": "Doporučené recepty",
+	"main_budget_title": "Jídlo za lepší cenu",
+	"main_show_all": "Zobrazit vše",
+	"main_view_more": "Zobrazit více",
+	"main_lets_cook": "Pojďme na to",
+	"main_ingredients": "Ingredience:",
+	"main_nav_home": "Domů",
+	"main_nav_recipes": "Recepty",
+	"main_nav_settings": "Nastavení",
+	"main_difficulty_easy": "Lehké",
+	"main_difficulty_medium": "Střední",
+	"main_difficulty_hard": "Těžké",
+
+	"aria_remove_tag": "Odebrat štítek",
+
+	"recipes_title": "Recepty",
+	"recipes_count": "{count} receptů celkem",
+	"recipes_search_placeholder": "Hledat recept nebo zemi…",
+	"recipes_cat_all": "Vše",
+	"recipes_cat_soups": "Polévky",
+	"recipes_cat_mains": "Hlavní jídla",
+	"recipes_cat_salads": "Saláty",
+	"recipes_cat_desserts": "Dezerty",
+	"recipes_cat_quick": "Rychlé",
+	"recipes_results": "{count} výsledků",
+	"recipes_no_results": "Žádné recepty nenalezeny",
+
+	"voice_tab_steps": "Postup",
+	"voice_tab_ingredients": "Ingredience",
+	"voice_step_current": "{step}. krok · Právě děláte",
+	"voice_step_next": "Následuje",
+	"voice_next": "Další"
 }
