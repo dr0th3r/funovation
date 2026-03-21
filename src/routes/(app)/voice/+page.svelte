@@ -424,10 +424,9 @@
 	const micPulsing = $derived(isAiSpeaking || isUserSpeaking);
 </script>
 
-<main class="flex w-xl flex-1 flex-col overflow-hidden">
-	{#if !recipeFinished}
-		<div class="flex-1 overflow-y-auto px-5 pb-20">
-			<h1 class="py-6 text-3xl leading-tight font-black tracking-tight text-foreground">
+<main class="relative flex w-xl flex-1 flex-col overflow-hidden">
+	<div class="flex-1 overflow-y-auto px-5 pb-20">
+		<h1 class="py-6 text-3xl leading-tight font-black tracking-tight text-foreground">
 				{recipe.name}
 			</h1>
 
@@ -565,10 +564,12 @@
 				{/if}
 			</div>
 		</div>
-	{:else}
+
+	{#if recipeFinished}
 		<!-- Post-Cook Completion Screen -->
-		<div class="flex flex-1 flex-col items-center justify-center p-6 text-center animate-in fade-in slide-in-from-bottom-8 duration-500">
-			<div class="mb-6 flex size-24 items-center justify-center rounded-full bg-primary/10">
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-sm animate-in fade-in duration-300">
+			<div class="flex w-full max-w-sm flex-col items-center rounded-3xl border border-border bg-card p-6 text-center shadow-xl animate-in zoom-in-95 duration-300">
+				<div class="mb-6 flex size-24 items-center justify-center rounded-full bg-primary/10">
 				<span class="text-5xl">🎉</span>
 			</div>
 			
@@ -622,6 +623,7 @@
 					<Home class="size-5" />Back to Home
 				</Button>
 			</div>
+		</div>
 		</div>
 	{/if}
 
