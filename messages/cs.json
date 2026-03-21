@@ -1,4 +1,4 @@
-{
+ {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
 
 	"auth_email_label": "E-mail",
@@ -128,5 +128,35 @@
 	"voice_tab_ingredients": "Ingredience",
 	"voice_step_current": "{step}. krok · Právě děláte",
 	"voice_step_next": "Následuje",
-	"voice_next": "Další"
+	"voice_next": "Další",
+
+	"voice_status_connecting": "Připojování…",
+	"voice_status_idle": "Klepnutím na mikrofon začněte",
+	"voice_status_listening": "Poslouchám…",
+	"voice_status_speaking": "Mluvím…",
+	"voice_status_ready": "Připraveno",
+
+	"voice_aria_start": "Spustit asistenta",
+	"voice_aria_stop": "Zastavit asistenta",
+
+	"voice_btn_finish": "Dokončit",
+	"voice_btn_take_photo": "Vyfotit",
+	"voice_btn_share": "Sdílet recept",
+	"voice_btn_home": "Zpět domů",
+	"voice_btn_retake": "Znovu vyfotit",
+
+	"voice_finish_title": "Dobrou chuť!",
+	"voice_finish_description": "Úspěšně jste připravili {name}. Teď je čas si to vychutnat!",
+
+	"voice_cancel_title": "Zrušit recept?",
+	"voice_cancel_description": "Opravdu chcete přestat vařit a vrátit se na domovskou obrazovku? Váš postup bude ztracen.",
+	"voice_cancel_confirm": "Ano, zrušit recept",
+	"voice_cancel_resume": "Ne, pokračuji ve vaření",
+
+	"voice_consent_title": "Ochrana soukromí a umělá inteligence",
+	"voice_consent_description": "Pro spuštění asistenta potvrďte, že rozumíte zpracování vašich údajů.",
+	"voice_consent_ai_act": "Beru na vědomí, že komunikuji se systémem umělé inteligence od OpenAI, nikoli s člověkem.",
+	"voice_consent_gdpr": "Souhlasím se zpracováním mého hlasu a údajů o receptech společností OpenAI za účelem poskytování pokynů k vaření.",
+	"voice_consent_accept": "Přijmout a spustit AI",
+	"voice_consent_cancel": "Zrušit"
 }
