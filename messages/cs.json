@@ -108,5 +108,17 @@
 	"main_difficulty_medium": "Střední",
 	"main_difficulty_hard": "Těžké",
 
-	"aria_remove_tag": "Odebrat štítek"
+	"aria_remove_tag": "Odebrat štítek",
+
+	"recipes_title": "Recepty",
+	"recipes_count": "{count} receptů celkem",
+	"recipes_search_placeholder": "Hledat recept nebo zemi…",
+	"recipes_cat_all": "Vše",
+	"recipes_cat_soups": "Polévky",
+	"recipes_cat_mains": "Hlavní jídla",
+	"recipes_cat_salads": "Saláty",
+	"recipes_cat_desserts": "Dezerty",
+	"recipes_cat_quick": "Rychlé",
+	"recipes_results": "{count} výsledků",
+	"recipes_no_results": "Žádné recepty nenalezeny"
 }

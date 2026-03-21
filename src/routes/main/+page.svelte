@@ -2,7 +2,7 @@
 	import * as m from '$lib/paraglide/messages';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
-	import RecipeDetailModal from './RecipeDetailModal.svelte';
+	import RecipeDetailModal from '../../lib/components/RecipeDetailModal.svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Progress } from '$lib/components/ui/progress';
 	import { goto } from '$app/navigation';

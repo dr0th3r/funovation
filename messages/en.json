@@ -108,5 +108,17 @@
 	"main_difficulty_medium": "Medium",
 	"main_difficulty_hard": "Hard",
 
-	"aria_remove_tag": "Remove tag"
+	"aria_remove_tag": "Remove tag",
+
+	"recipes_title": "Recipes",
+	"recipes_count": "{count} recipes total",
+	"recipes_search_placeholder": "Search recipe or country…",
+	"recipes_cat_all": "All",
+	"recipes_cat_soups": "Soups",
+	"recipes_cat_mains": "Main dishes",
+	"recipes_cat_salads": "Salads",
+	"recipes_cat_desserts": "Desserts",
+	"recipes_cat_quick": "Quick",
+	"recipes_results": "{count} results",
+	"recipes_no_results": "No recipes found"
 }
