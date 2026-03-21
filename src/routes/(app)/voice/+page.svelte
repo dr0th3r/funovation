@@ -27,23 +27,23 @@
 	};
 </script>
 
-<main class="flex w-xl flex-1 flex-col overflow-hidden">
-	<div class="flex-1 overflow-y-auto px-5 pb-20">
-		<h1 class="py-6 text-3xl leading-tight font-black tracking-tight text-foreground">
+<main class="flex w-full flex-1 flex-col overflow-hidden">
+	<div class="flex-1 overflow-y-auto px-4 pb-4">
+		<h1 class="py-5 text-2xl leading-tight font-black tracking-tight text-foreground">
 			{recipe.name}
 		</h1>
 
-		<div class="mb-6 grid grid-cols-2 gap-2">
+		<div class="mb-4 grid grid-cols-2 gap-2">
 			<button
 				onclick={() => (activeTab = 'steps')}
-				class="rounded-xl border py-2 text-sm font-bold transition-all
+				class="rounded-xl border py-2.5 text-sm font-bold transition-all
 					{activeTab === 'steps'
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground'}">{m.voice_tab_steps()}</button
 			>
 			<button
 				onclick={() => (activeTab = 'ingredients')}
-				class="rounded-xl border py-2 text-sm font-bold transition-all
+				class="rounded-xl border py-2.5 text-sm font-bold transition-all
 					{activeTab === 'ingredients'
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground'}"
@@ -56,16 +56,16 @@
 				{#each steps as step, i}
 					{#if i === currentStep || i === currentStep + 1}
 						<div
-							class="rounded-2xl border p-5
+							class="rounded-2xl border p-4
 							{i === currentStep ? 'border-primary bg-primary/5' : 'border-dashed border-border opacity-55'}"
 						>
 							<span
-								class="mb-1 block text-xs font-bold tracking-widest text-muted-foreground uppercase"
+								class="mb-2 block text-xs font-bold tracking-widest text-muted-foreground uppercase"
 							>
 								{i === currentStep ? m.voice_step_current({ step: i + 1 }) : m.voice_step_next()}
 							</span>
 							<p
-								class="text-sm leading-relaxed {i === currentStep
+								class="text-base leading-relaxed {i === currentStep
 									? 'text-foreground'
 									: 'text-secondary-foreground'}"
 							>
@@ -80,25 +80,25 @@
 		{#if activeTab === 'ingredients'}
 			<div class="flex flex-col">
 				{#each ingredients as ing (ing.id)}
-					<div class="border-b border-border py-4 text-sm">
-						<span class="font-bold text-foreground">{ing.name}</span>
+					<div class="border-b border-border py-3.5 text-sm">
+						<span class="font-semibold text-foreground">{ing.name}</span>
 					</div>
 				{/each}
 			</div>
 		{/if}
 	</div>
 
-	<div class="shrink-0 border-t border-border bg-background p-5">
-		<div class="mb-5 flex justify-center">
+	<div class="shrink-0 border-t border-border bg-background px-4 pt-4 pb-6">
+		<div class="mb-4 flex justify-center">
 			<button
 				onclick={() => (isRecording = !isRecording)}
 				aria-label={isRecording ? 'Stop recording' : 'Start recording'}
-				class="flex size-22 items-center justify-center rounded-full transition-all active:scale-95
+				class="flex size-20 items-center justify-center rounded-full transition-all active:scale-95
 					{isRecording
 					? 'animate-pulse-ring bg-primary text-primary-foreground'
 					: 'bg-secondary text-primary'}"
 			>
-				<Mic class="size-10" />
+				<Mic class="size-9" />
 			</button>
 		</div>
 
