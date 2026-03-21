@@ -442,9 +442,9 @@
 	const micPulsing = $derived(isAiSpeaking || isUserSpeaking);
 </script>
 
-<main class="relative flex w-xl flex-1 flex-col overflow-hidden">
-	<div class="flex-1 overflow-y-auto px-5 pb-20">
-		<h1 class="py-6 text-3xl leading-tight font-black tracking-tight text-foreground">
+<main class="relative flex w-full flex-1 flex-col overflow-hidden">
+	<div class="flex-1 overflow-y-auto px-4 pb-4">
+		<h1 class="py-5 text-2xl leading-tight font-black tracking-tight text-foreground">
 			{recipe.name}
 		</h1>
 
@@ -471,17 +471,17 @@
 		{/if}
 
 		<!-- Tabs -->
-		<div class="mb-6 grid grid-cols-2 gap-2">
+		<div class="mb-4 grid grid-cols-2 gap-2">
 			<button
 				onclick={() => (activeTab = 'steps')}
-				class="rounded-xl border py-2 text-sm font-bold transition-all
+				class="rounded-xl border py-2.5 text-sm font-bold transition-all
 						{activeTab === 'steps'
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground'}">{m.voice_tab_steps()}</button
 			>
 			<button
 				onclick={() => (activeTab = 'ingredients')}
-				class="rounded-xl border py-2 text-sm font-bold transition-all
+				class="rounded-xl border py-2.5 text-sm font-bold transition-all
 						{activeTab === 'ingredients'
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground'}"
@@ -494,11 +494,11 @@
 				{#each steps as step, i (step.id)}
 					{#if i === currentStep || i === currentStep + 1}
 						<div
-							class="rounded-2xl border p-5
+							class="rounded-2xl border p-4
 								{i === currentStep ? 'border-primary bg-primary/5' : 'border-dashed border-border opacity-55'}"
 						>
 							<span
-								class="mb-1 block text-xs font-bold tracking-widest text-muted-foreground uppercase"
+								class="mb-2 block text-xs font-bold tracking-widest text-muted-foreground uppercase"
 							>
 								{i === currentStep ? m.voice_step_current({ step: i + 1 }) : m.voice_step_next()}
 							</span>
@@ -521,7 +521,7 @@
 		{#if activeTab === 'ingredients'}
 			<div class="flex flex-col">
 				{#each ingredients as ing (ing.id)}
-					<div class="border-b border-border py-4 text-sm">
+					<div class="border-b border-border py-3.5 text-sm">
 						<span class="font-semibold text-foreground">{ing.name}</span>
 					</div>
 				{/each}
@@ -536,7 +536,7 @@
 		{/if}
 	</div>
 
-	<div class="shrink-0 border-t border-border bg-background p-5">
+	<div class="shrink-0 border-t border-border bg-background px-4 pt-4 pb-6">
 		<!-- Status / error -->
 		<div class="mb-3 text-center">
 			{#if errorMessage}
@@ -549,12 +549,12 @@
 		</div>
 
 		<!-- Mic button -->
-		<div class="mb-5 flex justify-center">
+		<div class="mb-4 flex justify-center">
 			<button
 				onclick={handleMicClick}
 				disabled={connectionState === 'connecting'}
 				aria-label={micActive ? m.voice_aria_stop() : m.voice_aria_start()}
-				class="flex size-22 items-center justify-center rounded-full transition-all active:scale-95 disabled:opacity-50
+				class="flex size-20 items-center justify-center rounded-full transition-all active:scale-95 disabled:opacity-50
 						{micActive ? 'bg-primary text-primary-foreground' : 'bg-secondary text-primary'}
 						{micPulsing ? 'animate-pulse-ring' : ''}"
 			>
@@ -565,7 +565,7 @@
 				{:else if micActive}
 					<MicOff class="size-10" />
 				{:else}
-					<Mic class="size-10" />
+					<Mic class="size-9" />
 				{/if}
 			</button>
 		</div>
