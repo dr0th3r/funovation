@@ -134,7 +134,7 @@
         },
         "cuisine": {
           "name": "cuisine",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -235,6 +235,12 @@
         },
         "category": {
           "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cuisine": {
+          "name": "cuisine",
           "type": "text",
           "primaryKey": false,
           "notNull": true

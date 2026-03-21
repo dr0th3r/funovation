@@ -121,6 +121,8 @@
 	"recipes_cat_quick": "Quick",
 	"recipes_results": "{count} results",
 	"recipes_no_results": "No recipes found",
+	"recipes_tab_recommended": "Recommended",
+	"recipes_tab_sale": "On Sale",
 
 	"voice_tab_steps": "Steps",
 	"voice_tab_ingredients": "Ingredients",

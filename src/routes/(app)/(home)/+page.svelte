@@ -7,130 +7,22 @@
 	import { goto } from '$app/navigation';
 	import Star from '@lucide/svelte/icons/star';
 	import Coins from '@lucide/svelte/icons/coins';
-	import Clock from '@lucide/svelte/icons/clock';
 
-	type Difficulty = 'easy' | 'medium' | 'hard';
+	import type { PageData } from './$types';
 
 	type Recipe = {
 		id: number;
 		name: string;
-		time: string;
-		price: string;
-		color: string;
-		difficulty: Difficulty;
-		description: string;
+		cuisine: string;
+		imageUrl: string | null;
 		ingredients: string[];
-		country: string;
+		pricePerPortionCZK: number;
+		preferences: string[];
 	};
 
-	const recommendedRecipes: Recipe[] = [
-		{
-			id: 1,
-			name: 'Kuřecí nudličky s rýží',
-			time: '30 min',
-			price: '100 Kč/porce',
-			color: '#c9a98a',
-			difficulty: 'easy',
-			description:
-				'Jemné kuřecí nudličky opečené na oleji, podávané s vařenou rýží a čerstvou zeleninou.',
-			ingredients: ['Kuřecí prsa 300 g', 'Rýže 200 g', 'Olej 2 lžíce', 'Sůl, pepř'],
-			country: '🇨🇿 Česká republika'
-		},
-		{
-			id: 2,
-			name: 'Těstovinový salát',
-			time: '20 min',
-			price: '80 Kč/porce',
-			color: '#a8bfa8',
-			difficulty: 'easy',
-			description: 'Studený salát z vaječných těstovin, zeleniny a majonézy. Ideální na léto.',
-			ingredients: ['Těstoviny 250 g', 'Kukuřice', 'Hrášek', 'Majonéza 3 lžíce'],
-			country: '🇮🇹 Itálie'
-		},
-		{
-			id: 3,
-			name: 'Svíčková na smetaně',
-			time: '90 min',
-			price: '150 Kč/porce',
-			color: '#b8a0c8',
-			difficulty: 'hard',
-			description:
-				'Tradiční české jídlo — hovězí svíčková ve smetanové omáčce s knedlíky a brusinkami.',
-			ingredients: [
-				'Hovězí svíčková 500 g',
-				'Mrkev',
-				'Celer',
-				'Smetana 200 ml',
-				'Houskový knedlík'
-			],
-			country: '🇨🇿 Česká republika'
-		},
-		{
-			id: 4,
-			name: 'Smažený řízek',
-			time: '40 min',
-			price: '120 Kč/porce',
-			color: '#d4a574',
-			difficulty: 'medium',
-			description:
-				'Klasický vídeňský řízek z vepřové kotlety, obalený ve strouhance a smažený dozlatova.',
-			ingredients: ['Vepřová kotleta 400 g', 'Vejce 2 ks', 'Strouhanka', 'Olej na smažení'],
-			country: '🇦🇹 Rakousko'
-		}
-	];
+	let { data }: { data: PageData } = $props();
 
-	const budgetRecipes: Recipe[] = [
-		{
-			id: 5,
-			name: 'Čočková polévka',
-			time: '25 min',
-			price: '40 Kč/porce',
-			color: '#c8b870',
-			difficulty: 'easy',
-			description: 'Sytá polévka z červené čočky s kmínem, česnekem a kapkou citronu.',
-			ingredients: ['Červená čočka 200 g', 'Cibule', 'Česnek', 'Kmín', 'Citron'],
-			country: '🇮🇳 Indie'
-		},
-		{
-			id: 6,
-			name: 'Bramborová kaše',
-			time: '20 min',
-			price: '35 Kč/porce',
-			color: '#8ab0c0',
-			difficulty: 'easy',
-			description: 'Krémová bramborová kaše s máslem a mlékem. Dokonalá příloha ke každému jídlu.',
-			ingredients: ['Brambory 600 g', 'Máslo 50 g', 'Mléko 100 ml', 'Sůl, muškátový oříšek'],
-			country: '🇨🇿 Česká republika'
-		},
-		{
-			id: 7,
-			name: 'Fazolový guláš',
-			time: '45 min',
-			price: '50 Kč/porce',
-			color: '#c87860',
-			difficulty: 'medium',
-			description:
-				'Vydatný vegetariánský guláš z červených fazolí, paprik a rajčat s kouřovou paprikou.',
-			ingredients: [
-				'Červené fazole 400 g',
-				'Paprika 2 ks',
-				'Rajčatový protlak',
-				'Uzená paprika'
-			],
-			country: '🇲🇽 Mexiko'
-		},
-		{
-			id: 8,
-			name: 'Zeleninová polévka',
-			time: '30 min',
-			price: '45 Kč/porce',
-			color: '#90b890',
-			difficulty: 'easy',
-			description: 'Lehká a výživná polévka plná sezónní zeleniny, bylinek a dobrého vývaru.',
-			ingredients: ['Mrkev', 'Celer', 'Petržel', 'Hrášek', 'Zeleninový vývar 1 l'],
-			country: '🇫🇷 Francie'
-		}
-	];
+	const { recommendedRecipes, budgetRecipes } = data;
 
 	let selectedRecipe: Recipe | null = $state(null);
 	let sheetOpen = $state(false);
@@ -141,30 +33,18 @@
 	$effect(() => {
 		fetch('/api/user/level')
 			.then((r) => r.json())
-			.then((data: UserLevel) => {
-				userLevel = data;
+			.then((d: UserLevel) => {
+				userLevel = d;
 			})
 			.catch(() => {});
 	});
 
-	const openRecipe = (recipe: Recipe) => {
-		selectedRecipe = recipe;
+	const openRecipe = (r: Recipe) => {
+		selectedRecipe = r;
 		sheetOpen = true;
 	};
 
 	const xpPercent = $derived(Math.min((userLevel.xp / userLevel.xpMax) * 100, 100));
-
-	const difficultyLabel: Record<Difficulty, () => string> = {
-		easy: m.main_difficulty_easy,
-		medium: m.main_difficulty_medium,
-		hard: m.main_difficulty_hard
-	};
-
-	const difficultyClass: Record<Difficulty, string> = {
-		easy: 'bg-[oklch(0.93_0.05_150)] text-[oklch(0.35_0.12_150)]',
-		medium: 'bg-[oklch(0.95_0.06_60)] text-[oklch(0.45_0.15_60)]',
-		hard: 'bg-[oklch(0.93_0.06_27)] text-[oklch(0.45_0.18_27)]'
-	};
 </script>
 
 <main>
@@ -210,28 +90,17 @@
 		>
 			{#each recommendedRecipes as recipe (recipe.id)}
 				<Card.Root class="flex-[0_0_230px]! overflow-hidden p-0! md:flex-none!">
-					<div
-						class="relative h-[140px] w-full md:h-[160px]"
-						style="background-color: {recipe.color}"
-					>
-						<span class="absolute bottom-1.5 left-2 text-xl leading-none"
-							>{recipe.country.split(' ')[0]}</span
+					<div class="relative h-[140px] w-full bg-muted md:h-[160px]">
+						{#if recipe.imageUrl}
+							<img src={recipe.imageUrl} alt={recipe.name} class="h-full w-full object-cover" />
+						{/if}
+						<span class="absolute bottom-1.5 left-2 text-xs font-semibold text-white drop-shadow"
+							>{recipe.cuisine}</span
 						>
 					</div>
 					<Card.Content class="p-3.5">
-						<div class="mb-1 flex items-start justify-between gap-2">
-							<Card.Title class="text-sm leading-snug font-bold">{recipe.name}</Card.Title>
-							<span
-								class="inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-bold {difficultyClass[
-									recipe.difficulty
-								]}"
-							>
-								{difficultyLabel[recipe.difficulty]()}
-							</span>
-						</div>
-						<p class="mb-3 flex items-center gap-1 text-xs text-muted-foreground">
-							<Clock class="size-3" />{recipe.time}<span class="mx-1">•</span>{recipe.price}
-						</p>
+						<Card.Title class="mb-2 text-sm leading-snug font-bold">{recipe.name}</Card.Title>
+						<p class="mb-3 text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
 						<Button size="sm" onclick={() => openRecipe(recipe)}>{m.main_view_more()}</Button>
 					</Card.Content>
 				</Card.Root>
@@ -259,28 +128,17 @@
 		>
 			{#each budgetRecipes as recipe (recipe.id)}
 				<Card.Root class="flex-[0_0_230px]! overflow-hidden p-0! md:flex-none!">
-					<div
-						class="relative h-[140px] w-full md:h-[160px]"
-						style="background-color: {recipe.color}"
-					>
-						<span class="absolute bottom-1.5 left-2 text-xl leading-none"
-							>{recipe.country.split(' ')[0]}</span
+					<div class="relative h-[140px] w-full bg-muted md:h-[160px]">
+						{#if recipe.imageUrl}
+							<img src={recipe.imageUrl} alt={recipe.name} class="h-full w-full object-cover" />
+						{/if}
+						<span class="absolute bottom-1.5 left-2 text-xs font-semibold text-white drop-shadow"
+							>{recipe.cuisine}</span
 						>
 					</div>
 					<Card.Content class="p-3.5">
-						<div class="mb-1 flex items-start justify-between gap-2">
-							<Card.Title class="text-sm leading-snug font-bold">{recipe.name}</Card.Title>
-							<span
-								class="inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-bold {difficultyClass[
-									recipe.difficulty
-								]}"
-							>
-								{difficultyLabel[recipe.difficulty]()}
-							</span>
-						</div>
-						<p class="mb-3 flex items-center gap-1 text-xs text-muted-foreground">
-							<Clock class="size-3" />{recipe.time}<span class="mx-1">•</span>{recipe.price}
-						</p>
+						<Card.Title class="mb-2 text-sm leading-snug font-bold">{recipe.name}</Card.Title>
+						<p class="mb-3 text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
 						<Button size="sm" onclick={() => openRecipe(recipe)}>{m.main_view_more()}</Button>
 					</Card.Content>
 				</Card.Root>
@@ -290,9 +148,4 @@
 </main>
 
 <!-- Recipe detail modal (Drawer on mobile, Dialog on desktop) -->
-<RecipeDetailModal
-	bind:open={sheetOpen}
-	recipe={selectedRecipe}
-	{difficultyClass}
-	{difficultyLabel}
-/>
+<RecipeDetailModal bind:open={sheetOpen} recipe={selectedRecipe} />

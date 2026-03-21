@@ -132,8 +132,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "area": {
-          "name": "area",
+        "country": {
+          "name": "country",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -231,8 +231,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "area": {
-          "name": "area",
+        "country": {
+          "name": "country",
           "type": "text",
           "primaryKey": false,
           "notNull": true
