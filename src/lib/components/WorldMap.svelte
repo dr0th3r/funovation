@@ -11,13 +11,19 @@
 		highlights?: Record<string, number>;
 		defaultColor?: string;
 		classes?: ClassValue;
+		onCountryHover?: (feature: any, e: MouseEvent) => void;
+		onCountryLeave?: () => void;
+		onCountryClick?: (feature: any, e: MouseEvent) => void;
 	};
 
 	let {
 		customColors = {},
 		highlights = {},
 		defaultColor = 'white',
-		classes = ''
+		classes = '',
+		onCountryHover,
+		onCountryLeave,
+		onCountryClick
 	}: Props = $props();
 
 	let filteredData = $derived({
@@ -42,11 +48,17 @@
 	{#each filteredData.features as feature}
 		{@const highlight = highlights[feature.id] ?? 0}
 		{@const baseColor = customColors[feature.properties.name] || defaultColor}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<path
 			d={pathGenerator(feature)}
+			onmousemove={(e) => onCountryHover?.(feature, e)}
+			onmouseleave={() => onCountryLeave?.()}
+			onclick={(e) => onCountryClick?.(feature, e)}
 			style="--path-fill: {highlight > 0
 				? `color-mix(in oklch, var(--primary) ${highlight * 100}%, ${baseColor})`
-				: baseColor}; stroke: var(--muted-foreground);"
+				: baseColor};"
+			class="stroke-border hover:stroke-primary hover:stroke-[1.5px] cursor-pointer transition-all duration-300 focus:outline-none"
 			stroke-width="0.5"
 		/>
 	{/each}

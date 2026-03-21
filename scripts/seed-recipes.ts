@@ -210,7 +210,7 @@ const run = async () => {
 					slug: item.slug,
 					name: item.name,
 					category: item.category,
-					cuisine: countryId,
+					cuisine: countryName,
 					imageUrl: item.imageUrl,
 					ingredients: item.ingredients,
 					simplifiedIngredients: item.simplifiedIngredients

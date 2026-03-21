@@ -9,6 +9,10 @@
 	import { goto } from '$app/navigation';
 	import Star from '@lucide/svelte/icons/star';
 	import Coins from '@lucide/svelte/icons/coins';
+	import X from '@lucide/svelte/icons/x';
+	import MapPin from '@lucide/svelte/icons/map-pin';
+	import Utensils from '@lucide/svelte/icons/utensils';
+	import countryInfoMap from '$lib/data/country-info.json';
 
 	import type { PageData } from './$types';
 
@@ -34,6 +38,28 @@
 		selectedRecipe = r;
 		sheetOpen = true;
 	};
+
+	let hoveredCountry = $state<any>(null);
+	let mousePos = $state({ x: 0, y: 0 });
+
+	const handleCountryHover = (feature: any, e: MouseEvent) => {
+		hoveredCountry = feature;
+		mousePos = { x: e.clientX, y: e.clientY };
+	};
+
+	const handleCountryLeave = () => {
+		hoveredCountry = null;
+	};
+
+	let clickedCountry = $state<any>(null);
+
+	const handleCountryClick = (feature: any) => {
+		clickedCountry = feature;
+	};
+
+	const clickedInfo = $derived(
+		clickedCountry ? (countryInfoMap as Record<string, { capital: string; meal: string }>)[clickedCountry.id] || { capital: 'Unknown Capital', meal: 'Traditional Local Cuisine' } : null
+	);
 </script>
 
 <main class="max-w-4xl">
@@ -49,7 +75,12 @@
 		<div class="h-75 overflow-hidden md:h-90">
 			<LayerCake data={worldData}>
 				<Svg>
-					<WorldMap highlights={{ USA: 0.5, CZE: 0.6 }} />
+					<WorldMap
+						highlights={{ USA: 0.5, CZE: 0.6 }}
+						onCountryHover={handleCountryHover}
+						onCountryLeave={handleCountryLeave}
+						onCountryClick={handleCountryClick}
+					/>
 				</Svg>
 			</LayerCake>
 		</div>
@@ -139,3 +170,62 @@
 
 <!-- Recipe detail modal (Drawer on mobile, Dialog on desktop) -->
 <RecipeDetailModal bind:open={sheetOpen} recipe={selectedRecipe} />
+
+<!-- Hover Tooltip -->
+{#if hoveredCountry && !clickedCountry}
+	<div
+		class="pointer-events-none fixed z-50 flex flex-col gap-1 rounded-2xl border border-white/20 bg-background/70 p-4 text-foreground shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-200"
+		style="left: {mousePos.x + 15}px; top: {mousePos.y + 15}px;"
+	>
+		<span class="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+			{hoveredCountry.id}
+		</span>
+		<strong class="text-lg leading-none">{hoveredCountry.properties.name}</strong>
+		<span class="mt-1 text-sm font-semibold text-primary">Click for details</span>
+	</div>
+{/if}
+
+<!-- Clicked Country Modal -->
+{#if clickedCountry}
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-background/60 px-4 backdrop-blur-sm animate-in fade-in duration-200">
+		<div class="w-full max-w-sm relative rounded-3xl border border-border bg-card p-6 shadow-2xl animate-in zoom-in-95 duration-200 overflow-hidden">
+			<!-- Header -->
+			<div class="mb-5 pr-8">
+				<span class="text-xs font-black tracking-widest text-primary uppercase">{clickedCountry.id}</span>
+				<h2 class="text-3xl font-black text-foreground">{clickedCountry.properties.name}</h2>
+			</div>
+
+			<!-- Close Button -->
+			<button
+				onclick={() => clickedCountry = null}
+				class="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+			>
+				<X class="size-4" />
+			</button>
+
+			<!-- Information Grid -->
+			<div class="flex flex-col gap-4">
+				<div class="flex items-start gap-4 rounded-2xl bg-muted/50 p-4">
+					<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-background shadow-sm text-primary">
+						<MapPin class="size-5" />
+					</div>
+					<div>
+						<p class="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Main City</p>
+						<p class="text-lg font-bold text-foreground">{clickedInfo.capital}</p>
+					</div>
+				</div>
+
+				<div class="flex items-start gap-4 rounded-2xl bg-muted/50 p-4">
+					<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-background shadow-sm text-primary">
+						<Utensils class="size-5" />
+					</div>
+					<div>
+						<p class="text-sm font-semibold text-muted-foreground uppercase tracking-widest">Typical Meal</p>
+						<p class="text-lg font-bold text-foreground">{clickedInfo.meal}</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{/if}

@@ -26,7 +26,12 @@ export const getUserDietaryProfile = async (userId: string) => {
 export const buildDietaryFilter = ({ allergens, diet }: { allergens: string[]; diet: string[] }) =>
 	and(
 		allergens.length > 0
-			? not(sql`${recipe.allergens} && ${JSON.stringify(allergens)}::jsonb`)
+			? not(
+					sql`${recipe.allergens} ?| array[${sql.join(
+						allergens.map((a) => sql`${a}`),
+						sql`, `
+					)}]::text[]`
+			  )
 			: sql`true`,
 		diet.length > 0 ? sql`${recipe.preferences} @> ${JSON.stringify(diet)}::jsonb` : sql`true`
 	);
