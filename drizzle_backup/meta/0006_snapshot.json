@@ -1,6 +1,6 @@
 {
-  "id": "fb564dd3-6aa4-4d1f-937b-933520e4d966",
-  "prevId": "b43805d7-3cad-4ac1-9aac-876998d244fe",
+  "id": "dd1f0d16-ab0c-4c57-ad5e-739c1ecddd3b",
+  "prevId": "fb564dd3-6aa4-4d1f-937b-933520e4d966",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -132,12 +132,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "area": {
-          "name": "area",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "cuisine": {
           "name": "cuisine",
           "type": "text",
@@ -188,7 +182,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "recipe_cuisine_country_id_fk": {
+          "name": "recipe_cuisine_country_id_fk",
+          "tableFrom": "recipe",
+          "tableTo": "country",
+          "columnsFrom": [
+            "cuisine"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "recipe_slug_unique": {
@@ -227,12 +235,6 @@
         },
         "category": {
           "name": "category",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "area": {
-          "name": "area",
           "type": "text",
           "primaryKey": false,
           "notNull": true

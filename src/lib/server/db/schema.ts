@@ -54,9 +54,7 @@ export const recipe = pgTable('recipe', {
 	slug: text('slug').notNull().unique(),
 	name: text('name').notNull(),
 	category: text('category').notNull(),
-	cuisine: integer('cuisine')
-		.notNull()
-		.references(() => country.id),
+	cuisine: text('cuisine').notNull(),
 	imageUrl: text('image_url'),
 	ingredients: jsonb('ingredients').$type<string[]>().notNull(),
 	simplifiedIngredients: integer('simplified_ingredients').array().notNull(),
@@ -76,6 +74,7 @@ export const recipeTranslation = pgTable(
 		locale: text('locale').notNull(),
 		name: text('name').notNull(),
 		category: text('category').notNull(),
+		cuisine: text('cuisine').notNull(),
 		ingredients: jsonb('ingredients').$type<string[]>(),
 		simplifiedIngredients: jsonb('simplified_ingredients').$type<string[]>(),
 		steps: jsonb('steps').$type<string[]>(),

@@ -99,9 +99,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		}
 
 		if (includePreferences.length > 0) {
-			conditions.push(
-				sql`${recipe.preferences} @> ${JSON.stringify(includePreferences)}::jsonb`
-			);
+			conditions.push(sql`${recipe.preferences} @> ${JSON.stringify(includePreferences)}::jsonb`);
 		}
 
 		if (excludeAllergens.length > 0) {
@@ -176,9 +174,6 @@ export const GET: RequestHandler = async ({ url }) => {
 
 		return json({ meals: normalizedMeals });
 	} catch {
-		return json(
-			{ error: 'Unable to load recipes from local database' },
-			{ status: 502 }
-		);
+		return json({ error: 'Unable to load recipes from local database' }, { status: 502 });
 	}
 };
