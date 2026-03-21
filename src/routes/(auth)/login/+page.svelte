@@ -23,7 +23,12 @@
 			<Form.Control>
 				{#snippet children({ props })}
 					<Form.Label>{m.auth_email_label()}</Form.Label>
-					<Input {...props} type="email" bind:value={$form.email} placeholder={m.auth_email_placeholder()} />
+					<Input
+						{...props}
+						type="email"
+						bind:value={$form.email}
+						placeholder={m.auth_email_placeholder()}
+					/>
 				{/snippet}
 			</Form.Control>
 			<Form.FieldErrors />
@@ -33,7 +38,12 @@
 			<Form.Control>
 				{#snippet children({ props })}
 					<Form.Label>{m.auth_password_label()}</Form.Label>
-					<Input {...props} type="password" bind:value={$form.password} placeholder={m.auth_password_placeholder()} />
+					<Input
+						{...props}
+						type="password"
+						bind:value={$form.password}
+						placeholder={m.auth_password_placeholder()}
+					/>
 				{/snippet}
 			</Form.Control>
 			<Form.FieldErrors />
@@ -45,7 +55,9 @@
 			</Button>
 			<p class="text-sm text-muted-foreground">
 				{m.auth_login_no_account()}
-				<a href="/register" class="text-primary underline-offset-4 hover:underline">{m.auth_login_register_link()}</a>
+				<a href="/register" class="text-primary underline hover:no-underline">
+					{m.auth_login_register_link()}
+				</a>
 			</p>
 		</div>
 	</form>

@@ -8,11 +8,17 @@
 
 	type Props = {
 		customColors?: Record<string, string>;
+		highlights?: Record<string, number>;
 		defaultColor?: string;
 		classes?: ClassValue;
 	};
 
-	let { customColors = {}, defaultColor = '#fff', classes }: Props = $props();
+	let {
+		customColors = {},
+		highlights = {},
+		defaultColor = 'white',
+		classes = ''
+	}: Props = $props();
 
 	let filteredData = $derived({
 		type: 'FeatureCollection',
@@ -34,10 +40,13 @@
 
 <g class={cn('map-group', classes)}>
 	{#each filteredData.features as feature}
+		{@const highlight = highlights[feature.id] ?? 0}
+		{@const baseColor = customColors[feature.properties.name] || defaultColor}
 		<path
 			d={pathGenerator(feature)}
-			fill={customColors[feature.properties.name] || defaultColor}
-			stroke="oklch(0.705 0.015 286.067)"
+			style="--path-fill: {highlight > 0
+				? `color-mix(in oklch, var(--primary) ${highlight * 100}%, ${baseColor})`
+				: baseColor}; stroke: var(--muted-foreground);"
 			stroke-width="0.5"
 		/>
 	{/each}
@@ -45,6 +54,7 @@
 
 <style>
 	path {
+		fill: var(--path-fill);
 		transition: fill 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 </style>

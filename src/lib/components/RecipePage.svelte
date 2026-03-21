@@ -46,7 +46,7 @@
 	};
 </script>
 
-<main class="w-full pb-10">
+<main class="w-full min-w-0 pb-10">
 	<!-- Count + search -->
 	<section class="pt-5 pb-4">
 		<p class="text-sm text-muted-foreground">
