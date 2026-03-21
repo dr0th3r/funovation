@@ -1,5 +1,6 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
+  import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
   import { Button } from '$lib/components/ui/button/index.js';
 
   type Step = { id: number; title: string; description: string };
@@ -32,8 +33,35 @@
 
 <div class="mx-auto flex h-screen max-w-[480px] flex-col bg-background font-sans antialiased">
 
-  <header class="flex-shrink-0 border-b border-border px-5 py-[18px]">
-    <a href={resolve('/')} class="font-['Caveat'] text-[1.75rem] font-semibold text-foreground">Papi</a>
+  <!-- Navbar -->
+  <header class="flex-shrink-0 flex items-center justify-between border-b border-border px-5 py-[18px] bg-background sticky top-0 z-[100]">
+    <a href={resolve('/demo')} class="font-['Pacifico'] text-[1.75rem] font-semibold text-foreground no-underline">Papi</a>
+
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
+        {#snippet child({ props }: { props: Record<string, unknown> })}
+          <Button variant="ghost" size="icon" {...props} aria-label="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/>
+            </svg>
+          </Button>
+        {/snippet}
+      </DropdownMenu.Trigger>
+
+      <!-- Dropdown menu -->
+      <DropdownMenu.Content align="end" sideOffset={8} class="nav-dropdown">
+        <DropdownMenu.Item>
+          <a href={resolve('/demo')}>Domů</a>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item>
+          <a href={resolve('/recipes')}>Recepty</a>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item>
+          <a href={resolve('/')}>Nastavení</a>
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   </header>
 
   <main class="flex flex-1 flex-col overflow-hidden">
@@ -126,7 +154,7 @@
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
   :global(.animate-pulse-ring) {
     animation: pulse-ring 1.5s infinite;
@@ -136,5 +164,28 @@
     0%   { box-shadow: 0 0 0 0 oklch(0.505 0.213 27.518 / 0.4); }
     70%  { box-shadow: 0 0 0 16px oklch(0.505 0.213 27.518 / 0); }
     100% { box-shadow: 0 0 0 0 oklch(0.505 0.213 27.518 / 0); }
+  }
+
+  :global(.nav-dropdown) {
+    border-radius: var(--radius-xl) !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: 0 8px 24px oklch(0 0 0 / 0.1) !important;
+    padding: 8px 0 !important;
+    min-width: 180px !important;
+    background: var(--background) !important;
+    z-index: 100;
+  }
+  :global(.nav-dropdown a) {
+    display: block;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: var(--foreground);
+    font-size: 0.95rem;
+    font-weight: 500;
+    width: 100%;
+  }
+  :global(.nav-dropdown [data-highlighted]) {
+    background: var(--secondary) !important;
+    color: var(--secondary-foreground) !important;
   }
 </style>

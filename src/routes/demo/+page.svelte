@@ -12,20 +12,24 @@
     time: string;
     price: string;
     color: string;
+    difficulty: 'Lehké' | 'Střední' | 'Těžké';
+    description: string;
+    ingredients: string[];
+    country: string;
   };
 
   const recommendedRecipes: Recipe[] = [
-    { id: 1, name: 'Kuřecí nudličky s rýží', time: '30 min', price: '100 Kč/porce', color: '#c9a98a' },
-    { id: 2, name: 'Těstovinový salát', time: '20 min', price: '80 Kč/porce', color: '#a8bfa8' },
-    { id: 3, name: 'Svíčková na smetaně', time: '90 min', price: '150 Kč/porce', color: '#b8a0c8' },
-    { id: 4, name: 'Smažený řízek', time: '40 min', price: '120 Kč/porce', color: '#d4a574' },
+    { id: 1, name: 'Kuřecí nudličky s rýží', time: '30 min', price: '100 Kč/porce', color: '#c9a98a', difficulty: 'Lehké',   description: 'Jemné kuřecí nudličky opečené na oleji, podávané s vařenou rýží a čerstvou zeleninou.', ingredients: ['Kuřecí prsa 300 g', 'Rýže 200 g', 'Olej 2 lžíce', 'Sůl, pepř'], country: '🇨🇿 Česká republika' },
+    { id: 2, name: 'Těstovinový salát',       time: '20 min', price: '80 Kč/porce',  color: '#a8bfa8', difficulty: 'Lehké',   description: 'Studený salát z vaječných těstovin, zeleniny a majonézy. Ideální na léto.',              ingredients: ['Těstoviny 250 g', 'Kukuřice', 'Hrášek', 'Majonéza 3 lžíce'],                         country: '🇮🇹 Itálie' },
+    { id: 3, name: 'Svíčková na smetaně',     time: '90 min', price: '150 Kč/porce', color: '#b8a0c8', difficulty: 'Těžké',   description: 'Tradiční české jídlo — hovězí svíčková ve smetanové omáčce s knedlíky a brusinkami.', ingredients: ['Hovězí svíčková 500 g', 'Mrkev', 'Celer', 'Smetana 200 ml', 'Houskový knedlík'],  country: '🇨🇿 Česká republika' },
+    { id: 4, name: 'Smažený řízek',           time: '40 min', price: '120 Kč/porce', color: '#d4a574', difficulty: 'Střední', description: 'Klasický vídeňský řízek z vepřové kotlety, obalený ve strouhance a smažený dozlatova.',  ingredients: ['Vepřová kotleta 400 g', 'Vejce 2 ks', 'Strouhanka', 'Olej na smažení'],             country: '🇦🇹 Rakousko' },
   ];
 
   const budgetRecipes: Recipe[] = [
-    { id: 5, name: 'Čočková polévka', time: '25 min', price: '40 Kč/porce', color: '#c8b870' },
-    { id: 6, name: 'Bramborová kaše', time: '20 min', price: '35 Kč/porce', color: '#8ab0c0' },
-    { id: 7, name: 'Fazolový guláš', time: '45 min', price: '50 Kč/porce', color: '#c87860' },
-    { id: 8, name: 'Zeleninová polévka', time: '30 min', price: '45 Kč/porce', color: '#90b890' },
+    { id: 5, name: 'Čočková polévka',    time: '25 min', price: '40 Kč/porce', color: '#c8b870', difficulty: 'Lehké',   description: 'Sytá polévka z červené čočky s kmínem, česnekem a kapkou citronu.',                   ingredients: ['Červená čočka 200 g', 'Cibule', 'Česnek', 'Kmín', 'Citron'],           country: '🇮🇳 Indie' },
+    { id: 6, name: 'Bramborová kaše',    time: '20 min', price: '35 Kč/porce', color: '#8ab0c0', difficulty: 'Lehké',   description: 'Krémová bramborová kaše s máslem a mlékem. Dokonalá příloha ke každému jídlu.',        ingredients: ['Brambory 600 g', 'Máslo 50 g', 'Mléko 100 ml', 'Sůl, muškátový oříšek'], country: '🇨🇿 Česká republika' },
+    { id: 7, name: 'Fazolový guláš',     time: '45 min', price: '50 Kč/porce', color: '#c87860', difficulty: 'Střední', description: 'Vydatný vegetariánský guláš z červených fazolí, paprik a rajčat s kouřovou paprikou.', ingredients: ['Červené fazole 400 g', 'Paprika 2 ks', 'Rajčatový protlak', 'Uzená paprika'], country: '🇲🇽 Mexiko' },
+    { id: 8, name: 'Zeleninová polévka', time: '30 min', price: '45 Kč/porce', color: '#90b890', difficulty: 'Lehké',   description: 'Lehká a výživná polévka plná sezónní zeleniny, bylinek a dobrého vývaru.',             ingredients: ['Mrkev', 'Celer', 'Petržel', 'Hrášek', 'Zeleninový vývar 1 l'],         country: '🇫🇷 Francie' },
   ];
 
   let selectedRecipe: Recipe | null = $state(null);
@@ -34,14 +38,13 @@
   // ── User level — wire up to your backend here ─────────────────────────
   type UserLevel = { level: number; xp: number; xpMax: number };
 
-  // Default mock shown instantly; replaced by real data on load
   let userLevel = $state<UserLevel>({ level: 8, xp: 90, xpMax: 195 });
 
   $effect(() => {
-    fetch('/api/user/level')            // ← replace with your endpoint
+    fetch('/api/user/level')
       .then((r) => r.json())
       .then((data: UserLevel) => { userLevel = data; })
-      .catch(() => { /* keep mock values on error */ });
+      .catch(() => {});
   });
   // ─────────────────────────────────────────────────────────────────────
 
@@ -51,12 +54,18 @@
   }
 
   let xpPercent = $derived(Math.min((userLevel.xp / userLevel.xpMax) * 100, 100));
+
+  const difficultyColor: Record<Recipe['difficulty'], string> = {
+    Lehké:   'badge-easy',
+    Střední: 'badge-medium',
+    Těžké:   'badge-hard',
+  };
 </script>
 
 <div class="mx-auto max-w-[480px] min-h-screen bg-background relative">
 
   <header class="flex items-center justify-between px-5 py-[18px] bg-background sticky top-0 z-[100] border-b border-border">
-    <a href={resolve('/')} class="font-['Caveat'] text-[1.75rem] font-semibold text-foreground no-underline">Papi</a>
+    <a href={resolve('/demo')} class="font-['Pacifico'] text-[1.75rem] font-semibold text-foreground no-underline">Papi</a>
 
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -72,7 +81,7 @@
 
       <DropdownMenu.Content align="end" sideOffset={8} class="nav-dropdown">
         <DropdownMenu.Item>
-          <a href={resolve('/')}>Domů</a>
+          <a href={resolve('/demo')}>Domů</a>
         </DropdownMenu.Item>
         <DropdownMenu.Item>
           <a href={resolve('/recipes')}>Recepty</a>
@@ -107,14 +116,18 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
           <h2 class="text-[1.05rem] font-bold text-foreground">Doporučené recepty</h2>
         </div>
-        <Button variant="link" class="show-all-btn">Zobrazit vše</Button>
-      </div>
+<Button variant="link" class="show-all-btn" onclick={() => goto('/recipes')}>Zobrazit vše</Button>      </div>
       <div class="card-scroll">
         {#each recommendedRecipes as recipe}
           <Card.Root class="recipe-card">
-            <div class="h-[140px] w-full" style="background-color: {recipe.color}"></div>
+            <div class="h-[140px] w-full relative" style="background-color: {recipe.color}">
+              <span class="card-flag">{recipe.country.split(' ')[0]}</span>
+            </div>
             <Card.Content class="p-[14px]">
-              <Card.Title class="text-[0.95rem] font-bold mb-[6px] leading-[1.3]">{recipe.name}</Card.Title>
+              <div class="flex items-start justify-between gap-2 mb-[4px]">
+                <Card.Title class="text-[0.95rem] font-bold leading-[1.3]">{recipe.name}</Card.Title>
+                <span class="badge {difficultyColor[recipe.difficulty]}">{recipe.difficulty}</span>
+              </div>
               <p class="text-[0.82rem] text-muted-foreground mb-3">{recipe.time} <span class="mx-1">•</span> {recipe.price}</p>
               <Button class="cta-btn" onclick={() => openRecipe(recipe)}>Zobrazit více</Button>
             </Card.Content>
@@ -130,14 +143,19 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M13.744 17.736a6 6 0 1 1-7.48-7.48"/><path d="M15 6h1v4"/><path d="m6.134 14.768.866-.5 2 3.464"/><circle cx="16" cy="8" r="6"/></svg>
           <h2 class="text-[1.05rem] font-bold text-foreground">Jídlo za lepší cenu</h2>
         </div>
-        <Button variant="link" class="show-all-btn">Zobrazit vše</Button>
+        <Button variant="link" class="show-all-btn" onclick={() => goto('/recipes')}>Zobrazit vše</Button>
       </div>
       <div class="card-scroll">
         {#each budgetRecipes as recipe}
           <Card.Root class="recipe-card">
-            <div class="h-[140px] w-full" style="background-color: {recipe.color}"></div>
+            <div class="h-[140px] w-full relative" style="background-color: {recipe.color}">
+              <span class="card-flag">{recipe.country.split(' ')[0]}</span>
+            </div>
             <Card.Content class="p-[14px]">
-              <Card.Title class="text-[0.95rem] font-bold mb-[6px] leading-[1.3]">{recipe.name}</Card.Title>
+              <div class="flex items-start justify-between gap-2 mb-[4px]">
+                <Card.Title class="text-[0.95rem] font-bold leading-[1.3]">{recipe.name}</Card.Title>
+                <span class="badge {difficultyColor[recipe.difficulty]}">{recipe.difficulty}</span>
+              </div>
               <p class="text-[0.82rem] text-muted-foreground mb-3">{recipe.time} <span class="mx-1">•</span> {recipe.price}</p>
               <Button class="cta-btn" onclick={() => openRecipe(recipe)}>Zobrazit více</Button>
             </Card.Content>
@@ -148,22 +166,54 @@
   </main>
 </div>
 
-<!-- Recipe Sheet -->
+<!-- Recipe Sheet — same as recipes page -->
 <Sheet.Root bind:open={sheetOpen}>
   <Sheet.Content side="bottom" class="recipe-sheet">
     {#if selectedRecipe}
-      <div class="mx-4 mt-4 h-[180px] rounded-2xl" style="background-color: {selectedRecipe.color}"></div>
+      <!-- Image with flag -->
+      <div class="sheet-image-wrap">
+        <div class="sheet-image" style="background-color: {selectedRecipe.color}">
+          <span class="sheet-flag">{selectedRecipe.country.split(' ')[0]}</span>
+        </div>
+      </div>
+
       <Sheet.Header class="px-5 pt-4">
-        <Sheet.Title class="text-[1.2rem] font-bold text-foreground">{selectedRecipe.name}</Sheet.Title>
-        <p class="text-[0.85rem] text-muted-foreground mt-1">{selectedRecipe.time} <span class="mx-1">•</span> {selectedRecipe.price}</p>
+        <!-- Title + difficulty badge -->
+        <div class="flex items-start justify-between gap-3">
+          <Sheet.Title class="text-[1.25rem] font-bold text-foreground leading-snug">{selectedRecipe.name}</Sheet.Title>
+          <span class="badge {difficultyColor[selectedRecipe.difficulty]} flex-shrink-0 mt-[3px]">{selectedRecipe.difficulty}</span>
+        </div>
+        <!-- Meta row -->
+        <div class="flex items-center gap-3 mt-1 flex-wrap">
+          <span class="text-[0.82rem] text-muted-foreground flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {selectedRecipe.time}
+          </span>
+          <span class="text-muted-foreground opacity-40 text-xs">•</span>
+          <span class="text-[0.82rem] text-muted-foreground">{selectedRecipe.price}</span>
+          <span class="text-muted-foreground opacity-40 text-xs">•</span>
+          <span class="text-[0.82rem] text-muted-foreground">{selectedRecipe.country}</span>
+        </div>
       </Sheet.Header>
+
       <div class="px-5 pt-4 pb-6">
+        <!-- Description -->
+        <p class="text-[0.88rem] leading-relaxed text-secondary-foreground mb-5">{selectedRecipe.description}</p>
+
+        <!-- Ingredients -->
         <p class="text-[0.9rem] font-bold mb-2 text-foreground">Ingredience:</p>
-        <ul class="list-disc pl-5 text-[0.9rem] text-secondary-foreground mb-5 flex flex-col gap-1">
-          <li>seznam</li>
-          <li>seznam</li>
+        <ul class="mb-6 flex flex-col gap-2">
+          {#each selectedRecipe.ingredients as ing}
+            <li class="flex items-center gap-2 text-[0.88rem] text-secondary-foreground">
+              <span class="ing-dot"></span>
+              {ing}
+            </li>
+          {/each}
         </ul>
-        <Button onclick={() => goto('/voice')} class="sheet-cta">Pojďme na to</Button>
+
+        <Button onclick={() => goto('/voice')} class="sheet-cta">
+          Pojďme na to
+        </Button>
       </div>
     {/if}
   </Sheet.Content>
@@ -171,6 +221,7 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
   /* Level progress bar */
   .level-bar-track {
@@ -223,6 +274,30 @@
     box-shadow: 0 2px 12px oklch(0 0 0 / 0.07) !important;
   }
 
+  /* Flag on card image */
+  .card-flag {
+    position: absolute;
+    bottom: 6px;
+    left: 8px;
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  /* Difficulty badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-easy   { background: oklch(0.93 0.05 150); color: oklch(0.35 0.12 150); }
+  .badge-medium { background: oklch(0.95 0.06 60);  color: oklch(0.45 0.15 60);  }
+  .badge-hard   { background: oklch(0.93 0.06 27);  color: oklch(0.45 0.18 27);  }
+
   :global(.show-all-btn) {
     color: var(--primary) !important;
     font-size: 0.85rem !important;
@@ -268,10 +343,29 @@
   }
 
   /* Sheet */
+  .sheet-image-wrap { padding: 16px 16px 0; }
+  .sheet-image {
+    width: 100%;
+    height: 160px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 12px;
+  }
+  .sheet-flag { font-size: 2rem; line-height: 1; }
+
+  .ing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+
   :global(.recipe-sheet) {
     border-radius: var(--radius-3xl) var(--radius-3xl) 0 0 !important;
     padding: 0 !important;
-    max-height: 60vh !important;
+    max-height: 80vh !important;
     overflow-y: auto !important;
     background: var(--background) !important;
   }
@@ -291,5 +385,8 @@
     font-size: 0.95rem !important;
     font-weight: 700 !important;
     height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 </style>

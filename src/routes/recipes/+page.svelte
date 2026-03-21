@@ -67,7 +67,7 @@
 
   <!-- Navbar (same as home) -->
   <header class="flex items-center justify-between px-5 py-[18px] bg-background sticky top-0 z-[100] border-b border-border">
-    <a href={resolve('/')} class="font-['Caveat'] text-[1.75rem] font-semibold text-foreground no-underline">Pipa</a>
+    <a href={resolve('/demo')} class="font-['Pacifico'] text-[1.75rem] font-semibold text-foreground no-underline">Papi</a>
 
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
@@ -215,7 +215,6 @@
         </ul>
 
         <Button onclick={() => goto('/voice')} class="sheet-cta">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
           Pojďme vařit!
         </Button>
       </div>
@@ -224,7 +223,8 @@
 </Sheet.Root>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
   /* ── Search ── */
   .search-wrap {
