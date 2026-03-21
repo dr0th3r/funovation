@@ -13,14 +13,14 @@
 	import { SvelteSet, SvelteMap } from 'svelte/reactivity';
 	import { goto } from '$app/navigation';
 
-	import type { PageData } from './$types';
+	import type { PageProps } from './$types';
 
 	type Step = { id: number; title: string; description: string };
 	type Ingredient = { id: number; name: string };
 	type ConnectionState = 'disconnected' | 'connecting' | 'connected';
 	type ActiveTimer = { id: number; label: string; remaining: number; paused?: boolean };
 
-	let { data }: { data: PageData } = $props();
+	let { data }: PageProps = $props();
 
 	const recipe = data.recipe;
 	const steps: Step[] = recipe.steps.map((raw, i) => {
@@ -485,8 +485,9 @@
 						{activeTab === 'ingredients'
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground'}"
-				>{m.voice_tab_ingredients()}</button
 			>
+				{m.voice_tab_ingredients()}
+			</button>
 		</div>
 
 		{#if activeTab === 'steps'}

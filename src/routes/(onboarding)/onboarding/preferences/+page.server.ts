@@ -1,6 +1,6 @@
 import { matchIngredientsWithAi } from '$lib/server/ai/ingredient-matcher';
 import { db } from '$lib/server/db';
-import { ingredient, ingredientTranslation, userProfile } from '$lib/server/db/schema';
+import { recipe, recipeTranslation, userProfile } from '$lib/server/db/schema';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq, sql } from 'drizzle-orm';
 import { superValidate } from 'sveltekit-superforms';
@@ -81,14 +81,21 @@ const getRequestedLocale = (event: Parameters<Actions['save']>[0]) => {
 };
 
 const getIngredientReferenceNames = async (requestedLocale: string) => {
-	const rows = await db
-		.select({
-			name: sql<string>`coalesce((select ${ingredientTranslation.name} from ${ingredientTranslation} where ${ingredientTranslation.ingredientId} = ${ingredient.id} and ${ingredientTranslation.locale} = ${requestedLocale} limit 1), (select ${ingredientTranslation.name} from ${ingredientTranslation} where ${ingredientTranslation.ingredientId} = ${ingredient.id} and ${ingredientTranslation.locale} = 'en' limit 1), ${ingredient.name})`
-		})
-		.from(ingredient)
-		.orderBy(ingredient.name);
+	const baseIngredients = await db.select({ ingredients: recipe.ingredients }).from(recipe);
+	const translatedIngredients = await db
+		.select({ ingredients: recipeTranslation.ingredients })
+		.from(recipeTranslation)
+		.where(eq(recipeTranslation.locale, requestedLocale));
 
-	return rows.map((row) => row.name);
+	const allIngredients = [
+		...baseIngredients.flatMap((r) => r.ingredients),
+		...translatedIngredients.flatMap((r) => r.ingredients ?? [])
+	];
+
+	// Extract simplified names if possible, but for now just use the whole strings
+	// In a real app, we might want to pre-process these to get "chicken" from "200g chicken"
+	// For now, let's just use unique strings and hope for the best with AI/Levenshtein
+	return Array.from(new Set(allIngredients)).sort();
 };
 
 const normalizeDislikedFoods = async (

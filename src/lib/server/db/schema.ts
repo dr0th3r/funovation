@@ -28,36 +28,14 @@ export const countryTranslation = pgTable(
 	})
 );
 
-export const ingredient = pgTable('ingredient', {
-	id: serial('id').primaryKey(),
-	name: text('name').notNull().unique()
-});
-
-export const ingredientTranslation = pgTable(
-	'ingredient_translation',
-	{
-		ingredientId: integer('ingredient_id')
-			.notNull()
-			.references(() => ingredient.id, { onDelete: 'cascade' }),
-		locale: text('locale').notNull(),
-		name: text('name').notNull(),
-		createdAt: timestamp('created_at').defaultNow().notNull(),
-		updatedAt: timestamp('updated_at').defaultNow().notNull()
-	},
-	(table) => ({
-		pk: primaryKey({ columns: [table.ingredientId, table.locale] })
-	})
-);
-
 export const recipe = pgTable('recipe', {
 	id: serial('id').primaryKey(),
 	slug: text('slug').notNull().unique(),
 	name: text('name').notNull(),
 	category: text('category').notNull(),
-	cuisine: text('cuisine').notNull(),
+	cuisine: integer('cuisine').notNull(),
 	imageUrl: text('image_url'),
 	ingredients: jsonb('ingredients').$type<string[]>().notNull(),
-	simplifiedIngredients: integer('simplified_ingredients').array().notNull(),
 	steps: jsonb('steps').$type<string[]>().notNull(),
 	timeLengthMinutes: integer('time_length_minutes').notNull(),
 	preferences: jsonb('preferences').$type<string[]>().notNull(),
@@ -74,9 +52,8 @@ export const recipeTranslation = pgTable(
 		locale: text('locale').notNull(),
 		name: text('name').notNull(),
 		category: text('category').notNull(),
-		cuisine: text('cuisine').notNull(),
+		cuisine: integer('cuisine').notNull(),
 		ingredients: jsonb('ingredients').$type<string[]>(),
-		simplifiedIngredients: jsonb('simplified_ingredients').$type<string[]>(),
 		steps: jsonb('steps').$type<string[]>(),
 		createdAt: timestamp('created_at').defaultNow().notNull(),
 		updatedAt: timestamp('updated_at').defaultNow().notNull()
