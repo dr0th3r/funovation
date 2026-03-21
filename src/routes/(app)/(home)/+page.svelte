@@ -82,7 +82,7 @@
 							<img src={recipe.imageUrl} alt={recipe.name} class="h-full w-full object-cover" />
 						{/if}
 					</div>
-					<Card.Content class="p-3.5">
+					<Card.Content class="flex flex-col flex-1 p-3.5">
 						<span
 							class="mb-1 block text-[10px] font-bold tracking-wider text-muted-foreground uppercase"
 						>
@@ -90,7 +90,9 @@
 						</span>
 						<Card.Title class="mb-2 text-sm leading-snug font-bold">{recipe.name}</Card.Title>
 						<p class="mb-3 text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
-						<Button size="sm" onclick={() => openRecipe(recipe)}>{m.main_view_more()}</Button>
+						<Button size="sm" class="mt-auto" onclick={() => openRecipe(recipe)}
+							>{m.main_view_more()}</Button
+						>
 					</Card.Content>
 				</Card.Root>
 			{/each}
@@ -122,14 +124,16 @@
 							<img src={recipe.imageUrl} alt={recipe.name} class="h-full w-full object-cover" />
 						{/if}
 					</div>
-					<Card.Content class="p-3.5">
+					<Card.Content class="flex flex-col flex-1 p-3.5">
 						<span
 							class="mb-1 block text-[10px] font-bold tracking-wider text-muted-foreground uppercase"
 							>{recipe.cuisine}</span
 						>
 						<Card.Title class="mb-2 text-sm leading-snug font-bold">{recipe.name}</Card.Title>
 						<p class="mb-3 text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
-						<Button size="sm" onclick={() => openRecipe(recipe)}>{m.main_view_more()}</Button>
+						<Button size="sm" class="mt-auto" onclick={() => openRecipe(recipe)}
+							>{m.main_view_more()}</Button
+						>
 					</Card.Content>
 				</Card.Root>
 			{/each}
