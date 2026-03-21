@@ -4,16 +4,16 @@
 	import Mic from '@lucide/svelte/icons/mic';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
-	import type { PageData } from './$types';
+	import type { PageProps } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data }: PageProps = $props();
 
-	const { recipe } = data;
+	let recipe = $derived(data.recipe);
 
 	// DB steps are plain strings — give each an index-based id
-	const steps = recipe.steps.map((description, i) => ({ id: i, description }));
+	const steps = $derived(recipe.steps.map((description, i) => ({ id: i, description })));
 	// DB simplifiedIngredients are plain strings like "Chicken breast 300g"
-	const ingredients = recipe.simplifiedIngredients.map((name, i) => ({ id: i, name }));
+	const ingredients = $derived(recipe.ingredients.map((name, i) => ({ id: i, name })));
 
 	let activeTab: 'steps' | 'ingredients' = $state('steps');
 	let currentStep = $state(0);
@@ -47,8 +47,9 @@
 					{activeTab === 'ingredients'
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground'}"
-				>{m.voice_tab_ingredients()}</button
 			>
+				{m.voice_tab_ingredients()}
+			</button>
 		</div>
 
 		{#if activeTab === 'steps'}

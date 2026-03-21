@@ -7,12 +7,11 @@ export type ExampleRecipeSeed = {
 	cuisine: string;
 	imageUrl: string | null;
 	ingredients: string[];
-	simplifiedIngredients: string[];
 	steps: string[];
 	timeLengthMinutes: number;
 	preferences: Preference[];
 	pricePerPortionCZK: number;
-	allergens: string[];// EU standard codes (1-14)
+	allergens: string[]; // EU standard codes (1-14)
 };
 
 export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
@@ -34,7 +33,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Salt and pepper',
 			'Fresh parsley'
 		],
-		simplifiedIngredients: ['oil', 'onion', 'bell pepper', 'garlic', 'cumin', 'paprika', 'tomatoes', 'eggs', 'parsley', 'bread'],
 		steps: [
 			'Prep;Heat oil and saute onion and pepper until soft.',
 			'Aromatics;Stir in garlic and spices for 30 seconds.',
@@ -64,7 +62,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tsp cornstarch + 2 tbsp water',
 			'Steamed broccoli'
 		],
-		simplifiedIngredients: ['chicken', 'rice', 'oil', 'soy sauce', 'mirin', 'sugar', 'ginger', 'cornstarch', 'broccoli'],
 		steps: [
 			'Chicken;Sear chicken in oil until cooked through.',
 			'Sauce;Add soy, mirin, sugar, and ginger;simmer briefly.',
@@ -94,7 +91,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 cup spinach',
 			'Lime wedges'
 		],
-		simplifiedIngredients: ['lentils', 'oil', 'onion', 'garlic', 'curry powder', 'turmeric', 'coconut milk', 'vegetable stock', 'spinach', 'lime'],
 		steps: [
 			'Aromatics;Saute onion and garlic until fragrant.',
 			'Spices;Bloom curry powder and turmeric for 30 seconds.',
@@ -124,7 +120,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 cup shredded cheese',
 			'Tortilla chips or warm tortillas'
 		],
-		simplifiedIngredients: ['beef', 'onion', 'garlic', 'taco seasoning', 'beans', 'corn', 'tomatoes', 'cheese', 'tortillas'],
 		steps: [
 			'Beef;Brown beef with onion and garlic;drain excess fat.',
 			'Mix;Add taco seasoning, beans, corn, and tomato sauce.',
@@ -150,7 +145,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 garlic cloves, minced',
 			'Salt and pepper'
 		],
-		simplifiedIngredients: ['salmon', 'oil', 'lemon', 'dill', 'garlic'],
 		steps: [
 			'Prep;Season salmon with salt and pepper.',
 			'Flavor;Mix oil, garlic, and dill, then brush over salmon.',
@@ -177,7 +171,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Salt',
 			'Parmesan (optional)'
 		],
-		simplifiedIngredients: ['pasta', 'oil', 'garlic', 'chili', 'parsley', 'cheese'],
 		steps: [
 			'Pasta;Cook spaghetti in salted water until al dente.',
 			'Aromatics;Gently fry garlic in olive oil until lightly golden.',
@@ -204,7 +197,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp extra virgin olive oil',
 			'Salt'
 		],
-		simplifiedIngredients: ['pizza dough', 'tomatoes', 'cheese', 'basil', 'oil'],
 		steps: [
 			'Prep;Preheat oven to 250C with a pizza stone inside.',
 			'Dough;Stretch dough into a 12-inch circle.',
@@ -235,7 +227,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Fresh basil leaves',
 			'Cooked jasmine rice'
 		],
-		simplifiedIngredients: ['chicken', 'curry paste', 'coconut milk', 'bamboo shoots', 'bell pepper', 'fish sauce', 'sugar', 'basil', 'rice'],
 		steps: [
 			'Base;Fry green curry paste in a little coconut cream until fragrant.',
 			'Chicken;Add chicken and cook until outside is white.',
@@ -265,7 +256,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1/4 cup melted butter',
 			'Butter and maple syrup for serving'
 		],
-		simplifiedIngredients: ['flour', 'sugar', 'baking powder', 'baking soda', 'buttermilk', 'eggs', 'butter', 'maple syrup'],
 		steps: [
 			'Dry;Whisk dry ingredients in a large bowl.',
 			'Wet;In another bowl, whisk buttermilk, eggs, and melted butter.',
@@ -295,7 +285,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp cornstarch',
 			'2 tbsp vegetable oil'
 		],
-		simplifiedIngredients: ['beef', 'broccoli', 'soy sauce', 'oyster sauce', 'sesame oil', 'garlic', 'ginger', 'cornstarch', 'oil'],
 		steps: [
 			'Marinate;Toss beef with 1 tbsp soy sauce and cornstarch;let sit 10 mins.',
 			'Sauce;Mix remaining soy sauce, oyster sauce, and sesame oil.',
@@ -325,7 +314,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp red wine vinegar',
 			'1 tsp dried oregano'
 		],
-		simplifiedIngredients: ['chickpeas', 'cucumber', 'tomatoes', 'onion', 'cheese', 'olives', 'oil', 'vinegar', 'oregano'],
 		steps: [
 			'Prep;Combine chickpeas, cucumber, tomatoes, onion, and olives in a bowl.',
 			'Dressing;Whisk olive oil, vinegar, oregano, salt, and pepper to make dressing.',
@@ -355,7 +343,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 tbsp butter',
 			'2 tbsp olive oil'
 		],
-		simplifiedIngredients: ['rice', 'mushrooms', 'onion', 'garlic', 'wine', 'broth', 'cheese', 'butter', 'oil'],
 		steps: [
 			'Mushrooms;Sauté mushrooms in 1 tbsp oil until browned;remove and set aside.',
 			'Aromatics;In the same pot, sauté onions and garlic in remaining oil until soft.',
@@ -385,7 +372,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Lime wedges',
 			'Cilantro for garnish'
 		],
-		simplifiedIngredients: ['pasta', 'eggs', 'bean sprouts', 'peanuts', 'onion', 'pad thai sauce', 'oil', 'lime', 'cilantro'],
 		steps: [
 			'Noodles;Soak rice noodles in warm water until pliable, then drain.',
 			'Eggs;Heat oil in a wok, scramble eggs loosely, and push to the side.',
@@ -414,7 +400,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 baguette, sliced and toasted',
 			'1.5 cups Gruyère cheese, grated'
 		],
-		simplifiedIngredients: ['onion', 'butter', 'oil', 'wine', 'beef broth', 'thyme', 'bread', 'cheese'],
 		steps: [
 			'Onions;Caramelize onions in butter and oil over medium-low heat for 40 mins.',
 			'Deglaze;Deglaze the pot with sherry, scraping up browned bits.',
@@ -445,7 +430,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 tbsp all-purpose flour',
 			'1/2 cup parmesan cheese, grated'
 		],
-		simplifiedIngredients: ['eggplant', 'beef', 'onion', 'garlic', 'tomatoes', 'cinnamon', 'milk', 'butter', 'flour', 'cheese'],
 		steps: [
 			'Eggplant;Roast eggplant slices at 200°C for 20 minutes until tender.',
 			'Meat;Brown meat with onion and garlic, then add tomatoes and cinnamon;simmer 20 minutes.',
@@ -475,7 +459,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 cup heavy cream',
 			'Fresh cilantro for garnish'
 		],
-		simplifiedIngredients: ['chicken', 'yogurt', 'garam masala', 'onion', 'garlic', 'ginger', 'tomatoes', 'cream', 'cilantro'],
 		steps: [
 			'Marinate;Marinate chicken in yogurt and 1 tbsp of garam masala for at least 1 hour.',
 			'Sear;Sear the marinated chicken in a hot pan until browned;remove and set aside.',
@@ -503,7 +486,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Salt and black pepper to taste',
 			'1 tsp fresh lemon juice'
 		],
-		simplifiedIngredients: ['bread', 'avocado', 'eggs', 'vinegar', 'pepper', 'lemon'],
 		steps: [
 			'Toast;Toast the sourdough bread slices until golden and crisp.',
 			'Avocado;In a small bowl, mash the avocado with lemon juice, salt, and pepper.',
@@ -529,7 +511,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 green onions, thinly sliced',
 			'1 tbsp dried wakame seaweed'
 		],
-		simplifiedIngredients: ['dashi', 'miso', 'tofu', 'onion', 'seaweed'],
 		steps: [
 			'Wakame;Rehydrate the dried wakame in a small bowl of water for 10 minutes, then drain well.',
 			'Broth;Bring the dashi stock to a gentle simmer in a medium pot over medium heat.',
@@ -559,7 +540,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp Dijon mustard',
 			'Cooked egg noodles for serving'
 		],
-		simplifiedIngredients: ['beef', 'mushrooms', 'onion', 'butter', 'flour', 'beef broth', 'sour cream', 'mustard', 'pasta'],
 		steps: [
 			'Beef;Quickly sear beef strips in a hot skillet with a little oil until browned;remove and set aside.',
 			'Veggies;Melt butter in the same skillet, add chopped onions and mushrooms, cooking until soft and browned.',
@@ -586,7 +566,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1 tbsp balsamic glaze',
 			'Flaky sea salt and black pepper'
 		],
-		simplifiedIngredients: ['tomatoes', 'cheese', 'basil', 'oil', 'balsamic glaze'],
 		steps: [
 			'Layer;Alternate slices of tomato and mozzarella on a large serving platter.',
 			'Basil;Tuck fresh basil leaves between the slices.',
@@ -614,7 +593,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 cloves garlic, minced',
 			'2 tbsp vegetable oil'
 		],
-		simplifiedIngredients: ['tofu', 'vegetables', 'soy sauce', 'hoisin', 'sesame oil', 'ginger', 'garlic', 'oil'],
 		steps: [
 			'Tofu;Pan-fry tofu cubes in 1 tbsp of vegetable oil until golden and crispy on all sides, then remove from pan.',
 			'Veggies;Add the remaining oil and stir-fry the mixed vegetables, ginger, and garlic for 3-4 minutes.',
@@ -644,7 +622,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'1/2 cup chicken broth',
 			'Hamburger buns for serving'
 		],
-		simplifiedIngredients: ['pork', 'paprika', 'sugar', 'garlic', 'onion', 'bbq sauce', 'vinegar', 'chicken broth', 'bread'],
 		steps: [
 			'Rub;Rub the pork shoulder evenly with smoked paprika, brown sugar, garlic powder, onion powder, salt, and pepper.',
 			'Prep;Place the pork in a slow cooker along with the apple cider vinegar and chicken broth.',
@@ -674,7 +651,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'Juice of 1 lemon',
 			'1/2 tsp red pepper flakes'
 		],
-		simplifiedIngredients: ['shrimp', 'pasta', 'butter', 'oil', 'garlic', 'wine', 'parsley', 'lemon', 'pepper'],
 		steps: [
 			'Pasta;Boil linguine in salted water according to package directions until al dente.',
 			'Base;Melt 2 tbsp butter and olive oil in a large skillet over medium heat.',
@@ -704,7 +680,6 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 			'2 tbsp Thai chili paste (Nam Prik Pao)',
 			'1/4 cup fresh lime juice'
 		],
-		simplifiedIngredients: ['broth', 'lemongrass', 'lime leaves', 'ginger', 'mushrooms', 'shrimp', 'fish sauce', 'chili paste', 'lime'],
 		steps: [
 			'Broth;Bring the broth to a boil in a pot and add lemongrass, kaffir lime leaves, and galangal;simmer for 5 minutes.',
 			'Mushrooms;Stir in the mushrooms and Thai chili paste, cooking for another 3 minutes.',

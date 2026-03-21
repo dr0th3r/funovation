@@ -5,7 +5,6 @@ export type ExampleRecipeTranslationSeed = {
 	category: string;
 	cuisine: string;
 	ingredients: string[];
-	simplifiedIngredients: string[];
 	steps: string[];
 };
 
@@ -30,7 +29,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'Sůl a pepř',
 			'Čerstvá petržel'
 		],
-		simplifiedIngredients: ['olej', 'cibule', 'paprika', 'česnek', 'kmín', 'paprika', 'rajčata', 'vejce', 'petržel', 'chléb'],
 		steps: [
 			'Příprava;Rozehřejte olej a orestujte cibuli a papriku dozměkka.',
 			'Základ;Přidejte česnek a koření a míchejte 30 sekund.',
@@ -56,7 +54,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 lžička kukuřičného škrobu + 2 lžíce vody',
 			'Brokolice v páře'
 		],
-		simplifiedIngredients: ['kuře', 'rýže', 'olej', 'sójová omáčka', 'mirin', 'cukr', 'zázvor', 'škrob', 'brokolice'],
 		steps: [
 			'Kuře;Orestujte kuře na oleji, dokud není propečené.',
 			'Omáčka;Přidejte sójovou omáčku, mirin, cukr a zázvor;krátce povařte.',
@@ -82,7 +79,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 šálek špenátu',
 			'Měsíčky limetky'
 		],
-		simplifiedIngredients: ['čočka', 'olej', 'cibule', 'česnek', 'kari koření', 'kurkuma', 'kokosové mléko', 'zeleninový vývar', 'špenát', 'limetka'],
 		steps: [
 			'Základ;Orestujte cibuli a česnek, dokud se nerozvoní.',
 			'Koření;Opražte kari koření a kurkumu po dobu 30 sekund.',
@@ -108,7 +104,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 šálek strouhaného sýra',
 			'Tortilla chipsy nebo teplé tortilly'
 		],
-		simplifiedIngredients: ['hovězí', 'cibule', 'česnek', 'taco koření', 'fazole', 'kukuřice', 'rajčata', 'sýr', 'tortilly'],
 		steps: [
 			'Hovězí;Orestujte hovězí s cibulí a česnekem;slijte přebytečný tuk.',
 			'Smíchání;Přidejte taco koření, fazole, kukuřici a rajčatovou omáčku.',
@@ -130,7 +125,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'2 stroužky česneku, nasekané',
 			'Sůl a pepř'
 		],
-		simplifiedIngredients: ['losos', 'olej', 'citron', 'kopr', 'česnek'],
 		steps: [
 			'Příprava;Osolte a opepřete lososa.',
 			'Dochucení;Smíchejte olej, česnek a kopr, poté potřete lososa.',
@@ -153,7 +147,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'Sůl',
 			'Parmazán (volitelně)'
 		],
-		simplifiedIngredients: ['těstoviny', 'olej', 'česnek', 'chilli', 'petržel', 'sýr'],
 		steps: [
 			'Těstoviny;Uvařte špagety v osolené vodě na skus (al dente).',
 			'Základ;Jemně orestujte česnek na olivovém oleji do světle zlatova.',
@@ -176,7 +169,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 lžíce extra panenského olivového oleje',
 			'Sůl'
 		],
-		simplifiedIngredients: ['těsto na pizzu', 'rajčata', 'sýr', 'bazalka', 'olej'],
 		steps: [
 			'Příprava;Předehřejte troubu na 250°C s kamenem na pizzu uvnitř.',
 			'Těsto;Vytáhněte těsto do kruhu o průměru 30 cm.',
@@ -203,7 +195,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'Lístky čerstvé bazalky',
 			'Vařená jasmínová rýže'
 		],
-		simplifiedIngredients: ['kuře', 'kari pasta', 'kokosové mléko', 'bambusové výhonky', 'paprika', 'rybí omáčka', 'cukr', 'bazalka', 'rýže'],
 		steps: [
 			'Základ;Orestujte zelenou kari pastu na trošce kokosového krému, dokud se nerozvoní.',
 			'Kuře;Přidejte kuře a vařte, dokud povrch nezbělá.',
@@ -229,7 +220,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1/4 šálku rozpuštěného másla',
 			'Máslo a javorový sirup na podávání'
 		],
-		simplifiedIngredients: ['mouka', 'cukr', 'prášek do pečiva', 'jedlá soda', 'podmáslí', 'vejce', 'máslo', 'javorový sirup'],
 		steps: [
 			'Suché;Vyšlehejte suché ingredience ve velké míse.',
 			'Mokré;V jiné míse vyšlehejte podmáslí, vejce a rozpuštěné máslo.',
@@ -255,7 +245,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 lžíce kukuřičného škrobu',
 			'2 lžíce rostlinného oleje'
 		],
-		simplifiedIngredients: ['hovězí', 'brokolice', 'sójová omáčka', 'ústřicová omáčka', 'sezamový olej', 'česnek', 'zázvor', 'škrob', 'olej'],
 		steps: [
 			'Marinování;Promíchejte hovězí s 1 lžící sójové omáčky a škrobem;nechte odstát 10 minut.',
 			'Omáčka;Smíchejte zbývající sójovou omáčku, ústřicovou omáčku a sezamový olej.',
@@ -281,7 +270,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 lžíce červeného vinného octa',
 			'1 lžička sušeného oregana'
 		],
-		simplifiedIngredients: ['cizrna', 'okurka', 'rajčata', 'cibule', 'sýr', 'olivy', 'olej', 'ocet', 'oregano'],
 		steps: [
 			'Příprava;V míse smíchejte cizrnu, okurku, rajčata, cibuli a olivy.',
 			'Dresink;Vyšlehejte olivový olej, ocet, oregano, sůl a pepř na dresink.',
@@ -307,7 +295,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'2 lžíce másla',
 			'2 lžíce olivového oleje'
 		],
-		simplifiedIngredients: ['rýže', 'houby', 'cibule', 'česnek', 'víno', 'vývar', 'sýr', 'máslo', 'olej'],
 		steps: [
 			'Houby;Orestujte houby na 1 lžíci oleje dohněda;vyjměte a dejte stranou.',
 			'Základ;Ve stejném hrnci orestujte na zbývajícím oleji cibuli a česnek dozměkka.',
@@ -333,7 +320,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'Měsíčky limetky',
 			'Koriandr na ozdobu'
 		],
-		simplifiedIngredients: ['těstoviny', 'vejce', 'klíčky', 'arašídy', 'cibule', 'pad thai omáčka', 'olej', 'limetka', 'koriandr'],
 		steps: [
 			'Nudle;Rýžové nudle namočte do teplé vody, dokud nezměknou, poté je sceďte.',
 			'Vejce;Rozehřejte olej ve woku, lehce usmažte vejce a odsuňte je ke kraji.',
@@ -358,7 +344,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 bageta, nakrájená na plátky a opečená',
 			'1.5 šálku sýru Gruyère, nastrouhaného'
 		],
-		simplifiedIngredients: ['cibule', 'máslo', 'olej', 'víno', 'hovězí vývar', 'tymián', 'chléb', 'sýr'],
 		steps: [
 			'Cibule;Karamelizujte cibuli na másle a oleji na středně mírném ohni po dobu 40 minut.',
 			'Odglazování;Odglazujte hrnec pomocí sherry, seškrábněte připečeniny ze dna.',
@@ -385,7 +370,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'2 lžíce hladké mouky',
 			'1/2 šálku parmazánu, nastrouhaného'
 		],
-		simplifiedIngredients: ['lilek', 'hovězí', 'cibule', 'česnek', 'rajčata', 'skořice', 'mléko', 'máslo', 'mouka', 'sýr'],
 		steps: [
 			'Lilek;Plátky lilku pečte na 200°C asi 20 minut dozměkka.',
 			'Maso;Orestujte maso s cibulí a česnekem, přidejte rajčata a skořici;vařte 20 minut.',
@@ -411,7 +395,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 šálek smetany ke šlehání',
 			'Čerstvý koriandr na ozdobu'
 		],
-		simplifiedIngredients: ['kuře', 'jogurt', 'garam masala', 'cibule', 'česnek', 'zázvor', 'rajčata', 'smetana', 'koriandr'],
 		steps: [
 			'Marinování;Marinujte kuře v jogurtu a 1 lžíci garam masaly alespoň 1 hodinu.',
 			'Orestování;Orestujte namarinované kuře na rozpálené pánvi dohněda;vyjměte a dejte stranou.',
@@ -435,7 +418,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'Sůl a černý pepř podle chuti',
 			'1 lžička čerstvé citronové šťávy'
 		],
-		simplifiedIngredients: ['chléb', 'avokádo', 'vejce', 'ocet', 'pepř', 'citron'],
 		steps: [
 			'Opečení;Opečte plátky kváskového chleba dozlatova a dokřupava.',
 			'Avokádo;V malé misce roztlačte avokádo s citronovou šťávou, solí a pepřem.',
@@ -457,7 +439,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'2 jarní cibulky, nakrájené na tenká kolečka',
 			'1 lžíce sušené řasy wakame'
 		],
-		simplifiedIngredients: ['dashi', 'miso', 'tofu', 'cibule', 'řasa'],
 		steps: [
 			'Wakame;Sušenou řasu wakame namočte na 10 minut do malé misky s vodou, poté dobře sceďte.',
 			'Vývar;Vývar dashi přiveďte v hrnci k jemnému varu na středním ohni.',
@@ -483,7 +464,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 lžíce dijonské hořčice',
 			'Uvařené vaječné nudle na podávání'
 		],
-		simplifiedIngredients: ['hovězí', 'houby', 'cibule', 'máslo', 'mouka', 'hovězí vývar', 'zakysaná smetana', 'hořčice', 'těstoviny'],
 		steps: [
 			'Hovězí;Zprudka orestujte hovězí nudličky na rozpálené pánvi s trochou oleje dohněda;vyjměte a dejte stranou.',
 			'Zelenina;Ve stejné pánvi rozpusťte máslo, přidejte nakrájenou cibuli a houby a restujte dozměkka a dohněda.',
@@ -506,7 +486,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1 lžíce balsamico glazury',
 			'Hrubozrnná mořská sůl a černý pepř'
 		],
-		simplifiedIngredients: ['rajčata', 'sýr', 'bazalka', 'olej', 'balsamico glazura'],
 		steps: [
 			'Vrstvení;Na velkém servírovacím talíři střídavě skládejte plátky rajčat a mozzarelly.',
 			'Basil;Mezi plátky vložte lístky čerstvé bazalky.',
@@ -530,7 +509,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'2 stroužky česneku, nasekané',
 			'2 lžíce rostlinného oleje'
 		],
-		simplifiedIngredients: ['tofu', 'zelenina', 'sójová omáčka', 'hoisin', 'sezamový olej', 'zázvor', 'česnek', 'olej'],
 		steps: [
 			'Tofu;Kostky tofu orestujte na 1 lžíci rostlinného oleje ze všech stran dozlatova a dokřupava, poté je z pánve vyjměte.',
 			'Zelenina;Přidejte zbylý olej a orestujte míchanou zeleninu, zázvor a česnek po dobu 3-4 minut.',
@@ -556,7 +534,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'1/2 šálku kuřecího vývaru',
 			'Hamburgerové bulky na podávání'
 		],
-		simplifiedIngredients: ['vepřové', 'paprika', 'cukr', 'česnek', 'cibule', 'bbq omáčka', 'ocet', 'kuřecí vývar', 'chléb'],
 		steps: [
 			'Potření;Vepřové maso rovnoměrně potřete směsí uzené papriky, hnědého cukru, sušeného česneku, sušené cibule, soli a pepře.',
 			'Příprava;Maso vložte do pomalého hrnce společně s jablečným octem a kuřecím vývarem.',
@@ -582,7 +559,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'Šťáva z 1 citronu',
 			'1/2 lžičky chilli vloček'
 		],
-		simplifiedIngredients: ['krevety', 'těstoviny', 'máslo', 'olej', 'česnek', 'víno', 'petržel', 'citron', 'pepř'],
 		steps: [
 			'Těstoviny;Linguine uvařte v osolené vodě podle návodu na obalu na skus (al dente).',
 			'Základ;Na velké pánvi rozpusťte 2 lžíce másla a olivový olej na středním ohni.',
@@ -608,7 +584,6 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 			'2 lžíce thajské chilli pasty (Nam Prik Pao)',
 			'1/4 šálku čerstvé limetkové šťávy'
 		],
-		simplifiedIngredients: ['vývar', 'citronová tráva', 'limetkové lístky', 'zázvor', 'houby', 'krevety', 'rybí omáčka', 'chilli pasta', 'limetka'],
 		steps: [
 			'Vývar;Přiveďte vývar k varu, přidejte citronovou trávu, lístky kafrové limetky a galangal;vařte 5 minut.',
 			'Houby;Vmíchejte houby a thajskou chilli pastu a vařte další 3 minuty.',

@@ -9,8 +9,6 @@ import { EXAMPLE_RECIPES } from '../src/lib/server/db/example-recipes';
 import {
 	country,
 	countryTranslation,
-	ingredient,
-	ingredientTranslation,
 	recipe,
 	recipeTranslation
 } from '../src/lib/server/db/schema';
@@ -57,84 +55,6 @@ const run = async () => {
 	const db = drizzle(client);
 
 	try {
-		const uniqueIngredients = [...new Set(EXAMPLE_RECIPES.flatMap((item) => item.simplifiedIngredients))];
-
-		const insertedIngredients = await db
-			.insert(ingredient)
-			.values(uniqueIngredients.map((name) => ({ name })))
-			.onConflictDoNothing({ target: ingredient.name })
-			.returning({ id: ingredient.id });
-
-		const existingIngredients = await db
-			.select({
-				id: ingredient.id,
-				name: ingredient.name
-			})
-			.from(ingredient);
-
-		const ingredientIdByName = new Map(existingIngredients.map((item) => [item.name, item.id]));
-		const ingredientNameById = new Map(existingIngredients.map((item) => [item.id, item.name]));
-
-		const englishIngredientTranslations = existingIngredients.map((item) => ({
-			ingredientId: item.id,
-			locale: 'en',
-			name: item.name
-		}));
-
-		const insertedEnglishIngredientTranslations = await db
-			.insert(ingredientTranslation)
-			.values(englishIngredientTranslations)
-			.onConflictDoNothing({
-				target: [ingredientTranslation.ingredientId, ingredientTranslation.locale]
-			})
-			.returning({ ingredientId: ingredientTranslation.ingredientId });
-
-		const recipeBySlug = new Map(EXAMPLE_RECIPES.map((item) => [item.slug, item]));
-		const localizedIngredientTranslationMap = new Map<string, { ingredientId: number; locale: string; name: string }>();
-
-		for (const translation of [...EXAMPLE_RECIPE_CS, ...EXAMPLE_RECIPE_TH]) {
-			const baseRecipe = recipeBySlug.get(translation.slug);
-			if (!baseRecipe) {
-				continue;
-			}
-
-			const maxLen = Math.min(
-				baseRecipe.simplifiedIngredients.length,
-				translation.simplifiedIngredients.length
-			);
-
-			for (let index = 0; index < maxLen; index++) {
-				const englishIngredientName = baseRecipe.simplifiedIngredients[index];
-				const localizedIngredientName = translation.simplifiedIngredients[index];
-				const ingredientId = ingredientIdByName.get(englishIngredientName);
-				if (!ingredientId) {
-					continue;
-				}
-
-				const key = `${ingredientId}:${translation.locale.toLowerCase()}`;
-				if (!localizedIngredientTranslationMap.has(key)) {
-					localizedIngredientTranslationMap.set(key, {
-						ingredientId,
-						locale: translation.locale.toLowerCase(),
-						name: localizedIngredientName
-					});
-				}
-			}
-		}
-
-		const localizedIngredientTranslations = [...localizedIngredientTranslationMap.values()];
-
-		const insertedLocalizedIngredientTranslations =
-			localizedIngredientTranslations.length > 0
-				? await db
-						.insert(ingredientTranslation)
-						.values(localizedIngredientTranslations)
-						.onConflictDoNothing({
-							target: [ingredientTranslation.ingredientId, ingredientTranslation.locale]
-						})
-						.returning({ ingredientId: ingredientTranslation.ingredientId })
-				: [];
-
 		const countrySeedRows = [...EXAMPLE_COUNTRIES];
 
 		const insertedCountries = await db
@@ -213,9 +133,6 @@ const run = async () => {
 					cuisine: countryId,
 					imageUrl: item.imageUrl,
 					ingredients: item.ingredients,
-					simplifiedIngredients: item.simplifiedIngredients
-						.map((ingredientName) => ingredientIdByName.get(ingredientName))
-						.filter((ingredientId): ingredientId is number => ingredientId !== undefined),
 					steps: item.steps,
 					timeLengthMinutes: item.timeLengthMinutes,
 					preferences: item.preferences,
@@ -239,7 +156,6 @@ const run = async () => {
 				category: recipe.category,
 				cuisine: recipe.cuisine,
 				ingredients: recipe.ingredients,
-				simplifiedIngredients: recipe.simplifiedIngredients,
 				steps: recipe.steps
 			})
 			.from(recipe);
@@ -251,9 +167,6 @@ const run = async () => {
 			category: item.category,
 			cuisine: item.cuisine,
 			ingredients: item.ingredients,
-			simplifiedIngredients: item.simplifiedIngredients
-				.map((ingredientId) => ingredientNameById.get(ingredientId))
-				.filter((ingredientName): ingredientName is string => ingredientName !== undefined),
 			steps: item.steps
 		}));
 
@@ -265,6 +178,15 @@ const run = async () => {
 
 		const recipeIdBySlug = new Map(existingRecipes.map((item) => [item.slug, item.id]));
 
+		const countryIdByTranslatedName = new Map<string, number>();
+		for (const translation of localizedCountryTranslationRows) {
+			countryIdByTranslatedName.set(translation.name.toLowerCase(), translation.countryId);
+		}
+		// Also add English names to the map
+		for (const [name, id] of countryIdByName) {
+			countryIdByTranslatedName.set(name.toLowerCase(), id);
+		}
+
 		const localizedSeedData = [...EXAMPLE_RECIPE_CS, ...EXAMPLE_RECIPE_TH];
 
 		const localizedTranslationRows = localizedSeedData.flatMap((translation) => {
@@ -274,15 +196,24 @@ const run = async () => {
 				return [];
 			}
 
+			const countryName = RECIPE_COUNTRY_BY_SLUG[translation.slug];
+			const countryId = countryName ? countryIdByName.get(countryName) : undefined;
+
+			if (!countryId) {
+				console.warn(
+					`Skipping translation for unknown cuisine in base recipe: ${translation.slug}`
+				);
+				return [];
+			}
+
 			return [
 				{
 					recipeId,
 					locale: translation.locale.toLowerCase(),
 					name: translation.name,
 					category: translation.category,
-					cuisine: translation.cuisine,
+					cuisine: countryId,
 					ingredients: translation.ingredients,
-					simplifiedIngredients: translation.simplifiedIngredients,
 					steps: translation.steps
 				}
 			];
@@ -300,7 +231,7 @@ const run = async () => {
 				: [];
 
 		console.log(
-			`Seed complete: ${insertedIngredients.length} new ingredients, ${insertedEnglishIngredientTranslations.length} new ingredient EN translations, ${insertedLocalizedIngredientTranslations.length} new localized ingredient translations, ${insertedCountries.length} new countries, ${insertedEnglishCountryTranslations.length} new country EN translations, ${insertedLocalizedCountryTranslations.length} new localized country translations, ${insertedRecipes.length} new recipes, ${insertedEnglishTranslations.length} new EN recipe translations, ${insertedLocalizedTranslations.length} new localized recipe translations.`
+			`Seed complete: ${insertedCountries.length} new countries, ${insertedEnglishCountryTranslations.length} new country EN translations, ${insertedLocalizedCountryTranslations.length} new localized country translations, ${insertedRecipes.length} new recipes, ${insertedEnglishTranslations.length} new EN recipe translations, ${insertedLocalizedTranslations.length} new localized recipe translations.`
 		);
 	} finally {
 		await client.end();
