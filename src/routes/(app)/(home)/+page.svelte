@@ -5,7 +5,7 @@
 	import RecipeDetailModal from '$lib/components/RecipeDetailModal.svelte';
 	import WorldMap from '$lib/components/WorldMap.svelte';
 	import { LayerCake, Svg } from 'layercake';
-	import { onMount } from 'svelte';
+	import worldData from '$lib/data/world-geo.json';
 	import { goto } from '$app/navigation';
 	import Star from '@lucide/svelte/icons/star';
 	import Coins from '@lucide/svelte/icons/coins';
@@ -30,13 +30,6 @@
 	let selectedRecipe: Recipe | null = $state(null);
 	let sheetOpen = $state(false);
 
-	let worldData = $state<any>(null);
-
-	onMount(async () => {
-		const res = await fetch('/data/world-geo.json');
-		worldData = await res.json();
-	});
-
 	const openRecipe = (r: Recipe) => {
 		selectedRecipe = r;
 		sheetOpen = true;
@@ -53,19 +46,13 @@
 
 	<!-- World Map -->
 	<section class="px-5 pb-6 md:px-8 md:pb-8">
-		{#if worldData}
-			<div class="h-75 overflow-hidden md:h-90">
-				<LayerCake data={worldData}>
-					<Svg>
-						<WorldMap highlights={{ USA: 0.5, CZE: 0.6 }} />
-					</Svg>
-				</LayerCake>
-			</div>
-		{:else}
-			<div class="flex h-75 items-center justify-center rounded-xl border border-border bg-muted">
-				<p class="animate-pulse text-sm text-muted-foreground">Loading map...</p>
-			</div>
-		{/if}
+		<div class="h-75 overflow-hidden md:h-90">
+			<LayerCake data={worldData}>
+				<Svg>
+					<WorldMap highlights={{ USA: 0.5, CZE: 0.6 }} />
+				</Svg>
+			</LayerCake>
+		</div>
 	</section>
 
 	<!-- Recommended recipes -->
