@@ -14,7 +14,7 @@
 	"auth_login_register_link": "Register",
 
 	"auth_register_title": "Create account",
-	"auth_register_description": "Get started with Funovation",
+	"auth_register_description": "Get started with Pipa",
 	"auth_register_name_label": "Name",
 	"auth_register_name_placeholder": "Your name",
 	"auth_register_submit": "Create account",
@@ -89,7 +89,7 @@
 	"common_add": "Add",
 	"common_tag_input_placeholder": "Type and press Enter…",
 
-	"home_title": "Welcome to Funovation",
+	"home_title": "Welcome to Pipa",
 	"home_subtitle": "Your AI-powered cooking companion.",
 
 	"main_coming_soon": "Coming soon",

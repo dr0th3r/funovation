@@ -344,7 +344,7 @@
 			if (navigator.share) {
 				await navigator.share({
 					title: `I just cooked ${recipe.name}!`,
-					text: `Check out this recipe for ${recipe.name}. I just made it using the Funovation AI assistant!`,
+					text: `Check out this recipe for ${recipe.name}. I just made it using the Pipa AI assistant!`,
 					url: window.location.href
 				});
 			} else {

@@ -14,7 +14,7 @@
 	"auth_login_register_link": "Zaregistrovat se",
 
 	"auth_register_title": "Vytvořit účet",
-	"auth_register_description": "Začněte s Funovation",
+	"auth_register_description": "Začněte s Pipou",
 	"auth_register_name_label": "Jméno",
 	"auth_register_name_placeholder": "Vaše jméno",
 	"auth_register_submit": "Vytvořit účet",
@@ -89,7 +89,7 @@
 	"common_add": "Přidat",
 	"common_tag_input_placeholder": "Napište a stiskněte Enter…",
 
-	"home_title": "Vítejte ve Funovation",
+	"home_title": "Vítejte v Pipě",
 	"home_subtitle": "Váš kuchařský společník poháněný umělou inteligencí.",
 
 	"main_coming_soon": "Brzy k dispozici",
