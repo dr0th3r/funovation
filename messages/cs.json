@@ -92,5 +92,21 @@
 	"home_title": "Vítejte ve Funovation",
 	"home_subtitle": "Váš kuchařský společník poháněný umělou inteligencí.",
 
+	"main_coming_soon": "Brzy k dispozici",
+	"main_hero_title": "Ahoj! Co si dnes uvaříme?",
+	"main_level": "Úroveň {level}",
+	"main_recommended_title": "Doporučené recepty",
+	"main_budget_title": "Jídlo za lepší cenu",
+	"main_show_all": "Zobrazit vše",
+	"main_view_more": "Zobrazit více",
+	"main_lets_cook": "Pojďme na to",
+	"main_ingredients": "Ingredience:",
+	"main_nav_home": "Domů",
+	"main_nav_recipes": "Recepty",
+	"main_nav_settings": "Nastavení",
+	"main_difficulty_easy": "Lehké",
+	"main_difficulty_medium": "Střední",
+	"main_difficulty_hard": "Těžké",
+
 	"aria_remove_tag": "Odebrat štítek"
 }
