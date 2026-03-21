@@ -237,7 +237,7 @@ const run = async () => {
 				slug: recipe.slug,
 				name: recipe.name,
 				category: recipe.category,
-				cuisine: recipe.cuisine
+				cuisine: recipe.cuisine,
 				ingredients: recipe.ingredients,
 				simplifiedIngredients: recipe.simplifiedIngredients,
 				steps: recipe.steps
@@ -249,7 +249,7 @@ const run = async () => {
 			locale: 'en',
 			name: item.name,
 			category: item.category,
-			cuisine: item.cuisine
+			cuisine: item.cuisine,
 			ingredients: item.ingredients,
 			simplifiedIngredients: item.simplifiedIngredients
 				.map((ingredientId) => ingredientNameById.get(ingredientId))
