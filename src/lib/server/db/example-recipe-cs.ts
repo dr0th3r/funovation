@@ -2,22 +2,20 @@ export type ExampleRecipeTranslationSeed = {
 	slug: string;
 	locale: string;
 	name: string;
-	category: string;
 	cuisine: string;
+	country: string;
 	ingredients: string[];
 	simplifiedIngredients: string[];
 	steps: string[];
 };
 
-// Optional manually curated translations for selected locales.
-// English translations are generated automatically from recipe source fields.
 export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 	{
 		slug: 'shakshuka',
 		locale: 'cs',
 		name: 'Šakšuka',
-		category: 'Snídaně',
 		cuisine: 'Blízkovýchodní',
+		country: 'Tunisko',
 		ingredients: [
 			'2 lžíce olivového oleje',
 			'1 cibule, nakrájená na kostičky',
@@ -43,8 +41,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'chicken-teriyaki-bowl',
 		locale: 'cs',
 		name: 'Kuřecí teriyaki miska',
-		category: 'Večeře',
 		cuisine: 'Japonská',
+		country: 'Japonsko',
 		ingredients: [
 			'400g kuřecích stehen, nakrájených',
 			'2 šálky vařené rýže',
@@ -68,8 +66,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'lentil-coconut-curry',
 		locale: 'cs',
 		name: 'Čočkové kokosové kari',
-		category: 'Vegetariánské',
 		cuisine: 'Indická',
+		country: 'Indie',
 		ingredients: [
 			'1 šálek červené čočky',
 			'1 lžíce oleje',
@@ -95,8 +93,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'beef-taco-skillet',
 		locale: 'cs',
 		name: 'Hovězí taco pánev',
-		category: 'Večeře',
 		cuisine: 'Mexická',
+		country: 'Mexiko',
 		ingredients: [
 			'400g mletého hovězího',
 			'1 cibule, nakrájená na kostičky',
@@ -120,8 +118,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'salmon-lemon-dill',
 		locale: 'cs',
 		name: 'Losos s citronem a koprem',
-		category: 'Večeře',
 		cuisine: 'Severská',
+		country: 'Norsko',
 		ingredients: [
 			'4 filety z lososa',
 			'1 lžíce olivového oleje',
@@ -142,8 +140,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'spaghetti-aglio-olio',
 		locale: 'cs',
 		name: 'Špagety aglio e olio',
-		category: 'Těstoviny',
 		cuisine: 'Italská',
+		country: 'Itálie',
 		ingredients: [
 			'300g špaget',
 			'4 lžíce olivového oleje',
@@ -166,8 +164,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'classic-margherita-pizza',
 		locale: 'cs',
 		name: 'Klasická pizza margherita',
-		category: 'Večeře',
 		cuisine: 'Italská',
+		country: 'Itálie',
 		ingredients: [
 			'1 těsto na pizzu',
 			'1/2 šálku rajčatové omáčky San Marzano',
@@ -190,8 +188,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'thai-green-chicken-curry',
 		locale: 'cs',
 		name: 'Thajské zelené kuřecí kari',
-		category: 'Večeře',
 		cuisine: 'Thajská',
+		country: 'Thajsko',
 		ingredients: [
 			'400g kuřecích prsou, nakrájených',
 			'2 lžíce zelené kari pasty',
@@ -216,8 +214,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'fluffy-buttermilk-pancakes',
 		locale: 'cs',
 		name: 'Nadýchané podmáslové lívance',
-		category: 'Snídaně',
 		cuisine: 'Americká',
+		country: 'Spojené státy',
 		ingredients: [
 			'2 šálky hladké mouky',
 			'2 lžíce cukru',
@@ -242,8 +240,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'beef-and-broccoli-stir-fry',
 		locale: 'cs',
 		name: 'Restované hovězí s brokolicí',
-		category: 'Večeře',
 		cuisine: 'Čínská',
+		country: 'Čína',
 		ingredients: [
 			'400g hovězího pupku (flank steak), nakrájeného na tenké plátky',
 			'2 šálky růžiček brokolice',
@@ -268,8 +266,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'mediterranean-chickpea-salad',
 		locale: 'cs',
 		name: 'Středomořský cizrnový salát',
-		category: 'Oběd',
 		cuisine: 'Středomořská',
+		country: 'Řecko',
 		ingredients: [
 			'1 plechovka (400g) cizrny, propláchnutá',
 			'1 okurka, nakrájená na kostičky',
@@ -294,8 +292,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'creamy-mushroom-risotto',
 		locale: 'cs',
 		name: 'Krémové houbové rizoto',
-		category: 'Večeře',
 		cuisine: 'Italská',
+		country: 'Itálie',
 		ingredients: [
 			'1.5 šálku rýže arborio',
 			'300g směsi hub, nakrájených na plátky',
@@ -320,8 +318,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'veggie-pad-thai',
 		locale: 'cs',
 		name: 'Zeleninové pad thai',
-		category: 'Večeře',
 		cuisine: 'Thajská',
+		country: 'Thajsko',
 		ingredients: [
 			'200g rýžových nudlí',
 			'2 vejce, rozšlehaná',
@@ -346,8 +344,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'french-onion-soup',
 		locale: 'cs',
 		name: 'Francouzská cibulačka',
-		category: 'Předkrm',
 		cuisine: 'Francouzská',
+		country: 'Francie',
 		ingredients: [
 			'4 velké žluté cibule, nakrájené na tenké plátky',
 			'3 lžíce másla',
@@ -371,8 +369,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'greek-moussaka',
 		locale: 'cs',
 		name: 'Řecká musaka',
-		category: 'Večeře',
 		cuisine: 'Řecká',
+		country: 'Řecko',
 		ingredients: [
 			'2 velké lilky, nakrájené na 1 cm silné plátky',
 			'400g mletého jehněčího nebo hovězího',
@@ -398,8 +396,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'chicken-tikka-masala',
 		locale: 'cs',
 		name: 'Kuřecí tikka masala',
-		category: 'Večeře',
 		cuisine: 'Indická',
+		country: 'Indie',
 		ingredients: [
 			'500g kuřecích prsou, nakrájených na kostky',
 			'1 šálek bílého jogurtu',
@@ -424,8 +422,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'avocado-toast-poached-egg',
 		locale: 'cs',
 		name: 'Avokádový toast se zastřeným vejcem',
-		category: 'Snídaně',
 		cuisine: 'Americká',
+		country: 'Spojené státy',
 		ingredients: [
 			'2 silné plátky kváskového chleba',
 			'1 velké zralé avokádo',
@@ -448,8 +446,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'classic-miso-soup',
 		locale: 'cs',
 		name: 'Klasická miso polévka',
-		category: 'Předkrm',
 		cuisine: 'Japonská',
+		country: 'Japonsko',
 		ingredients: [
 			'4 šálky vývaru dashi',
 			'3 lžíce bílé miso pasty',
@@ -470,8 +468,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'beef-stroganoff',
 		locale: 'cs',
 		name: 'Hovězí stroganov',
-		category: 'Večeře',
 		cuisine: 'Ruská',
+		country: 'Rusko',
 		ingredients: [
 			'500g svíčkové, nakrájené na tenké nudličky',
 			'300g hnědých žampionů, nakrájených na plátky',
@@ -496,8 +494,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'classic-caprese-salad',
 		locale: 'cs',
 		name: 'Klasický caprese salát',
-		category: 'Předkrm',
 		cuisine: 'Italská',
+		country: 'Itálie',
 		ingredients: [
 			'3 velká zralá rajčata, nakrájená na plátky',
 			'250g čerstvé mozzarelly, nakrájené na plátky',
@@ -518,8 +516,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'tofu-vegetable-stir-fry',
 		locale: 'cs',
 		name: 'Restované tofu se zeleninou',
-		category: 'Veganské',
 		cuisine: 'Čínská',
+		country: 'Čína',
 		ingredients: [
 			'400g extra pevného tofu, vylisovaného a nakrájeného na kostky',
 			'2 šálky míchané zeleniny (paprika, cukrový hrášek, mrkev)',
@@ -543,8 +541,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'bbq-pulled-pork',
 		locale: 'cs',
 		name: 'Trhané vepřové s BBQ',
-		category: 'Večeře',
 		cuisine: 'Americká',
+		country: 'Spojené státy',
 		ingredients: [
 			'1.5kg vepřového plecka',
 			'2 lžíce uzené papriky',
@@ -569,8 +567,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'garlic-shrimp-scampi',
 		locale: 'cs',
 		name: 'Česnekové krevety scampi',
-		category: 'Večeře',
 		cuisine: 'Italská',
+		country: 'Itálie',
 		ingredients: [
 			'400g velkých krevet, oloupaných a zbavených střívka',
 			'250g nudlí linguine',
@@ -595,8 +593,8 @@ export const EXAMPLE_RECIPE_CS: ExampleRecipeTranslationSeed[] = [
 		slug: 'tom-yum-goong',
 		locale: 'cs',
 		name: 'Tom yum goong',
-		category: 'Předkrm',
 		cuisine: 'Thajská',
+		country: 'Thajsko',
 		ingredients: [
 			'4 šálky kuřecího nebo zeleninového vývaru',
 			'2 stonky citronové trávy, naklepané a nakrájené na 5cm kousky',
