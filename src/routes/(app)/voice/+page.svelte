@@ -59,9 +59,31 @@
 	let connectionState = $state<ConnectionState>('disconnected');
 	let isAiSpeaking = $state(false);
 	let isUserSpeaking = $state(false);
-	let aiTranscript = $state('');
+	let errorMessage = $state<string | null>(null);
+	let aiTranscript = $state<string | null>(null);
 	let activeTimers = $state<ActiveTimer[]>([]);
-	let errorMessage = $state('');
+
+	// Compliance state
+	let showConsentModal = $state(false);
+	let aiConsentAccepted = $state(false);
+	let aiActChecked = $state(false);
+	let gdprChecked = $state(false);
+
+	const handleMicClick = () => {
+		if (!aiConsentAccepted && connectionState === 'disconnected') {
+			showConsentModal = true;
+		} else {
+			toggleConnection();
+		}
+	};
+
+	const handleConsentSubmit = () => {
+		if (aiActChecked && gdprChecked) {
+			showConsentModal = false;
+			aiConsentAccepted = true;
+			toggleConnection();
+		}
+	};
 
 	// Non-reactive refs
 	let pc: RTCPeerConnection | null = null;
@@ -527,7 +549,7 @@
 			<!-- Mic button -->
 			<div class="mb-5 flex justify-center">
 				<button
-					onclick={toggleConnection}
+					onclick={handleMicClick}
 					disabled={connectionState === 'connecting'}
 					aria-label={micActive ? 'Stop assistant' : 'Start assistant'}
 					class="flex size-22 items-center justify-center rounded-full transition-all active:scale-95 disabled:opacity-50
@@ -641,6 +663,40 @@
 					</Button>
 					<Button variant="outline" size="lg" onclick={resumeCooking} class="w-full font-bold">
 						No, keep cooking
+					</Button>
+				</div>
+			</div>
+		</div>
+	{/if}
+
+	<!-- EU AI Act & GDPR Consent Modal -->
+	{#if showConsentModal}
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-background/80 px-4 backdrop-blur-sm animate-in fade-in duration-200">
+			<div class="w-full max-w-sm rounded-3xl border border-border bg-card p-6 shadow-xl animate-in zoom-in-95 duration-200">
+				<h2 class="mb-2 text-2xl font-black text-foreground text-center">Privacy & AI Notice</h2>
+				<p class="mb-4 text-center text-sm text-muted-foreground">
+					To start the assistant, confirm your understanding of our data processing.
+				</p>
+				<div class="flex flex-col gap-4 mb-6">
+					<label class="flex items-start gap-3 cursor-pointer">
+						<input type="checkbox" bind:checked={aiActChecked} class="mt-0.5 h-6 w-6 shrink-0 rounded border-input bg-background accent-primary text-primary focus:ring-primary" />
+						<span class="text-sm font-medium leading-tight text-foreground">
+							I acknowledge that I am interacting with an AI system powered by OpenAI, not a human.
+						</span>
+					</label>
+					<label class="flex items-start gap-3 cursor-pointer">
+						<input type="checkbox" bind:checked={gdprChecked} class="mt-0.5 h-6 w-6 shrink-0 rounded border-input bg-background accent-primary text-primary focus:ring-primary" />
+						<span class="text-sm font-medium leading-tight text-foreground">
+							I consent to my voice and recipe data being securely processed by OpenAI to provide cooking instructions.
+						</span>
+					</label>
+				</div>
+				<div class="flex flex-col gap-3">
+					<Button variant="default" size="lg" disabled={!aiActChecked || !gdprChecked} onclick={handleConsentSubmit} class="w-full font-bold">
+						Accept & Start AI
+					</Button>
+					<Button variant="ghost" size="lg" onclick={() => showConsentModal = false} class="w-full font-bold">
+						Cancel
 					</Button>
 				</div>
 			</div>
