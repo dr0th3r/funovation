@@ -3,7 +3,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import RecipeDetailModal from '$lib/components/RecipeDetailModal.svelte';
-	import { Progress } from '$lib/components/ui/progress';
+	import WorldMap from '$lib/components/WorldMap.svelte';
+	import { LayerCake, Svg } from 'layercake';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import Star from '@lucide/svelte/icons/star';
 	import Coins from '@lucide/svelte/icons/coins';
@@ -27,45 +29,42 @@
 	let selectedRecipe: Recipe | null = $state(null);
 	let sheetOpen = $state(false);
 
-	type UserLevel = { level: number; xp: number; xpMax: number };
-	let userLevel = $state<UserLevel>({ level: 8, xp: 90, xpMax: 195 });
+	let worldData = $state<any>(null);
 
-	$effect(() => {
-		fetch('/api/user/level')
-			.then((r) => r.json())
-			.then((d: UserLevel) => {
-				userLevel = d;
-			})
-			.catch(() => {});
+	onMount(async () => {
+		const res = await fetch('/data/world-geo.json');
+		worldData = await res.json();
 	});
 
 	const openRecipe = (r: Recipe) => {
 		selectedRecipe = r;
 		sheetOpen = true;
 	};
-
-	const xpPercent = $derived(Math.min((userLevel.xp / userLevel.xpMax) * 100, 100));
 </script>
 
 <main>
-	<!-- Hero + XP -->
-	<section class="px-5 pt-7 pb-6 md:px-8 md:pt-10 md:pb-8">
-		<div class="md:flex md:items-end md:gap-16">
-			<h1 class="text-4xl leading-tight font-bold text-foreground md:text-5xl">
-				{m.main_hero_title()}
-			</h1>
-			<div class="mt-5 md:mt-0 md:w-72 md:shrink-0">
-				<div class="mb-2 flex items-center justify-between">
-					<span class="text-sm font-bold text-foreground">
-						{m.main_level({ level: userLevel.level })}
-					</span>
-					<span class="text-xs font-semibold text-muted-foreground">
-						{userLevel.xp}/{userLevel.xpMax}
-					</span>
-				</div>
-				<Progress value={xpPercent} class="h-2.5" />
+	<!-- Hero -->
+	<section class="px-5 pt-7 pb-4 md:px-8 md:pt-10 md:pb-6">
+		<h1 class="text-4xl leading-tight font-bold text-foreground md:text-5xl">
+			{m.main_hero_title()}
+		</h1>
+	</section>
+
+	<!-- World Map -->
+	<section class="px-5 pb-6 md:px-8 md:pb-8">
+		{#if worldData}
+			<div class="h-75 overflow-hidden md:h-90">
+				<LayerCake data={worldData}>
+					<Svg>
+						<WorldMap />
+					</Svg>
+				</LayerCake>
 			</div>
-		</div>
+		{:else}
+			<div class="flex h-75 items-center justify-center rounded-xl border border-border bg-muted">
+				<p class="animate-pulse text-sm text-muted-foreground">Loading map...</p>
+			</div>
+		{/if}
 	</section>
 
 	<!-- Recommended recipes -->
@@ -90,15 +89,17 @@
 		>
 			{#each recommendedRecipes as recipe (recipe.id)}
 				<Card.Root class="flex-[0_0_230px]! overflow-hidden p-0! md:flex-none!">
-					<div class="relative h-[140px] w-full bg-muted md:h-[160px]">
+					<div class="relative h-35 w-full bg-muted md:h-40">
 						{#if recipe.imageUrl}
 							<img src={recipe.imageUrl} alt={recipe.name} class="h-full w-full object-cover" />
 						{/if}
-						<span class="absolute bottom-1.5 left-2 text-xs font-semibold text-white drop-shadow"
-							>{recipe.cuisine}</span
-						>
 					</div>
 					<Card.Content class="p-3.5">
+						<span
+							class="mb-1 block text-[10px] font-bold tracking-wider text-muted-foreground uppercase"
+						>
+							{recipe.cuisine}
+						</span>
 						<Card.Title class="mb-2 text-sm leading-snug font-bold">{recipe.name}</Card.Title>
 						<p class="mb-3 text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
 						<Button size="sm" onclick={() => openRecipe(recipe)}>{m.main_view_more()}</Button>
@@ -132,11 +133,12 @@
 						{#if recipe.imageUrl}
 							<img src={recipe.imageUrl} alt={recipe.name} class="h-full w-full object-cover" />
 						{/if}
-						<span class="absolute bottom-1.5 left-2 text-xs font-semibold text-white drop-shadow"
-							>{recipe.cuisine}</span
-						>
 					</div>
 					<Card.Content class="p-3.5">
+						<span
+							class="mb-1 block text-[10px] font-bold tracking-wider text-muted-foreground uppercase"
+							>{recipe.cuisine}</span
+						>
 						<Card.Title class="mb-2 text-sm leading-snug font-bold">{recipe.name}</Card.Title>
 						<p class="mb-3 text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
 						<Button size="sm" onclick={() => openRecipe(recipe)}>{m.main_view_more()}</Button>

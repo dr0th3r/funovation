@@ -34,6 +34,7 @@
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.1.18",
+		"@types/d3-geo": "^3.1.0",
 		"@types/node": "^22",
 		"better-auth": "~1.4.21",
 		"bits-ui": "^2.16.3",
@@ -61,7 +62,9 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
+		"d3-geo": "^3.1.1",
 		"formsnap": "^2.0.1",
+		"layercake": "^10.0.2",
 		"leaflet": "^1.9.4",
 		"openai": "^6.32.0",
 		"sveaflet": "^0.1.4",

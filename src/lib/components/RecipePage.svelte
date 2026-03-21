@@ -48,7 +48,7 @@
 
 <main class="w-full pb-10">
 	<!-- Count + search -->
-	<section class="px-5 pb-4 pt-5 md:px-8">
+	<section class="pt-5 pb-4">
 		<p class="text-sm text-muted-foreground">
 			{m.recipes_count({ count: recipes.length })}
 		</p>
@@ -65,13 +65,11 @@
 	</section>
 
 	<!-- Category filters -->
-	<div
-		class="flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:px-8 [&::-webkit-scrollbar]:hidden"
-	>
+	<div class="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 		{#each categories as cat (cat.id)}
 			<button
 				onclick={() => (activeCategory = cat.id)}
-				class="shrink-0 whitespace-nowrap rounded-full border px-3.5 py-1.5 text-xs font-semibold
+				class="shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap
 					{activeCategory === cat.id
 					? 'border-primary bg-primary text-primary-foreground'
 					: 'border-border bg-background text-muted-foreground hover:border-primary hover:text-primary'}"
@@ -82,15 +80,15 @@
 	</div>
 
 	<!-- Results count -->
-	<div class="px-5 pt-4 pb-2 md:px-8">
-		<span class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+	<div class="pt-4 pb-2">
+		<span class="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
 			{m.recipes_results({ count: filteredRecipes.length })}
 		</span>
 	</div>
 
 	<!-- Recipe list / grid -->
 	{#if filteredRecipes.length > 0}
-		<div class="flex flex-col gap-3 px-5 md:grid md:grid-cols-2 md:gap-4 md:px-8">
+		<div class="flex flex-col gap-3 md:grid md:grid-cols-2 md:gap-4">
 			{#each filteredRecipes as recipe (recipe.id)}
 				<button
 					class="flex items-stretch overflow-hidden rounded-2xl border border-border bg-background text-left hover:border-primary"
@@ -105,11 +103,13 @@
 								class="absolute inset-0 h-full w-full object-cover"
 							/>
 						{/if}
-						<span class="relative text-xs font-semibold text-white drop-shadow">{recipe.cuisine}</span>
 					</div>
 
 					<!-- Content -->
-					<div class="flex flex-1 flex-col justify-center gap-1 px-3.5 py-3">
+					<div class="flex flex-1 flex-col justify-center gap-0.5 px-3.5 py-3">
+						<span class="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+							{recipe.cuisine}
+						</span>
 						<span class="text-sm leading-snug font-bold text-foreground">{recipe.name}</span>
 						<p class="text-xs text-muted-foreground">{recipe.pricePerPortionCZK} Kč/porce</p>
 					</div>
