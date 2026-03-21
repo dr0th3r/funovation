@@ -128,5 +128,35 @@
 	"voice_tab_ingredients": "Ingredients",
 	"voice_step_current": "Step {step} · In progress",
 	"voice_step_next": "Next up",
-	"voice_next": "Next"
+	"voice_next": "Next",
+
+	"voice_status_connecting": "Connecting…",
+	"voice_status_idle": "Tap the mic to start",
+	"voice_status_listening": "Listening…",
+	"voice_status_speaking": "Speaking…",
+	"voice_status_ready": "Ready",
+
+	"voice_aria_start": "Start assistant",
+	"voice_aria_stop": "Stop assistant",
+
+	"voice_btn_finish": "Finish",
+	"voice_btn_take_photo": "Take a Photo",
+	"voice_btn_share": "Share Recipe",
+	"voice_btn_home": "Back to Home",
+	"voice_btn_retake": "Retake",
+
+	"voice_finish_title": "Enjoy your meal!",
+	"voice_finish_description": "You successfully prepared {name}. Now it's time to enjoy your meal!",
+
+	"voice_cancel_title": "Cancel Recipe?",
+	"voice_cancel_description": "Are you sure you want to stop cooking and return to the home screen? Your progress will be lost.",
+	"voice_cancel_confirm": "Yes, cancel recipe",
+	"voice_cancel_resume": "No, keep cooking",
+
+	"voice_consent_title": "Privacy & AI Notice",
+	"voice_consent_description": "To start the assistant, confirm your understanding of our data processing.",
+	"voice_consent_ai_act": "I acknowledge that I am interacting with an AI system powered by OpenAI, not a human.",
+	"voice_consent_gdpr": "I consent to my voice and recipe data being securely processed by OpenAI to provide cooking instructions.",
+	"voice_consent_accept": "Accept & Start AI",
+	"voice_consent_cancel": "Cancel"
 }

@@ -199,18 +199,12 @@ const run = async () => {
 				return [];
 			}
 
-			const countryId = countryIdByName.get(countryName);
-			if (!countryId) {
-				console.warn(`Skipping recipe with missing country row (${countryName}): ${item.slug}`);
-				return [];
-			}
-
 			return [
 				{
 					slug: item.slug,
 					name: item.name,
 					category: item.category,
-					cuisine: countryId,
+					cuisine: countryName,
 					imageUrl: item.imageUrl,
 					ingredients: item.ingredients,
 					simplifiedIngredients: item.simplifiedIngredients
