@@ -82,7 +82,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		category: ['Main dishes', 'Quick'],
 		cuisine: 'Indian',
 		country: 'India',
-		imageUrl: 'https://images.unsplash.com/photo-1565557612110-d8ab1f84d634?auto=format&fit=crop&w=800&q=80',
+		imageUrl: 'https://images.unsplash.com/photo-1695708832583-0f8f415efd8a?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 		ingredients: [
 			'1 cup red lentils',
 			'1 tbsp oil',
@@ -142,7 +142,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		category: ['Main dishes', 'Quick'],
 		cuisine: 'Nordic',
 		country: 'Norway',
-		imageUrl: 'https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=800&q=80',
+		imageUrl: 'https://plus.unsplash.com/premium_photo-1723773790103-54d440d1ca7c?q=80&w=1117&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 		ingredients: [
 			'4 salmon fillets',
 			'1 tbsp olive oil',
@@ -433,7 +433,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		category: ['Main dishes'],
 		cuisine: 'Greek',
 		country: 'Greece',
-		imageUrl: 'https://images.unsplash.com/photo-1627522460108-2144342a3f9e?auto=format&fit=crop&w=800&q=80',
+		imageUrl: 'https://imgs.search.brave.com/YdnRj96AiEOcg6qYh9xOlJQPuAaTgiv5dwbNOmxpfpc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9ncmVl/ay1tb3Vzc2FrYS1j/ZXJhbWljLWRpc2gt/bGF5ZXJzLWVnZ3Bs/YW50LW1pbmNlZC1t/ZWF0LWNyZWFteS1i/ZWNoYW1lbC1zYXVj/ZS0zODY4MjEwNTgu/anBn',
 		ingredients: [
 			'2 large eggplants, sliced 1/2 inch thick',
 			'400g ground lamb or beef',
@@ -522,7 +522,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		category: ['Soups', 'Quick'],
 		cuisine: 'Japanese',
 		country: 'Japan',
-		imageUrl: 'https://images.unsplash.com/photo-1548943487-a2e4f43b4851?auto=format&fit=crop&w=800&q=80',
+		imageUrl: 'https://images.unsplash.com/photo-1763470260582-894ae15f43bb?q=80&w=1071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 		ingredients: [
 			'4 cups dashi stock',
 			'3 tbsp white miso paste',
@@ -633,7 +633,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		category: ['Main dishes'],
 		cuisine: 'American',
 		country: 'United States',
-		imageUrl: 'https://images.unsplash.com/photo-1629236715174-87428f522883?auto=format&fit=crop&w=800&q=80',
+		imageUrl: 'https://images.unsplash.com/photo-1567529855370-57ecd066454c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 		ingredients: [
 			'1.5kg pork shoulder',
 			'2 tbsp smoked paprika',
@@ -663,7 +663,7 @@ export const EXAMPLE_RECIPES: ExampleRecipeSeed[] = [
 		category: ['Main dishes'],
 		cuisine: 'Italian',
 		country: 'Italy',
-		imageUrl: 'https://images.unsplash.com/photo-1625944230945-1b7dd12a8fee?auto=format&fit=crop&w=800&q=80',
+		imageUrl: 'https://images.unsplash.com/photo-1762631882900-e3174bada2ed?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 		ingredients: [
 			'400g large shrimp, peeled and deveined',
 			'250g linguine pasta',
