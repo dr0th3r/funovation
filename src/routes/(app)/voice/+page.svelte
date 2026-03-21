@@ -442,7 +442,7 @@
 	const micPulsing = $derived(isAiSpeaking || isUserSpeaking);
 </script>
 
-<main class="relative flex w-full flex-1 flex-col overflow-hidden">
+<main class="relative flex w-full flex-1 flex-col overflow-hidden md:max-w-xl">
 	<div class="flex-1 overflow-y-auto px-4 pb-4">
 		<h1 class="py-5 text-2xl leading-tight font-black tracking-tight text-foreground">
 			{recipe.name}
