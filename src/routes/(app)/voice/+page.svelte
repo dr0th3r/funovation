@@ -16,7 +16,7 @@
 	type Step = { id: number; title: string; description: string };
 	type Ingredient = { id: number; name: string; amount: string };
 	type ConnectionState = 'disconnected' | 'connecting' | 'connected';
-	type ActiveTimer = { id: number; label: string; remaining: number };
+	type ActiveTimer = { id: number; label: string; remaining: number; paused?: boolean };
 
 	const recipe = { name: 'Kuřecí nudličky s rýží' };
 
@@ -83,7 +83,7 @@
 
 		const intervalId = setInterval(() => {
 			activeTimers = activeTimers.map((t) =>
-				t.id === id ? { ...t, remaining: t.remaining - 1 } : t
+				t.id === id && !t.paused ? { ...t, remaining: t.remaining - 1 } : t
 			);
 
 			const timer = activeTimers.find((t) => t.id === id);
@@ -143,6 +143,30 @@
 		} else if (name === 'cancel_recipe') {
 			output = { success: true };
 			showCancelConfirmation = true;
+		} else if (name === 'pause_cooking_timer') {
+			if (activeTimers.length > 0) {
+				activeTimers = activeTimers.map((t) => ({ ...t, paused: true }));
+				output = { success: true };
+			} else {
+				output = { success: false, error: 'No active timer to pause.' };
+			}
+		} else if (name === 'resume_cooking_timer') {
+			if (activeTimers.length > 0) {
+				activeTimers = activeTimers.map((t) => ({ ...t, paused: false }));
+				output = { success: true };
+			} else {
+				output = { success: false, error: 'No paused timer to resume.' };
+			}
+		} else if (name === 'stop_cooking_timer') {
+			if (activeTimers.length > 0) {
+				// Clear all intervals and empty the timers array
+				timerIntervals.forEach(clearInterval);
+				timerIntervals.clear();
+				activeTimers = [];
+				output = { success: true };
+			} else {
+				output = { success: false, error: 'No active timer to stop.' };
+			}
 		} else {
 			output = { scheduled: false, error: `Unknown tool: ${name}` };
 		}
@@ -408,19 +432,23 @@
 			</h1>
 
 			<!-- Timers -->
-			{#if activeTimers.length > 0}
-				<div class="mb-4 flex flex-wrap gap-2">
-					{#each activeTimers as timer (timer.id)}
-						<div
-							class="flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-700"
-						>
-							<Timer class="size-3.5" />
-							<span>{timer.label}</span>
-							<span class="font-mono tabular-nums">{formatTime(timer.remaining)}</span>
-						</div>
-					{/each}
-				</div>
-			{/if}
+		{#if activeTimers.length > 0}
+			<div class="mb-4 flex flex-wrap gap-2">
+				{#each activeTimers as timer (timer.id)}
+					<div
+						class="flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-bold transition-all
+						{timer.paused ? 'bg-muted border-muted text-muted-foreground opacity-70' : 'border-amber-200 bg-amber-50 text-amber-700'}"
+					>
+						<Timer class="size-3.5" />
+						<span>{timer.label}</span>
+						<span class="font-mono tabular-nums">
+							{#if timer.paused}(Paused) {/if}
+							{formatTime(timer.remaining)}
+						</span>
+					</div>
+				{/each}
+			</div>
+		{/if}
 
 			<!-- Tabs -->
 			<div class="mb-6 grid grid-cols-2 gap-2">
