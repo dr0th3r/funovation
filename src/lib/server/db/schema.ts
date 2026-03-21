@@ -7,17 +7,61 @@ export const task = pgTable('task', {
 	priority: integer('priority').notNull().default(1)
 });
 
+export const country = pgTable('country', {
+	id: serial('id').primaryKey(),
+	name: text('name').notNull().unique()
+});
+
+export const countryTranslation = pgTable(
+	'country_translation',
+	{
+		countryId: integer('country_id')
+			.notNull()
+			.references(() => country.id, { onDelete: 'cascade' }),
+		locale: text('locale').notNull(),
+		name: text('name').notNull(),
+		createdAt: timestamp('created_at').defaultNow().notNull(),
+		updatedAt: timestamp('updated_at').defaultNow().notNull()
+	},
+	(table) => ({
+		pk: primaryKey({ columns: [table.countryId, table.locale] })
+	})
+);
+
+export const ingredient = pgTable('ingredient', {
+	id: serial('id').primaryKey(),
+	name: text('name').notNull().unique()
+});
+
+export const ingredientTranslation = pgTable(
+	'ingredient_translation',
+	{
+		ingredientId: integer('ingredient_id')
+			.notNull()
+			.references(() => ingredient.id, { onDelete: 'cascade' }),
+		locale: text('locale').notNull(),
+		name: text('name').notNull(),
+		createdAt: timestamp('created_at').defaultNow().notNull(),
+		updatedAt: timestamp('updated_at').defaultNow().notNull()
+	},
+	(table) => ({
+		pk: primaryKey({ columns: [table.ingredientId, table.locale] })
+	})
+);
+
 export const recipe = pgTable('recipe', {
 	id: serial('id').primaryKey(),
 	slug: text('slug').notNull().unique(),
 	name: text('name').notNull(),
 	category: text('category').notNull(),
-	area: text('area').notNull(),
-	cuisine: text('cuisine').notNull(),
+	cuisine: integer('cuisine')
+		.notNull()
+		.references(() => country.id),
 	imageUrl: text('image_url'),
 	ingredients: jsonb('ingredients').$type<string[]>().notNull(),
-	simplifiedIngredients: jsonb('simplified_ingredients').$type<string[]>().notNull(),
+	simplifiedIngredients: integer('simplified_ingredients').array().notNull(),
 	steps: jsonb('steps').$type<string[]>().notNull(),
+	timeLengthMinutes: integer('time_length_minutes').notNull(),
 	preferences: jsonb('preferences').$type<string[]>().notNull(),
 	pricePerPortionCZK: integer('price_per_portion_czk').notNull(),
 	allergens: jsonb('allergens').$type<string[]>().notNull()
@@ -32,8 +76,6 @@ export const recipeTranslation = pgTable(
 		locale: text('locale').notNull(),
 		name: text('name').notNull(),
 		category: text('category').notNull(),
-		area: text('area').notNull(),
-		cuisine: text('cuisine').notNull(),
 		ingredients: jsonb('ingredients').$type<string[]>(),
 		simplifiedIngredients: jsonb('simplified_ingredients').$type<string[]>(),
 		steps: jsonb('steps').$type<string[]>(),
@@ -66,6 +108,11 @@ export const userProfile = pgTable('user_profile', {
 		.array()
 		.notNull()
 		.default(sql`'{}'`), // 'plan' | 'learn' | 'recommendations'
+	countries: text('countries')
+		.array()
+		.notNull()
+		.default(sql`'{}'`),
+	xp: integer('xp').notNull().default(0),
 	createdAt: timestamp('created_at').defaultNow().notNull(),
 	updatedAt: timestamp('updated_at').defaultNow().notNull()
 });
