@@ -37,7 +37,7 @@
 		</div>
 	</header>
 
-	<div class="flex flex-1 flex-col items-center">
+	<div class="flex flex-1 flex-col md:items-center">
 		{@render children()}
 	</div>
 </div>

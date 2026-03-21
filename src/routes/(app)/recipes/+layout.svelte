@@ -5,9 +5,9 @@
 	let { children } = $props();
 </script>
 
-<div class="w-full">
+<div class="w-full max-w-4xl">
 	<!-- Title + tabs -->
-	<section class="px-5 pt-7 pb-0 md:px-8 md:pt-10">
+	<section class="pt-7 pb-0 md:pt-10">
 		<h1 class="text-4xl leading-tight font-bold tracking-tight text-foreground md:text-5xl">
 			{m.recipes_title()}
 		</h1>
